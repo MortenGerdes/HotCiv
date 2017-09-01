@@ -1,0 +1,5 @@
+Testsuite: hotciv.standard.TestAlphaCiv
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 sec
+
+Testcase: shouldBeRedAsStartingPlayer took 0.005 sec
+Testcase: shouldDefinetelyBeRemoved took 0.005 sec
