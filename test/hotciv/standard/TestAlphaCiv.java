@@ -65,8 +65,8 @@ public class TestAlphaCiv {
   public void shouldBeRedTurnAfterBlue()
   {
     assertThat(game, is(notNullValue()));
-    game.endOfTurn();
-    game.endOfTurn();
+    game.endOfTurn(); //End red turn
+    game.endOfTurn(); //End blue turn
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
