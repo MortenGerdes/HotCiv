@@ -52,7 +52,16 @@ public class GameImpl implements Game {
   public Player getWinner() { return winner; }
   public int getAge() { return age; }
   public boolean moveUnit( Position from, Position to ) {
-    return false;
+    if(world.get(from).getUnit() == null)
+    {
+      return false;
+    }
+    else if(world.get(to).getUnit() != null){
+      return false;
+    }
+    else{
+      world.get()
+    }
   }
   public void endOfTurn()
   {

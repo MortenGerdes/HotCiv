@@ -75,8 +75,6 @@ public class TestAlphaCiv {
   {
     assertThat(game, is(notNullValue()));
 
-    for()
-
   }
 
   /** REMOVE ME. Not a test of HotCiv, just an example of what
