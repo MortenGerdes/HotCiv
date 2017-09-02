@@ -38,7 +38,21 @@ public class GameImpl implements Game {
   private Player winner = null;
   private HashMap<Position, WorldEntityWrapper> world = new HashMap<>();
 
-  public Tile getTileAt( Position p ) { return world.get(p).getTile(); }
+  /**
+   * Game initial code goes here.
+   */
+  public GameImpl()
+  {
+    for(int i = 0; i < 16; i++) // Populate the world
+    {
+      for(int j = 0; j < 16; j++)
+      {
+        world.put(new Position(i, j), new WorldEntityWrapper(new TileIns(GameConstants.PLAINS), null, null));
+      }
+    }
+  }
+
+  public Tile getTileAt(Position p ) { return world.get(p).getTile(); }
   public Unit getUnitAt( Position p ) { return world.get(p).getUnit(); }
   public City getCityAt( Position p ) { return world.get(p).getCity(); }
   public Player getPlayerInTurn() { return playerInTurn; }

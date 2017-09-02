@@ -145,13 +145,6 @@ public class TestAlphaCiv {
     {
         assertThat(game, is(notNullValue()));
         assertThat(game.getWorld(), is(notNullValue()));
-        for(int i = 0; i < 16; i++) // Populate the world
-        {
-            for(int j = 0; j < 16; j++)
-            {
-                game.getWorld().put(new Position(i, j), new WorldEntityWrapper(null, null, null));
-            }
-        }
 
         game.getWorld().put(new Position(1, 1), new WorldEntityWrapper(null, new UnitIns(GameConstants.ARCHER, Player.RED), null));
         assertThat(game.getUnitAt(new Position(1,1)), is(notNullValue()));
