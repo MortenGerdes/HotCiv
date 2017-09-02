@@ -1,9 +1,11 @@
 [ok] 	  Skift tur fra rød til blå til rød.
-[] 		Kun en unit per tile.
+[ok] 		Kun en unit per tile.
 [ok]      Lav unit classes (?)
 []		Red starter med en archer og settler.
 []		Blue starter med en legion.
 []		Angrebende Unit vinder altid.
+[]      Units skal kunne bevæge sig.
+[]      Units skal kunne angribe hinanden.
 [ok]		Unit må ikke have nogen UnitAction.
 []		Cities må ikke gro i populazation size.
 []		Cities skal lave 6 produktion per runde.

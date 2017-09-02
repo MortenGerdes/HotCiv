@@ -61,4 +61,11 @@ public class GameImpl implements Game {
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) { throw new UnsupportedOperationException();}
+
+  //Testing purposes
+  public HashMap<Position, WorldEntityWrapper> getWorld()
+  {
+    return world;
+  }
+
 }
