@@ -48,20 +48,12 @@ public class GameImpl implements Game {
   {
     age += ageIncrease;
 
-    if(playerInTurn == Player.RED) // Turn handling
-    {
-        playerInTurn = Player.BLUE;
-    }
-    else
-    {
-        playerInTurn = Player.RED;
-    }
+    playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED; // Refactored version of turn handling
 
     if(age == -3000)
     {
       winner = Player.RED;
     }
-
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
