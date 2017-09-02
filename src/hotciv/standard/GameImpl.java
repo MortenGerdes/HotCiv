@@ -38,9 +38,16 @@ public class GameImpl implements Game {
   private Player winner = null;
   private HashMap<Position, WorldEntityWrapper> world = new HashMap<>();
 
+<<<<<<< Updated upstream
   public Tile getTileAt( Position p ) { return world.get(p).getTile(); }
   public Unit getUnitAt( Position p ) { return world.get(p).getUnit(); }
   public City getCityAt( Position p ) { return world.get(p).getCity(); }
+=======
+
+  public Tile getTileAt( Position p ) { return; }
+  public Unit getUnitAt( Position p ) { return null; }
+  public City getCityAt( Position p ) { return null; }
+>>>>>>> Stashed changes
   public Player getPlayerInTurn() { return playerInTurn; }
   public Player getWinner() { return winner; }
   public int getAge() { return age; }
