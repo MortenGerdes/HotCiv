@@ -50,6 +50,15 @@ public class GameImpl implements Game {
         world.put(new Position(i, j), new WorldEntityWrapper(new TileIns(GameConstants.PLAINS), null, null));
       }
     }
+
+    Position archerStartPos = new Position(2,0);
+    Position legionStartPos = new Position(3,2);
+    Position settlerStartPos = new Position(4,3);
+
+    world.get(archerStartPos).setUnit(new UnitIns(GameConstants.ARCHER, Player.RED));
+    world.get(settlerStartPos).setUnit(new UnitIns(GameConstants.SETTLER, Player.RED));
+    world.get(legionStartPos).setUnit(new UnitIns(GameConstants.LEGION, Player.BLUE));
+
   }
 
   public Tile getTileAt(Position p ) { return world.get(p).getTile(); }

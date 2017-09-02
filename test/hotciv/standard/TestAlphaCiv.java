@@ -139,6 +139,7 @@ public class TestAlphaCiv {
         assertThat(game.getAge(), is(-3000));
         assertThat(game.getWinner(), is(Player.RED));
     }
+    
 
     @Test
     public void shouldMoveAUnitToAnotherPosition()
@@ -151,5 +152,19 @@ public class TestAlphaCiv {
         game.moveUnit(new Position(1, 1), new Position(1, 2));
         assertThat(game.getUnitAt(new Position(1,2)), is(notNullValue()));
         assertThat(game.getUnitAt(new Position(1, 2)).getTypeString(), is(GameConstants.ARCHER));
+    }
+
+    @Test
+    public void shouldHaveRedStartingWithArcherAndSettler(){
+       // game.getWorld().put(new Position(2, 0), new WorldEntityWrapper(null, new UnitIns(GameConstants.ARCHER, Player.RED), null));
+        assertThat(game.getUnitAt(new Position(2, 0)), is(GameConstants.ARCHER));
+        //game.getWorld().put(new Position(4,3), new WorldEntityWrapper(null, new UnitIns(GameConstants.SETTLER, Player.RED), null));
+        assertThat(game.getUnitAt(new Position(4,3)), is(GameConstants.SETTLER));
+    }
+
+    @Test
+    public void shouldHaveBlueStartingWithLegion(){
+        //game.getWorld().put(new Position(3,2), new WorldEntityWrapper(null, new UnitIns(GameConstants.LEGION, Player.RED), null));
+        assertThat(game.getUnitAt(new Position(3, 2)), is(GameConstants.LEGION));
     }
 }
