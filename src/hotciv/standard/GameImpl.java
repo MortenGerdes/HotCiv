@@ -38,40 +38,29 @@ public class GameImpl implements Game {
   private Player winner = null;
   private HashMap<Position, WorldEntityWrapper> world = new HashMap<>();
 
-//<<<<<<< Updated upstream
   public Tile getTileAt( Position p ) { return world.get(p).getTile(); }
   public Unit getUnitAt( Position p ) { return world.get(p).getUnit(); }
   public City getCityAt( Position p ) { return world.get(p).getCity(); }
-//=======
-/*
-  public Tile getTileAt( Position p ) {
-    if(world.get(p).getUnit() != null)
-    {
-      return null;
-    }
-  }
-  public Unit getUnitAt( Position p ) { return null; }
-  public City getCityAt( Position p ) { return null; } */
-//>>>>>>> Stashed changes
-
   public Player getPlayerInTurn() { return playerInTurn; }
   public Player getWinner() { return winner; }
   public int getAge() { return age; }
-  public boolean moveUnit( Position from, Position to ) {
-    if(world.get(from).getUnit() == null)
+  public boolean moveUnit( Position from, Position to )
+  {
+    if(getUnitAt(from) == null)
     {
+      // No Unit on position "from"
+      return false;
+    }
+    if(getUnitAt(from).getOwner() != playerInTurn)
+    {
+      // Not this player's turn
       return false;
     }
 
-    /*if(world.get(to).getUnit() == null){
-      System.out.println("Im null");
-      return false;
-    }*/
-    else{
-      world.put(to, world.get(from));
-      world.put(from, null);
-      return true;
-    }
+    Unit unitToMove = getUnitAt(from);
+    world.get(from).setUnit(null);
+    world.get(to).setUnit(unitToMove);
+    return true;
   }
   public void endOfTurn()
   {
