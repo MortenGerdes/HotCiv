@@ -95,4 +95,41 @@ public class TestAlphaCiv {
     // Matchers may be combined, like is-not
     assertThat(l.get(0), is(not("Bumse")));
   }
+
+  @Test
+  public void shouldStartInYear4000BC()
+  {
+      assertThat(game, is(notNullValue()));
+      assertThat(game.getAge(), is(-4000));
+  }
+
+  @Test
+  public void shouldBe3900BCAfterFirstRound()
+  {
+      assertThat(game, is(notNullValue()));
+      assertThat(game.getAge(), is(-4000));
+      game.endOfTurn();
+      assertThat(game.getAge(), is(-3900));
+  }
+
+    @Test
+    public void shouldIncreaseWith100YearsPerRound()
+    {
+        assertThat(game, is(notNullValue()));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(-3900));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(-3800));
+    }
+
+    @Test
+    public void shouldBeRedThatWinsInYear3000BC()
+    {
+        for(int i = 0; i<10; i++)
+        {
+            game.endOfTurn();
+        }
+        assertThat(game.getAge(), is(-3000));
+        assertThat(game.getWinner(), is(Player.RED));
+    }
 }
