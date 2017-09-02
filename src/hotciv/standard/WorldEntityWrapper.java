@@ -7,6 +7,12 @@ import hotciv.framework.Unit;
 /**
  * Created by morten on 9/2/17.
  */
+
+/**
+ * A wrapper that collects everything that can be on a position in the world.
+ * If things later in the course get's added to the world, it will be easy to implement it
+ * in this system
+ */
 public class WorldEntityWrapper
 {
     private Tile tile;

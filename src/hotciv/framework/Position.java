@@ -31,11 +31,11 @@ package hotciv.framework;
  */
 public class Position {
 
-  /** create a position. 
+  /** create a position.
    * @param r the row
    * @param c the column
   */
-  public Position(int r, int c) { 
+  public Position(int r, int c) {
     this.r = r; this.c = c; 
   }
 

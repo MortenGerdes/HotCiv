@@ -37,7 +37,7 @@ import java.util.*;
 
 */
 public class TestAlphaCiv {
-  private Game game;
+  private GameImpl game; //Todo change to "Game" again?
 
   /** Fixture for alphaciv testing. */
   @Before
@@ -138,5 +138,17 @@ public class TestAlphaCiv {
         }
         assertThat(game.getAge(), is(-3000));
         assertThat(game.getWinner(), is(Player.RED));
+    }
+
+    @Test
+    public void shouldMoveAUnitToAnotherPosition()
+    {
+        assertThat(game, is(notNullValue()));
+        assertThat(game.getWorld(), is(notNullValue()));
+        game.getWorld().put(new Position(1, 1), new WorldEntityWrapper(null, new UnitIns(GameConstants.ARCHER, Player.RED), null));
+        assertThat(game.getUnitAt(new Position(1,1)), is(notNullValue()));
+        game.moveUnit(new Position(1, 1), new Position(1, 2));
+        assertThat(game.getUnitAt(new Position(1,2)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(1, 2)).getTypeString(), is(GameConstants.ARCHER));
     }
 }
