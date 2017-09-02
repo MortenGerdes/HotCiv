@@ -29,24 +29,26 @@ import hotciv.framework.*;
 
 */
 
-public class GameImpl implements Game, Tile, Unit {
+public class GameImpl implements Game {
+  private int age = -4000; //Initial starting age.
+  private int ageIncrease = 100; // The amount of years every round will increase with.
   private Player playerInTurn = Player.RED; //First to start
+  private Player winner = null;
 
-
-
-
-  public Tile getTileAt( Position p ) { return ; }
+  public Tile getTileAt( Position p ) { return null; }
   public Unit getUnitAt( Position p ) { return null; }
   public City getCityAt( Position p ) { return null; }
   public Player getPlayerInTurn() { return playerInTurn; }
-  public Player getWinner() { return null; }
-  public int getAge() { return 0; }
+  public Player getWinner() { return winner; }
+  public int getAge() { return age; }
   public boolean moveUnit( Position from, Position to ) {
     return false;
   }
   public void endOfTurn()
   {
-    if(playerInTurn == Player.RED)
+    age += ageIncrease;
+
+    if(playerInTurn == Player.RED) // Turn handling
     {
         playerInTurn = Player.BLUE;
     }
@@ -54,8 +56,14 @@ public class GameImpl implements Game, Tile, Unit {
     {
         playerInTurn = Player.RED;
     }
+
+    if(age == -3000)
+    {
+      winner = Player.RED;
+    }
+
   }
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) {}
+  public void performUnitActionAt( Position p ) { throw new UnsupportedOperationException();}
 }
