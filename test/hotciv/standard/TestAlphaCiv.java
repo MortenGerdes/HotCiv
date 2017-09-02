@@ -156,15 +156,13 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldHaveRedStartingWithArcherAndSettler(){
-       // game.getWorld().put(new Position(2, 0), new WorldEntityWrapper(null, new UnitIns(GameConstants.ARCHER, Player.RED), null));
-        assertThat(game.getUnitAt(new Position(2, 0)), is(GameConstants.ARCHER));
-        //game.getWorld().put(new Position(4,3), new WorldEntityWrapper(null, new UnitIns(GameConstants.SETTLER, Player.RED), null));
-        assertThat(game.getUnitAt(new Position(4,3)), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(new Position(2, 0)).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(new Position(4,3)).getTypeString(), is(GameConstants.SETTLER));
     }
 
     @Test
     public void shouldHaveBlueStartingWithLegion(){
         //game.getWorld().put(new Position(3,2), new WorldEntityWrapper(null, new UnitIns(GameConstants.LEGION, Player.RED), null));
-        assertThat(game.getUnitAt(new Position(3, 2)), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(new Position(3, 2)).getTypeString(), is(GameConstants.LEGION));
     }
 }
