@@ -70,6 +70,12 @@ public class TestAlphaCiv {
     assertThat(game.getPlayerInTurn(), is(Player.RED));
   }
 
+  @Test
+  public void shouldBeOnlyOneUnitPerTile()
+  {
+    assertThat(game, is(notNullValue()));
+  }
+
   /** REMOVE ME. Not a test of HotCiv, just an example of what
       matchers the hamcrest library has... */
   @Test

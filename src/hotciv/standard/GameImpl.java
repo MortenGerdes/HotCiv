@@ -29,10 +29,13 @@ import hotciv.framework.*;
 
 */
 
-public class GameImpl implements Game {
+public class GameImpl implements Game, Tile, Unit {
   private Player playerInTurn = Player.RED; //First to start
 
-  public Tile getTileAt( Position p ) { return null; }
+
+
+
+  public Tile getTileAt( Position p ) { return ; }
   public Unit getUnitAt( Position p ) { return null; }
   public City getCityAt( Position p ) { return null; }
   public Player getPlayerInTurn() { return playerInTurn; }
