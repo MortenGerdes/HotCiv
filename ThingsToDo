@@ -1,10 +1,10 @@
-[ok] 	Skift tur fra rød til blå til rød.
+[ok] 	  Skift tur fra rød til blå til rød.
 [] 		Kun en unit per tile.
-[]      Lav unit classes (?)
+[ok]      Lav unit classes (?)
 []		Red starter med en archer og settler.
 []		Blue starter med en legion.
 []		Angrebende Unit vinder altid.
-[]		Unit må ikke have nogen UnitAction.
+[ok]		Unit må ikke have nogen UnitAction.
 []		Cities må ikke gro i populazation size.
 []		Cities skal lave 6 produktion per runde.
 [OK]		Spillet skal starte i år 4000BC.

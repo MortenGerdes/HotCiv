@@ -42,6 +42,7 @@ public class GameConstants {
   public static final String FOREST    = "forest";
   public static final String HILLS     = "hills";
   public static final String MOUNTAINS = "mountain";
+  public static final String CITY      = "city";
   // Valid production balance types
   public static final String productionFocus = "hammer";
   public static final String foodFocus = "apple";

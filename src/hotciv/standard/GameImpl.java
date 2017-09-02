@@ -2,6 +2,8 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import java.util.HashMap;
+
 /** Skeleton implementation of HotCiv.
  
    This source code is from the book 
@@ -34,10 +36,11 @@ public class GameImpl implements Game {
   private int ageIncrease = 100; // The amount of years every round will increase with.
   private Player playerInTurn = Player.RED; //First to start
   private Player winner = null;
+  private HashMap<Position, WorldEntityWrapper> world = new HashMap<>();
 
-  public Tile getTileAt( Position p ) { return; }
-  public Unit getUnitAt( Position p ) { return null; }
-  public City getCityAt( Position p ) { return null; }
+  public Tile getTileAt( Position p ) { return world.get(p).getTile(); }
+  public Unit getUnitAt( Position p ) { return world.get(p).getUnit(); }
+  public City getCityAt( Position p ) { return world.get(p).getCity(); }
   public Player getPlayerInTurn() { return playerInTurn; }
   public Player getWinner() { return winner; }
   public int getAge() { return age; }
