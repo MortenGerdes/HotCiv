@@ -5,13 +5,13 @@ import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
 /**
- * Created by morten on 9/2/17.
+ * Created by csdev on 9/2/17.
  */
-public class Archer implements Unit
-{
+public class Legion implements Unit {
+
     private Player owner;
 
-    public Archer(Player owner)
+    public Legion(Player owner)
     {
         this.owner = owner;
     }
@@ -19,7 +19,7 @@ public class Archer implements Unit
     @Override
     public String getTypeString()
     {
-        return GameConstants.ARCHER;
+        return GameConstants.LEGION;
     }
 
     @Override
@@ -37,12 +37,14 @@ public class Archer implements Unit
     @Override
     public int getDefensiveStrength()
     {
-        return 3;
+        return 2;
     }
 
     @Override
     public int getAttackingStrength()
     {
-        return 2;
+        return 4;
     }
+
+
 }

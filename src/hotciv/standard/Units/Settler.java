@@ -2,16 +2,15 @@ package hotciv.standard.Units;
 
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
-import hotciv.framework.Unit;
 
 /**
- * Created by morten on 9/2/17.
+ * Created by csdev on 9/2/17.
  */
-public class Archer implements Unit
-{
+public class Settler {
+
     private Player owner;
 
-    public Archer(Player owner)
+    public Settler(Player owner)
     {
         this.owner = owner;
     }
@@ -19,7 +18,7 @@ public class Archer implements Unit
     @Override
     public String getTypeString()
     {
-        return GameConstants.ARCHER;
+        return GameConstants.SETTLER;
     }
 
     @Override
@@ -43,6 +42,6 @@ public class Archer implements Unit
     @Override
     public int getAttackingStrength()
     {
-        return 2;
+        return 0;
     }
 }
