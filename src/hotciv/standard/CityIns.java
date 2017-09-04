@@ -46,6 +46,7 @@ public class CityIns implements City
     public void onEndTurn()
     {
         ressources += 6;
+        size = 1;
     }
 
     public int getRessources()

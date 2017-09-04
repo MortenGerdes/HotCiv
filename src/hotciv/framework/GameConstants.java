@@ -1,5 +1,7 @@
 package hotciv.framework;
 
+import java.util.HashMap;
+
 /** Collection of constants used in HotCiv Game. Note that strings are
  * used instead of enumeration types to keep the set of valid
  * constants open to extensions by future HotCiv variants.  Enums can
@@ -46,4 +48,13 @@ public class GameConstants {
   // Valid production balance types
   public static final String productionFocus = "hammer";
   public static final String foodFocus = "apple";
+
+  public static final HashMap<String, Integer> priceOnUnit;
+  static
+  {
+    priceOnUnit = new HashMap<>();
+    priceOnUnit.put(ARCHER, 10);
+    priceOnUnit.put(LEGION, 15);
+    priceOnUnit.put(SETTLER, 30);
+  }
 }

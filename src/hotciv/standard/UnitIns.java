@@ -24,6 +24,7 @@ public class UnitIns implements Unit
         this(type, owner, moveCount, 0, 0);
     }
 
+
     public UnitIns(String type, Player owner, int moveCount, int defensiveStrength, int attackingStrength)
     {
         this.moveCount = moveCount;
