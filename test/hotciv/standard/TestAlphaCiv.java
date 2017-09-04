@@ -225,4 +225,15 @@ public class TestAlphaCiv {
     public void shouldBePlainTile() {
         assertThat(game.getTileAt(new Position(0,0)).getTypeString(), is(GameConstants.PLAINS));
     }
+
+    @Test
+    public void shouldBeCorrectInfoAboutCity(){
+        game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
+        CityIns city = (CityIns) game.getCityAt(new Position(5,6));
+
+        assertThat(game.getCityAt(new Position(5,6)).getOwner(), is(Player.BLUE));
+        assertThat(((CityIns) game.getCityAt(new Position(5,6))).getRessources(), is(0));
+        assertThat(game.getCityAt(new Position(5,6)).getSize(), is(1));
+        assertThat(((CityIns) game.getCityAt(new Position(5,6))).getProcessPercentage(), is(0));
+    }
 }
