@@ -50,9 +50,14 @@ public class GameImpl implements Game {
         world.put(new Position(i, j), new WorldEntityWrapper(new TileIns(GameConstants.PLAINS), null, null));
       }
     }
+
+    //Sets starting units Archer, Settler and Legion in their respective positions.
     world.get(new Position(2,0)).setUnit(new UnitIns(GameConstants.ARCHER, Player.RED));
     world.get(new Position(4,3)).setUnit(new UnitIns(GameConstants.SETTLER, Player.RED));
     world.get(new Position(3,2)).setUnit(new UnitIns(GameConstants.LEGION, Player.BLUE));
+
+    //Sets starting cities
+
 
   }
 

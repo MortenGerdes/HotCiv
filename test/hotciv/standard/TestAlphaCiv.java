@@ -165,4 +165,14 @@ public class TestAlphaCiv {
         //game.getWorld().put(new Position(3,2), new WorldEntityWrapper(null, new UnitIns(GameConstants.LEGION, Player.RED), null));
         assertThat(game.getUnitAt(new Position(3, 2)).getTypeString(), is(GameConstants.LEGION));
     }
+
+    @Test
+    public void shouldHaveCityProducingSixProductionsPerRound(){
+
+    }
+
+    @Test
+    public void shouldHaveStartingCities(){
+
+    }
 }

@@ -121,7 +121,7 @@ public interface Game {
    * Precondition: there is a city at location 'p'.
    * Predondition: the unit type is a valid type.
    * @param p the position of the city whose production
-   * should be changed. 
+   * should be changed.
    * @param unitType a string defining the type of unit that the
    * city should produce next.
    */
