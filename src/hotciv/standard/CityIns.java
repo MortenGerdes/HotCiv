@@ -19,10 +19,6 @@ public class CityIns implements City
         this.owner = owner;
     }
 
-    public void onEndTurn(){
-        
-    }
-
     @Override
     public Player getOwner()
     {
@@ -45,5 +41,20 @@ public class CityIns implements City
     public String getWorkforceFocus()
     {
         return workForceFocus;
+    }
+
+    public void onEndTurn()
+    {
+
+    }
+
+    public int getRessources()
+    {
+        return ressources;
+    }
+
+    public int getProcessPercentage()
+    {
+        return processPercentage;
     }
 }
