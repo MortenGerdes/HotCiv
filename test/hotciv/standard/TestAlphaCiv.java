@@ -184,7 +184,9 @@ public class TestAlphaCiv {
         game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
         city.onEndTurn();
+        assertThat(city.setProduction(GameConstants.ARCHER), is(false));
         city.onEndTurn();
+        assertThat(city.setProduction(GameConstants.ARCHER), is(true));
 
 
     }

@@ -49,12 +49,12 @@ public class GameConstants {
   public static final String productionFocus = "hammer";
   public static final String foodFocus = "apple";
 
-  public static final HashMap<String, Integer> priceOnUnit;
+  public static final HashMap<String, Integer> PRICE_ON_UNIT;
   static
   {
-    priceOnUnit = new HashMap<>();
-    priceOnUnit.put(ARCHER, 10);
-    priceOnUnit.put(LEGION, 15);
-    priceOnUnit.put(SETTLER, 30);
+    PRICE_ON_UNIT = new HashMap<>();
+    PRICE_ON_UNIT.put(ARCHER, 10);
+    PRICE_ON_UNIT.put(LEGION, 15);
+    PRICE_ON_UNIT.put(SETTLER, 30);
   }
 }
