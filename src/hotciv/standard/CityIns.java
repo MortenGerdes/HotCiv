@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.City;
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 
 /**
@@ -37,6 +38,7 @@ public class CityIns implements City
         return production;
     }
 
+
     @Override
     public String getWorkforceFocus()
     {
@@ -56,5 +58,16 @@ public class CityIns implements City
     public int getProcessPercentage()
     {
         return processPercentage;
+    }
+
+    public boolean setProduction(String production)
+    {
+        if(ressources >= 12 && production.equals(GameConstants.ARCHER)){
+            this.production = production;
+            return true;
+        }
+        else
+            return false;
+
     }
 }

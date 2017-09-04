@@ -179,4 +179,14 @@ public class TestAlphaCiv {
 
     }
 
+    @Test
+    public void shouldProduceUnitWhenEnoughRessources(){
+        game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
+        CityIns city = (CityIns) game.getCityAt(new Position(5,6));
+        city.onEndTurn();
+        city.onEndTurn();
+
+
+    }
+
 }
