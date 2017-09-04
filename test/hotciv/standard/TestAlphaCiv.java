@@ -167,12 +167,16 @@ public class TestAlphaCiv {
     }
 
     @Test
-    public void shouldHaveCityProducingSixProductionsPerRound(){
-
+    public void shouldHaveCityProducingSixRessourcesPerRound(){
+        game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
+        CityIns city = (CityIns) game.getCityAt(new Position(5,6));
+        city.onEndTurn();
+        assertThat(city.getRessources(), is(6));
     }
 
     @Test
     public void shouldHaveStartingCities(){
 
     }
+
 }

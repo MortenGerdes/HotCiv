@@ -9,9 +9,9 @@ import hotciv.framework.Player;
 public class CityIns implements City
 {
     private Player owner;
-    private int size;
-    private int ressources;
-    private int processPercentage;
+    private int size = 1;
+    private int ressources = 0;
+    private int processPercentage = 0;
     private String production;
     private String workForceFocus;
 
@@ -45,7 +45,7 @@ public class CityIns implements City
 
     public void onEndTurn()
     {
-
+        ressources += 6;
     }
 
     public int getRessources()

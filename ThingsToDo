@@ -8,7 +8,7 @@
 []      Units skal kunne angribe hinanden.
 [ok]	    Unit må ikke have nogen UnitAction.
 []		Cities må ikke gro i populazation size.
-[]		Cities skal lave 6 produktion per runde.
+[ok]		Cities skal lave 6 ressources per runde.
 [ok]		Spillet skal starte i år 4000BC.
 [ok]		Hver runde skal der gå 100 år.
 [ok]		Rød vinder i år 3000BC.
