@@ -7,7 +7,7 @@
 [ok]        Units skal kunne bevæge sig.
 []      Units skal kunne angribe hinanden.
 [ok]	    Unit må ikke have nogen UnitAction.
-[]		Cities må ikke gro i populazation size.
+[ok]		Cities må ikke gro i populazation size.
 [ok]		Cities skal lave 6 ressources per runde.
 [ok]		Spillet skal starte i år 4000BC.
 [ok]		Hver runde skal der gå 100 år.
