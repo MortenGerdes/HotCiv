@@ -14,5 +14,5 @@
 [ok]		Rød vinder i år 3000BC.
 []      Cities kan producere forskellige units, som spillers kan vælge
 [ok]      Red har en city på position (1,1) og blue har en city på (4,1)
-[]      Når en by har nok ressources, kan den producer den unit, som er ved at blive lavet
+[ok]      Når en by har nok ressources, kan den producer den unit, som er ved at blive lavet
 []      Units, der spawner fra cities, spawner på samme tile som byen. Hvis optaget, start fra north og bevæg clockwise

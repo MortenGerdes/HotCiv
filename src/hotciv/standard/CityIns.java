@@ -65,6 +65,7 @@ public class CityIns implements City
     {
         if(ressources >= GameConstants.PRICE_ON_UNIT.get(production)){
             this.production = production;
+            ressources -= GameConstants.PRICE_ON_UNIT.get(production);
             return true;
         }
         else

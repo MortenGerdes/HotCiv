@@ -147,7 +147,13 @@ public class TestAlphaCiv {
         assertThat(game, is(notNullValue()));
         assertThat(game.units, is(notNullValue()));
 
+        assertThat(game.moveUnit(new Position(5,8), new Position(5,9)), is(false));
+
+
         game.units.put(new Position(1,1), new UnitIns(GameConstants.ARCHER, Player.RED));
+        game.endOfTurn();
+        assertThat(game.moveUnit(new Position(1,1), new Position(1,2)), is(false));
+        game.endOfTurn();
         assertThat(game.getUnitAt(new Position(1,1)), is(notNullValue()));
         game.moveUnit(new Position(1, 1), new Position(1, 2));
         assertThat(game.getUnitAt(new Position(1,2)), is(notNullValue()));
@@ -184,11 +190,39 @@ public class TestAlphaCiv {
         game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
         city.onEndTurn();
-        assertThat(city.setProduction(GameConstants.ARCHER), is(false));
+        assertThat(city.setProduction(GameConstants.LEGION), is(false));
         city.onEndTurn();
+        city.onEndTurn();
+        city.onEndTurn();
+        city.onEndTurn();
+        city.onEndTurn();
+        city.onEndTurn();
+        city.onEndTurn();
+        city.onEndTurn();
+        city.onEndTurn();
+
+        assertThat(city.setProduction(GameConstants.LEGION), is(true));
         assertThat(city.setProduction(GameConstants.ARCHER), is(true));
-
-
+        assertThat(city.setProduction(GameConstants.SETTLER), is(true));
+        assertThat(city.getRessources(), is(5));
+        assertThat(city.setProduction(GameConstants.LEGION), is(false));
     }
 
+    @Test
+    public void shouldCreateUnitWithMoveCount(){
+        game.units.put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED,3));
+        assertThat(game.getUnitAt(new Position(5,5)).getMoveCount(), is(3));
+    }
+
+    @Test
+    public void shouldCreateUnitWithAttackAndDefence(){
+        game.units.put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED,3, 3, 2));
+        assertThat(game.getUnitAt(new Position(5,5)).getAttackingStrength(), is(2));
+        assertThat(game.getUnitAt(new Position(5,5)).getDefensiveStrength(), is(3));
+    }
+
+    @Test
+    public void shouldBePlainTile() {
+        assertThat(game.getTileAt(new Position(0,0)).getTypeString(), is(GameConstants.PLAINS));
+    }
 }
