@@ -264,4 +264,12 @@ public class TestAlphaCiv {
         assertThat(game.getUnitAt(new Position(10,3)).getOwner(), is(Player.RED));
     }
 
+    @Test
+    public void shouldNotAllowToMoveOwnUnitOntopOfYourSelf()
+    {
+        game.units.put(new Position(10,2), new UnitIns(GameConstants.ARCHER, Player.RED, 1));
+        game.units.put(new Position(10,3), new UnitIns(GameConstants.LEGION, Player.RED, 1));
+        assertThat(game.moveUnit(new Position(10,2), new Position(10, 3)), is(false));
+    }
+
 }

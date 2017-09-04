@@ -3,18 +3,19 @@
 [ok]        Lav unit classes (?)
 [ok]		Red starter med en archer og settler.
 [ok]		Blue starter med en legion.
-[]		Angrebende Unit vinder altid.
-[ok]        Units skal kunne bevæge sig.
-[]      Units skal kunne angribe hinanden.
 [ok]	    Unit må ikke have nogen UnitAction.
 [ok]		Cities må ikke gro i populazation size.
-[ok]		Cities skal lave 6 ressources per runde.
+[ok]		Cities skal lave 6 resources per runde.
 [ok]		Spillet skal starte i år 4000BC.
 [ok]		Hver runde skal der gå 100 år.
 [ok]		Rød vinder i år 3000BC.
-[]       Cities kan producere forskellige units, som spillers kan vælge
+[ok]        Units skal kunne bevæge sig.
 [ok]        Red har en city på position (1,1) og blue har en city på (4,1)
-[ok]        Når en by har nok ressources, kan den producer den unit, som er ved at blive lavet
-[]       Units, der spawner fra cities, spawner på samme tile som byen. Hvis optaget, start fra north og bevæg clockwise
-[ok]      Cities kan spawne units on end turn.
+[ok]        Når en by har nok resources, kan den producer den unit, som er ved at blive lavet
+[ok]        Cities kan spawne units on end turn.
+[ok]		Angrebende Unit vinder altid.
+[ok]        Units skal kunne angribe hinanden.
+
+[]          Cities kan producere forskellige units, som spillerne kan vælge (?)
+[]          Units, der spawner fra cities, spawner på samme tile som byen. Hvis optaget, start fra north og bevæg clockwise
 []          Units må ikke rykke længere end deres movecount
