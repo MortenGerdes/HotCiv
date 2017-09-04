@@ -12,7 +12,9 @@
 [ok]		Spillet skal starte i år 4000BC.
 [ok]		Hver runde skal der gå 100 år.
 [ok]		Rød vinder i år 3000BC.
-[]      Cities kan producere forskellige units, som spillers kan vælge
-[ok]      Red har en city på position (1,1) og blue har en city på (4,1)
-[ok]      Når en by har nok ressources, kan den producer den unit, som er ved at blive lavet
-[]      Units, der spawner fra cities, spawner på samme tile som byen. Hvis optaget, start fra north og bevæg clockwise
+[]       Cities kan producere forskellige units, som spillers kan vælge
+[ok]        Red har en city på position (1,1) og blue har en city på (4,1)
+[ok]        Når en by har nok ressources, kan den producer den unit, som er ved at blive lavet
+[]       Units, der spawner fra cities, spawner på samme tile som byen. Hvis optaget, start fra north og bevæg clockwise
+[ok]      Cities kan spawne units on end turn.
+[]          Units må ikke rykke længere end deres movecount

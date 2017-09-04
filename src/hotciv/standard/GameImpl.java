@@ -80,6 +80,20 @@ public class GameImpl implements Game {
     }
 
     Unit unitToMove = getUnitAt(from);
+
+      if(getUnitAt(to) != null)
+      {
+          if(getUnitAt(to).getOwner() != playerInTurn)
+          {
+              units.remove(from);
+              units.remove(to); //Attacker always wins
+              units.put(to, unitToMove);
+              return true;
+          }
+          else
+              return false;
+      }
+
     units.remove(from);
     units.put(to, unitToMove);
     return true;
@@ -87,8 +101,20 @@ public class GameImpl implements Game {
   public void endOfTurn()
   {
     age += ageIncrease;
-
     playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED; // Refactored version of turn handling
+
+    for(Position position: cities.keySet())
+    {
+      CityIns theBetterCity = (CityIns)cities.get(position);
+      if(theBetterCity.getProduction() != null && !theBetterCity.getProduction().isEmpty())
+      {
+        if(theBetterCity.getProcessPercentage() >= 100)
+        {
+          units.put(position, new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
+        }
+      }
+      theBetterCity.onEndTurn();
+    }
 
     if(age == -3000)
     {

@@ -12,7 +12,7 @@ public class CityIns implements City
     private Player owner;
     private int size = 1;
     private int ressources = 0;
-    private int processPercentage = 0;
+    private int processPercentage = 100;
     private String production;
     private String workForceFocus;
 
@@ -38,7 +38,6 @@ public class CityIns implements City
         return production;
     }
 
-
     @Override
     public String getWorkforceFocus()
     {
@@ -51,7 +50,7 @@ public class CityIns implements City
         size = 1;
     }
 
-    public int getRessources()
+    public int getResources()
     {
         return ressources;
     }

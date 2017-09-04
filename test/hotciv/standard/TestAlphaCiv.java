@@ -177,7 +177,7 @@ public class TestAlphaCiv {
         game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
         city.onEndTurn();
-        assertThat(city.getRessources(), is(6));
+        assertThat(city.getResources(), is(6));
     }
 
     @Test
@@ -204,7 +204,7 @@ public class TestAlphaCiv {
         assertThat(city.setProduction(GameConstants.LEGION), is(true));
         assertThat(city.setProduction(GameConstants.ARCHER), is(true));
         assertThat(city.setProduction(GameConstants.SETTLER), is(true));
-        assertThat(city.getRessources(), is(5));
+        assertThat(city.getResources(), is(5));
         assertThat(city.setProduction(GameConstants.LEGION), is(false));
     }
 
@@ -232,8 +232,36 @@ public class TestAlphaCiv {
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
 
         assertThat(game.getCityAt(new Position(5,6)).getOwner(), is(Player.BLUE));
-        assertThat(((CityIns) game.getCityAt(new Position(5,6))).getRessources(), is(0));
+        assertThat(((CityIns) game.getCityAt(new Position(5,6))).getResources(), is(0));
         assertThat(game.getCityAt(new Position(5,6)).getSize(), is(1));
-        assertThat(((CityIns) game.getCityAt(new Position(5,6))).getProcessPercentage(), is(0));
+        assertThat(((CityIns) game.getCityAt(new Position(5,6))).getProcessPercentage(), is(100));
     }
+
+    @Test
+    public void shouldCreateAUnitWhenSetToProduce()
+    {
+        game.cities.put(new Position(5,6), new CityIns(Player.RED));
+        CityIns city = (CityIns) game.getCityAt(new Position(5,6));
+
+        assertThat(game.getCityAt(new Position(5,6)), is(notNullValue()));
+        assertThat(game.getCityAt(new Position(5,6)).getOwner(), is(Player.RED));
+        game.endOfTurn();
+        game.endOfTurn(); // Har nu 12 resources og archer koster 10
+
+        assertThat(city.setProduction(GameConstants.ARCHER), is(true)); // Nu er resources 2
+        game.endOfTurn(); // Tilføjer 6 til resources: 6 + 2 = 8
+        assertThat(game.units.get(new Position(5,6)).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.units.get(new Position(5,6)).getOwner(), is(Player.RED));
+        assertThat(city.getResources(), is(8)); // Checker om resources er 8
+    }
+
+    @Test
+    public void shouldAllowUnitsToAttack(){
+        game.units.put(new Position(10,2), new UnitIns(GameConstants.ARCHER, Player.RED, 1));
+        game.units.put(new Position(10,3), new UnitIns(GameConstants.LEGION, Player.BLUE, 1));
+        game.moveUnit(new Position(10,2), new Position(10, 3));
+        assertThat(game.getUnitAt(new Position(10, 3)).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(new Position(10,3)).getOwner(), is(Player.RED));
+    }
+
 }
