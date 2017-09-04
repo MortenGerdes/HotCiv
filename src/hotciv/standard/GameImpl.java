@@ -36,7 +36,12 @@ public class GameImpl implements Game {
   private int ageIncrease = 100; // The amount of years every round will increase with.
   private Player playerInTurn = Player.RED; //First to start
   private Player winner = null;
-  private HashMap<Position, WorldEntityWrapper> world = new HashMap<>();
+
+  //Public for testing purposes
+  public HashMap<Position, Unit> units = new HashMap<>();
+  public HashMap<Position, City> cities = new HashMap<>();
+  public HashMap<Position, Tile> tiles = new HashMap<>();
+
 
   /**
    * Game initial code goes here.
@@ -47,18 +52,17 @@ public class GameImpl implements Game {
     {
       for(int j = 0; j < 16; j++)
       {
-        world.put(new Position(i, j), new WorldEntityWrapper(new TileIns(GameConstants.PLAINS), null, null));
+        tiles.put(new Position(i,j), new TileIns(GameConstants.PLAINS));
       }
     }
-    world.get(new Position(2,0)).setUnit(new UnitIns(GameConstants.ARCHER, Player.RED));
-    world.get(new Position(4,3)).setUnit(new UnitIns(GameConstants.SETTLER, Player.RED));
-    world.get(new Position(3,2)).setUnit(new UnitIns(GameConstants.LEGION, Player.BLUE));
-
+    units.put(new Position(2,0), new UnitIns(GameConstants.ARCHER, Player.RED));
+    units.put(new Position(4,3), new UnitIns(GameConstants.SETTLER, Player.RED));
+    units.put(new Position(3,2), new UnitIns(GameConstants.LEGION, Player.BLUE));
   }
 
-  public Tile getTileAt(Position p ) { return world.get(p).getTile(); }
-  public Unit getUnitAt( Position p ) { return world.get(p).getUnit(); }
-  public City getCityAt( Position p ) { return world.get(p).getCity(); }
+  public Tile getTileAt(Position p ) { return tiles.get(p); }
+  public Unit getUnitAt( Position p ) { return units.get(p); }
+  public City getCityAt( Position p ) { return cities.get(p); }
   public Player getPlayerInTurn() { return playerInTurn; }
   public Player getWinner() { return winner; }
   public int getAge() { return age; }
@@ -76,8 +80,8 @@ public class GameImpl implements Game {
     }
 
     Unit unitToMove = getUnitAt(from);
-    world.get(from).setUnit(null);
-    world.get(to).setUnit(unitToMove);
+    units.remove(from);
+    units.put(to, unitToMove);
     return true;
   }
   public void endOfTurn()
@@ -94,11 +98,5 @@ public class GameImpl implements Game {
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) { throw new UnsupportedOperationException();}
-
-  //Testing purposes
-  public HashMap<Position, WorldEntityWrapper> getWorld()
-  {
-    return world;
-  }
 
 }

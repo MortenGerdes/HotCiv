@@ -145,9 +145,9 @@ public class TestAlphaCiv {
     public void shouldMoveAUnitToAnotherPosition()
     {
         assertThat(game, is(notNullValue()));
-        assertThat(game.getWorld(), is(notNullValue()));
+        assertThat(game.units, is(notNullValue()));
 
-        game.getWorld().put(new Position(1, 1), new WorldEntityWrapper(null, new UnitIns(GameConstants.ARCHER, Player.RED), null));
+        game.units.put(new Position(1,1), new UnitIns(GameConstants.ARCHER, Player.RED));
         assertThat(game.getUnitAt(new Position(1,1)), is(notNullValue()));
         game.moveUnit(new Position(1, 1), new Position(1, 2));
         assertThat(game.getUnitAt(new Position(1,2)), is(notNullValue()));
