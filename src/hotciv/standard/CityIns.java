@@ -10,8 +10,18 @@ public class CityIns implements City
 {
     private Player owner;
     private int size;
+    private int ressources;
+    private int processPercentage;
     private String production;
     private String workForceFocus;
+
+    public CityIns(Player owner) {
+        this.owner = owner;
+    }
+
+    public void onEndTurn(){
+        
+    }
 
     @Override
     public Player getOwner()
