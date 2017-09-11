@@ -1,25 +1,23 @@
 Testsuite: hotciv.standard.TestAlphaCiv
-Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.094 sec
+Tests run: 20, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.115 sec
 
-Testcase: shouldProduceUnitWhenEnoughRessources took 0.021 sec
-Testcase: shouldMoveAUnitToAnotherPosition took 0.003 sec
-Testcase: shouldBeRedAsStartingPlayer took 0 sec
-Testcase: shouldIncreaseWith100YearsPerRound took 0 sec
-Testcase: shouldOnlyBeOneUnitPerTile took 0 sec
-Testcase: shouldCreateUnitWithMoveCount took 0 sec
-Testcase: shouldBeRedTurnAfterBlue took 0 sec
+Testcase: ShouldReturnFalseWhenTryingToMoveAUnitThatsNotThere took 0.026 sec
+Testcase: shouldProduceUnitWhenEnoughRessources took 0.004 sec
+Testcase: shouldMoveAUnitToAnotherPosition took 0.001 sec
+Testcase: shouldBeRedAsStartingPlayer took 0.001 sec
+Testcase: shouldIncreaseWith100YearsPerRound took 0.001 sec
+Testcase: shouldOnlyBeOneUnitPerTile took 0.001 sec
+Testcase: shouldCreateUnitWithMoveCount took 0.001 sec
+Testcase: shouldBeRedTurnAfterBlue took 0.001 sec
 Testcase: shouldBeCorrectInfoAboutCity took 0.001 sec
-Testcase: shouldBeBlueTurnAfterRed took 0 sec
-Testcase: shouldStartInYear4000BC took 0.001 sec
-Testcase: shouldHaveRedStartingWithArcherAndSettler took 0.001 sec
-Testcase: shouldAllowUnitsToAttack took 0 sec
-Testcase: shouldHaveBlueStartingWithLegion took 0.001 sec
-Testcase: shouldBeRedThatWinsInYear3000BC took 0.002 sec
-Testcase: shouldDefinetelyBeRemoved took 0.013 sec
-Testcase: shouldNotAllowToMoveOwnUnitOntopOfYourSelf took 0.002 sec
-Testcase: shouldHaveStartingCities took 0 sec
-Testcase: shouldCreateAUnitWhenSetToProduce took 0.001 sec
-Testcase: shouldCreateUnitWithAttackAndDefence took 0 sec
-Testcase: shouldBePlainTile took 0 sec
-Testcase: shouldHaveCityProducingSixRessourcesPerRound took 0 sec
-Testcase: shouldBe3900BCAfterFirstRound took 0 sec
+Testcase: shouldBeBlueTurnAfterRed took 0.002 sec
+Testcase: shouldStartInYear4000BC took 0 sec
+Testcase: shouldAllowUnitsToAttack took 0.001 sec
+Testcase: shouldBeRedThatWinsInYear3000BC took 0.001 sec
+Testcase: ShouldHaveStartingUnitsForRedAndBlue took 0 sec
+Testcase: shouldHaveCityProducingSixResourcesPerRound took 0.001 sec
+Testcase: shouldCreateAUnitWhenSetToProduce took 0.002 sec
+Testcase: shouldCreateUnitWithAttackAndDefence took 0.001 sec
+Testcase: shouldNotAllowUnitFromSameTeamToAttack took 0 sec
+Testcase: shouldBePlainTile took 0.001 sec
+Testcase: shouldBe3900BCAfterFirstRound took 0.001 sec

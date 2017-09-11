@@ -2,7 +2,10 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 /** Skeleton implementation of HotCiv.
  
@@ -55,9 +58,9 @@ public class GameImpl implements Game {
         tiles.put(new Position(i,j), new TileIns(GameConstants.PLAINS));
       }
     }
-    units.put(new Position(2,0), new UnitIns(GameConstants.ARCHER, Player.RED));
-    units.put(new Position(4,3), new UnitIns(GameConstants.SETTLER, Player.RED));
-    units.put(new Position(3,2), new UnitIns(GameConstants.LEGION, Player.BLUE));
+      units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
+      units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
+      units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
   }
 
   public Tile getTileAt(Position p ) { return tiles.get(p); }
@@ -66,7 +69,8 @@ public class GameImpl implements Game {
   public Player getPlayerInTurn() { return playerInTurn; }
   public Player getWinner() { return winner; }
   public int getAge() { return age; }
-  public boolean moveUnit( Position from, Position to )
+
+  public boolean moveUnit(Position from, Position to )
   {
     if(getUnitAt(from) == null)
     {
@@ -81,23 +85,17 @@ public class GameImpl implements Game {
 
     Unit unitToMove = getUnitAt(from);
 
-      if(getUnitAt(to) != null)
-      {
-          if(getUnitAt(to).getOwner() != playerInTurn)
-          {
-              units.remove(from);
-              units.remove(to); //Attacker always wins
-              units.put(to, unitToMove);
-              return true;
-          }
-          else
-              return false;
-      }
+    if(getUnitAt(to) != null){
+        if(getUnitAt(from).getOwner() == getUnitAt(to).getOwner()){
+            return false;
+        }
+    }
 
     units.remove(from);
     units.put(to, unitToMove);
     return true;
   }
+
   public void endOfTurn()
   {
     age += ageIncrease;
@@ -110,7 +108,7 @@ public class GameImpl implements Game {
       {
         if(theBetterCity.getProcessPercentage() >= 100)
         {
-          units.put(position, new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
+          units.put(getFirstAvailableCitySpawn(position), new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
         }
       }
       theBetterCity.onEndTurn();
@@ -121,6 +119,36 @@ public class GameImpl implements Game {
       winner = Player.RED;
     }
   }
+
+  public Position getFirstAvailableCitySpawn(Position pos)
+  {
+      if(getCityAt(pos) == null) // No city at provided position
+      {
+          return null;
+      }
+      List<Position> arrayPos = new ArrayList<>();
+      arrayPos.add(pos);
+      arrayPos.add(new Position(pos.getRow()+1, pos.getColumn()));
+      arrayPos.add(new Position(pos.getRow()+1, pos.getColumn()+1));
+      arrayPos.add(new Position(pos.getRow(), pos.getColumn()+1));
+      arrayPos.add(new Position(pos.getRow()-1, pos.getColumn()+1));
+      arrayPos.add(new Position(pos.getRow()-1, pos.getColumn()));
+      arrayPos.add(new Position(pos.getRow()-1, pos.getColumn()-1));
+      arrayPos.add(new Position(pos.getRow(), pos.getColumn()-1));
+      arrayPos.add(new Position(pos.getRow()+1, pos.getColumn()-1));
+      // I'm so sorry for the eye burn
+      for (Position thePos : arrayPos)
+      {
+         arrayPos.removeIf(e -> getUnitAt(thePos) != null);
+      }
+
+      if(arrayPos.isEmpty())
+      {
+          return null;
+      }
+      return arrayPos.get(0);
+  }
+
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) { throw new UnsupportedOperationException();}

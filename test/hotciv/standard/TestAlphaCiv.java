@@ -77,32 +77,6 @@ public class TestAlphaCiv {
 
   }
 
-  /** REMOVE ME. Not a test of HotCiv, just an example of what
-      matchers the hamcrest library has... */
-  @Test
-  public void shouldDefinetelyBeRemoved() {
-    // Matching null and not null values
-    // 'is' require an exact match
-    String s = null;
-    assertThat(s, is(nullValue()));
-    s = "Ok";
-    assertThat(s, is(notNullValue()));
-    assertThat(s, is("Ok"));
-
-    // If you only validate substrings, use containsString
-    assertThat("This is a dummy test", containsString("dummy"));
-
-    // Match contents of Lists
-    List<String> l = new ArrayList<String>();
-    l.add("Bimse");
-    l.add("Bumse");
-    // Note - ordering is ignored when matching using hasItems
-    assertThat(l, hasItems(new String[] {"Bumse","Bimse"}));
-
-    // Matchers may be combined, like is-not
-    assertThat(l.get(0), is(not("Bumse")));
-  }
-
   @Test
   public void shouldStartInYear4000BC()
   {
@@ -147,9 +121,6 @@ public class TestAlphaCiv {
         assertThat(game, is(notNullValue()));
         assertThat(game.units, is(notNullValue()));
 
-        assertThat(game.moveUnit(new Position(5,8), new Position(5,9)), is(false));
-
-
         game.units.put(new Position(1,1), new UnitIns(GameConstants.ARCHER, Player.RED));
         game.endOfTurn();
         assertThat(game.moveUnit(new Position(1,1), new Position(1,2)), is(false));
@@ -161,28 +132,31 @@ public class TestAlphaCiv {
     }
 
     @Test
-    public void shouldHaveRedStartingWithArcherAndSettler(){
+    public void ShouldReturnFalseWhenTryingToMoveAUnitThatsNotThere()
+    {
+        assertThat(game, is(notNullValue()));
+        assertThat(game.units, is(notNullValue()));
+
+        assertThat(game.moveUnit(new Position(5,8), new Position(5,9)), is(false));
+    }
+
+    @Test
+    public void ShouldHaveStartingUnitsForRedAndBlue()
+    {
         assertThat(game.getUnitAt(new Position(2, 0)).getTypeString(), is(GameConstants.ARCHER));
-        assertThat(game.getUnitAt(new Position(4,3)).getTypeString(), is(GameConstants.SETTLER));
-    }
-
-    @Test
-    public void shouldHaveBlueStartingWithLegion(){
-        //game.getWorld().put(new Position(3,2), new WorldEntityWrapper(null, new UnitIns(GameConstants.LEGION, Player.RED), null));
+        assertThat(game.getUnitAt(new Position(2, 0)).getOwner(), is(Player.RED));
+        assertThat(game.getUnitAt(new Position(4, 3)).getTypeString(), is(GameConstants.SETTLER));
+        assertThat(game.getUnitAt(new Position(4, 3)).getOwner(), is(Player.RED));
         assertThat(game.getUnitAt(new Position(3, 2)).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(new Position(3, 2)).getOwner(), is(Player.BLUE));
     }
 
     @Test
-    public void shouldHaveCityProducingSixRessourcesPerRound(){
+    public void shouldHaveCityProducingSixResourcesPerRound(){
         game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
         city.onEndTurn();
         assertThat(city.getResources(), is(6));
-    }
-
-    @Test
-    public void shouldHaveStartingCities(){
-
     }
 
     @Test
@@ -191,20 +165,14 @@ public class TestAlphaCiv {
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
         city.onEndTurn();
         assertThat(city.setProduction(GameConstants.LEGION), is(false));
-        city.onEndTurn();
-        city.onEndTurn();
-        city.onEndTurn();
-        city.onEndTurn();
-        city.onEndTurn();
-        city.onEndTurn();
-        city.onEndTurn();
-        city.onEndTurn();
-        city.onEndTurn();
+        for(int i = 0; i < 9; i++)
+        {
+            city.onEndTurn();
+        }
 
         assertThat(city.setProduction(GameConstants.LEGION), is(true));
         assertThat(city.setProduction(GameConstants.ARCHER), is(true));
         assertThat(city.setProduction(GameConstants.SETTLER), is(true));
-        assertThat(city.getResources(), is(5));
         assertThat(city.setProduction(GameConstants.LEGION), is(false));
     }
 
@@ -257,19 +225,42 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldAllowUnitsToAttack(){
-        game.units.put(new Position(10,2), new UnitIns(GameConstants.ARCHER, Player.RED, 1));
-        game.units.put(new Position(10,3), new UnitIns(GameConstants.LEGION, Player.BLUE, 1));
-        game.moveUnit(new Position(10,2), new Position(10, 3));
-        assertThat(game.getUnitAt(new Position(10, 3)).getTypeString(), is(GameConstants.ARCHER));
+        game.units.put(new Position(10, 2), new UnitIns(GameConstants.ARCHER, Player.RED));
+        game.units.put(new Position(10, 3), new UnitIns(GameConstants.LEGION, Player.BLUE));
+        game.moveUnit(new Position(10,2), new Position(10,3));
+        assertThat(game.getUnitAt(new Position(10,3)).getTypeString(), is(GameConstants.ARCHER));
         assertThat(game.getUnitAt(new Position(10,3)).getOwner(), is(Player.RED));
     }
 
     @Test
-    public void shouldNotAllowToMoveOwnUnitOntopOfYourSelf()
-    {
-        game.units.put(new Position(10,2), new UnitIns(GameConstants.ARCHER, Player.RED, 1));
-        game.units.put(new Position(10,3), new UnitIns(GameConstants.LEGION, Player.RED, 1));
-        assertThat(game.moveUnit(new Position(10,2), new Position(10, 3)), is(false));
+    public void shouldNotAllowUnitFromSameTeamToAttack(){
+        game.units.put(new Position(10, 2), new UnitIns(GameConstants.ARCHER, Player.RED));
+        game.units.put(new Position(10, 3), new UnitIns(GameConstants.LEGION, Player.RED));
+        game.moveUnit(new Position(10, 2), new Position(10, 3));
+        assertThat(game.getUnitAt(new Position(10,3)).getTypeString(), is(GameConstants.LEGION));
+        assertThat(game.getUnitAt(new Position(10,2)).getTypeString(), is(GameConstants.ARCHER));
     }
+
+    @Test
+    public void shouldSpawnUnitsCorrectly() throws InterruptedException
+    {
+        game.cities.put(new Position(5,5), new CityIns(Player.RED));
+        CityIns castedCity = (CityIns) game.getCityAt(new Position(5,5));
+
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+        game.endOfTurn();
+
+
+        castedCity.setProduction(GameConstants.ARCHER);
+        game.endOfTurn();
+        castedCity.setProduction(GameConstants.ARCHER);
+        game.endOfTurn();
+
+        assertThat(game.getUnitAt(new Position(5,5)).toString(), is(GameConstants.ARCHER));
+      //  assertThat(game.getUnitAt(new Position(6,6)).toString(), is(GameConstants.ARCHER));
+    }
+
 
 }

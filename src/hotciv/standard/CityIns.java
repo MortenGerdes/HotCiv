@@ -3,6 +3,9 @@ package hotciv.standard;
 import hotciv.framework.City;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
+import hotciv.framework.Position;
+
+import java.util.ArrayList;
 
 /**
  * Created by morten on 9/2/17.
@@ -16,7 +19,8 @@ public class CityIns implements City
     private String production;
     private String workForceFocus;
 
-    public CityIns(Player owner) {
+    public CityIns(Player owner)
+    {
         this.owner = owner;
     }
 
