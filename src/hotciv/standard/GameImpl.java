@@ -98,7 +98,6 @@ public class GameImpl implements Game {
   public void endOfTurn()
   {
     age += ageIncrease;
-    playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED; // Refactored version of turn handling
 
     for(Position position: cities.keySet())
     {
