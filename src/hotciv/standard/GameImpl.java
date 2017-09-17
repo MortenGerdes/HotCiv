@@ -98,6 +98,9 @@ public class GameImpl implements Game {
     return true;
   }
 
+    /**
+     * This is a method that handles every activity upon end turn.
+     */
   public void endOfTurn()
   {
     age += ageIncrease;
