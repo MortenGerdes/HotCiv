@@ -36,13 +36,12 @@ import java.util.Objects;
 public class GameImpl implements Game {
   private int age = -4000; //Initial starting age.
   private int ageIncrease = 100; // The amount of years every round will increase with.
-  private Player playerInTurn = Player.RED; //First to start
   private Player winner = null;
+  private Player playerInTurn = Player.RED;
 
-  //Public for testing purposes
-  public HashMap<Position, Unit> units = new HashMap<>();
-  public HashMap<Position, City> cities = new HashMap<>();
-  public HashMap<Position, Tile> tiles = new HashMap<>();
+  private HashMap<Position, Unit> units = new HashMap<>();
+  private HashMap<Position, City> cities = new HashMap<>();
+  private HashMap<Position, Tile> tiles = new HashMap<>();
 
 
   /**
@@ -76,7 +75,7 @@ public class GameImpl implements Game {
       // No Unit on position "from"
       return false;
     }
-    if(getUnitAt(from).getOwner() != playerInTurn)
+    if(getUnitAt(from).getOwner() != getPlayerInTurn())
     {
       // Not this player's turn
       return false;
@@ -98,6 +97,7 @@ public class GameImpl implements Game {
   public void endOfTurn()
   {
     age += ageIncrease;
+    playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
 
     for(Position position: cities.keySet())
     {
@@ -150,5 +150,25 @@ public class GameImpl implements Game {
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) { throw new UnsupportedOperationException();}
+
+    public HashMap<Position, Unit> getUnits()
+    {
+        return units;
+    }
+
+    public HashMap<Position, City> getCities()
+    {
+        return cities;
+    }
+
+    public HashMap<Position, Tile> getTiles()
+    {
+        return tiles;
+    }
+
+    public void addCity(Position pos, City theCity)
+    {
+        cities.put(pos, theCity);
+    }
 
 }

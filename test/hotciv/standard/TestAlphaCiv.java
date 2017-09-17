@@ -45,14 +45,18 @@ public class TestAlphaCiv {
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
+  @Test
+  public void shouldBeRedAsStartingPlayer()
+  {
+      assertThat(game.getPlayerInTurn(), is(Player.RED));
+  }
 
   @Test
-  public void shouldBeRedTurnAfterBlue()
+  public void shouldBeBluesTurnAfterRed()
   {
-    assertThat(game, is(notNullValue()));
-    game.endOfTurn(); //End red turn
-    game.endOfTurn(); //End blue turn
-    assertThat(game.getPlayerInTurn(), is(Player.RED));
+      assertThat(game.getPlayerInTurn(), is(Player.RED));
+      game.endOfTurn();
+      assertThat(game.getPlayerInTurn(), is(Player.BLUE));
   }
 
   @Test
@@ -121,7 +125,7 @@ public class TestAlphaCiv {
     public void ShouldReturnFalseWhenTryingToMoveAUnitThatsNotThere()
     {
         assertThat(game, is(notNullValue()));
-        assertThat(game.units, is(notNullValue()));
+        assertThat(game.getUnits(), is(notNullValue()));
 
         assertThat(game.moveUnit(new Position(5,8), new Position(5,9)), is(false));
     }
@@ -139,7 +143,7 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldHaveCityProducingSixResourcesPerRound(){
-        game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
+        game.getCities().put(new Position(5,6), new CityIns(Player.BLUE));
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
         city.onEndTurn();
         assertThat(city.getResources(), is(6));
@@ -147,7 +151,7 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldProduceUnitWhenEnoughRessources(){
-        game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
+        game.getCities().put(new Position(5,6), new CityIns(Player.BLUE));
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
         city.onEndTurn();
         assertThat(city.setProduction(GameConstants.LEGION), is(false));
@@ -164,13 +168,13 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldCreateUnitWithCorrectMoveCount(){
-        game.units.put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED,3));
+        game.getUnits().put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED,3));
         assertThat(game.getUnitAt(new Position(5,5)).getMoveCount(), is(3));
     }
 
     @Test
     public void shouldCreateUnitWithAttackAndDefence(){
-        game.units.put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED,3, 3, 2));
+        game.getUnits().put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED,3, 3, 2));
         assertThat(game.getUnitAt(new Position(5,5)).getAttackingStrength(), is(2));
         assertThat(game.getUnitAt(new Position(5,5)).getDefensiveStrength(), is(3));
     }
@@ -182,7 +186,7 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldBeCorrectInfoAboutCity(){
-        game.cities.put(new Position(5,6), new CityIns(Player.BLUE));
+        game.getCities().put(new Position(5,6), new CityIns(Player.BLUE));
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
 
         assertThat(game.getCityAt(new Position(5,6)).getOwner(), is(Player.BLUE));
@@ -194,7 +198,7 @@ public class TestAlphaCiv {
     @Test
     public void shouldCreateAUnitWhenSetToProduce()
     {
-        game.cities.put(new Position(5,6), new CityIns(Player.RED));
+        game.getCities().put(new Position(5,6), new CityIns(Player.RED));
         CityIns city = (CityIns) game.getCityAt(new Position(5,6));
 
         assertThat(game.getCityAt(new Position(5,6)), is(notNullValue()));
@@ -204,15 +208,15 @@ public class TestAlphaCiv {
 
         assertThat(city.setProduction(GameConstants.ARCHER), is(true)); // Nu er resources 2
         game.endOfTurn(); // Tilføjer 6 til resources: 6 + 2 = 8
-        assertThat(game.units.get(new Position(5,6)).getTypeString(), is(GameConstants.ARCHER));
-        assertThat(game.units.get(new Position(5,6)).getOwner(), is(Player.RED));
+        assertThat(game.getUnits().get(new Position(5,6)).getTypeString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnits().get(new Position(5,6)).getOwner(), is(Player.RED));
         assertThat(city.getResources(), is(8)); // Checker om resources er 8
     }
 
     @Test
     public void shouldAllowUnitsToAttack(){
-        game.units.put(new Position(10, 2), new UnitIns(GameConstants.ARCHER, Player.RED));
-        game.units.put(new Position(10, 3), new UnitIns(GameConstants.LEGION, Player.BLUE));
+        game.getUnits().put(new Position(10, 2), new UnitIns(GameConstants.ARCHER, Player.RED));
+        game.getUnits().put(new Position(10, 3), new UnitIns(GameConstants.LEGION, Player.BLUE));
         game.moveUnit(new Position(10,2), new Position(10,3));
         assertThat(game.getUnitAt(new Position(10,3)).getTypeString(), is(GameConstants.ARCHER));
         assertThat(game.getUnitAt(new Position(10,3)).getOwner(), is(Player.RED));
@@ -220,8 +224,8 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldNotAllowUnitFromSameTeamToAttack(){
-        game.units.put(new Position(10, 2), new UnitIns(GameConstants.ARCHER, Player.RED));
-        game.units.put(new Position(10, 3), new UnitIns(GameConstants.LEGION, Player.RED));
+        game.getUnits().put(new Position(10, 2), new UnitIns(GameConstants.ARCHER, Player.RED));
+        game.getUnits().put(new Position(10, 3), new UnitIns(GameConstants.LEGION, Player.RED));
         game.moveUnit(new Position(10, 2), new Position(10, 3));
         assertThat(game.getUnitAt(new Position(10,3)).getTypeString(), is(GameConstants.LEGION));
         assertThat(game.getUnitAt(new Position(10,2)).getTypeString(), is(GameConstants.ARCHER));
