@@ -102,24 +102,22 @@ public class TestAlphaCiv {
         assertThat(game.getAge(), is(-3000));
         assertThat(game.getWinner(), is(Player.RED));
     }
-    
-/* todo
+
     @Test
     public void shouldMoveAUnitToAnotherPosition()
     {
         assertThat(game, is(notNullValue()));
-        assertThat(game.units, is(notNullValue()));
+        assertThat(game.getUnits(), is(notNullValue()));
 
-        game.units.put(new Position(1,1), new UnitIns(GameConstants.ARCHER, Player.RED));
+        game.getUnits().put(new Position(1, 1), new UnitIns(GameConstants.ARCHER, Player.RED));
         game.endOfTurn();
-        assertThat(game.moveUnit(new Position(1,1), new Position(1,2)), is(false));
+        assertThat(game.moveUnit(new Position(1, 1), new Position(1, 2)), is(false));
         game.endOfTurn();
-        assertThat(game.getUnitAt(new Position(1,1)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(1, 1)), is(notNullValue()));
         game.moveUnit(new Position(1, 1), new Position(1, 2));
-        assertThat(game.getUnitAt(new Position(1,2)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(1, 2)), is(notNullValue()));
         assertThat(game.getUnitAt(new Position(1, 2)).getTypeString(), is(GameConstants.ARCHER));
     }
-    */
 
     @Test
     public void ShouldReturnFalseWhenTryingToMoveAUnitThatsNotThere()
