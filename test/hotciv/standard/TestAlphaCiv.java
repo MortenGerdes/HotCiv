@@ -177,7 +177,7 @@ public class TestAlphaCiv {
     }
 
     @Test
-    public void shouldCreateUnitWithMoveCount(){
+    public void shouldCreateUnitWithCorrectMoveCount(){
         game.units.put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED,3));
         assertThat(game.getUnitAt(new Position(5,5)).getMoveCount(), is(3));
     }
@@ -190,7 +190,7 @@ public class TestAlphaCiv {
     }
 
     @Test
-    public void shouldBePlainTile() {
+    public void shouldBePlainTileAtPosition00() {
         assertThat(game.getTileAt(new Position(0,0)).getTypeString(), is(GameConstants.PLAINS));
     }
 
