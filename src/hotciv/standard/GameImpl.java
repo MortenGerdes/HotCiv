@@ -30,6 +30,7 @@ import java.util.HashMap;
    limitations under the License.
  This is a change
  This an important hotfix for release so the customer wont yell at us.
+ This is an even more imporant hotfix.
 */
 
 public class GameImpl implements Game {
