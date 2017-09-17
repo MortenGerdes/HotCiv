@@ -1,6 +1,4 @@
-[ok] 	    Skift tur fra rød til blå til rød.
 [ok] 	    Kun en unit per tile.
-[ok]        Lav unit classes (?)
 [ok]	    Unit må ikke have nogen UnitAction.
 [ok]		Cities må ikke gro i populazation size.
 [ok]		Cities skal lave 6 resources per runde.
@@ -13,6 +11,7 @@
 [ok]        Units skal kunne angribe hinanden.
 [ok]        Units må ikke kunne angribe units fra samme team.
 [ok]        Cities kan spawne units on end turn.
+[ok] 	    Skift tur fra rød til blå til rød.
 
 []		    Red starter med en archer og settler.
 []		    Blue starter med en legion.
