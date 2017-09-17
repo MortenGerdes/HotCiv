@@ -2,10 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
 /** Skeleton implementation of HotCiv.
 
@@ -31,6 +28,7 @@ import java.util.Objects;
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+ This is a change
 */
 
 public class GameImpl implements Game {
@@ -109,7 +107,8 @@ public class GameImpl implements Game {
       {
         if(theBetterCity.getProcessPercentage() >= 100)
         {
-          units.put(getFirstAvailableCitySpawn(position), new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
+            //Todo add spawn around city.
+            units.put(position, new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
         }
       }
       theBetterCity.onEndTurn();
@@ -121,39 +120,12 @@ public class GameImpl implements Game {
     }
   }
 
-  public Position getFirstAvailableCitySpawn(Position pos)
-  {
-      if(getCityAt(pos) == null) // No city at provided position
-      {
-          return null;
-      }
-      List<Position> arrayPos = new ArrayList<>();
-      arrayPos.add(pos);
-      arrayPos.add(new Position(pos.getRow()+1, pos.getColumn()));
-      arrayPos.add(new Position(pos.getRow()+1, pos.getColumn()+1));
-      arrayPos.add(new Position(pos.getRow(), pos.getColumn()+1));
-      arrayPos.add(new Position(pos.getRow()-1, pos.getColumn()+1));
-      arrayPos.add(new Position(pos.getRow()-1, pos.getColumn()));
-      arrayPos.add(new Position(pos.getRow()-1, pos.getColumn()-1));
-      arrayPos.add(new Position(pos.getRow(), pos.getColumn()-1));
-      arrayPos.add(new Position(pos.getRow()+1, pos.getColumn()-1));
-      // I'm so sorry for the eye burn
-      for (Position thePos : arrayPos)
-      {
-         arrayPos.removeIf(e -> getUnitAt(thePos) != null);
-      }
-
-      if(arrayPos.isEmpty())
-      {
-          return null;
-      }
-      return arrayPos.get(0);
-  }
-
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) { throw new UnsupportedOperationException();}
 
+
+    // Getters for testing purposes
     public HashMap<Position, Unit> getUnits()
     {
         return units;
@@ -168,10 +140,4 @@ public class GameImpl implements Game {
     {
         return tiles;
     }
-
-    public void addCity(Position pos, City theCity)
-    {
-        cities.put(pos, theCity);
-    }
-
 }
