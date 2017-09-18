@@ -15,36 +15,35 @@ public class BetaCivAgeingStrategy implements AgeingStrategy
         if(currentAge < -100){
             return currentAge + 100;
         }
-
-        if (currentAge == -200) {
+        else if (currentAge == -200) {
             return -100;
         }
 
-        if(currentAge == -100){
+        else if(currentAge == -100){
             return -1;
         }
 
-        if(currentAge == -1){
+        else if(currentAge == -1){
             return 1;
         }
 
-        if(currentAge == 1){
+        else if(currentAge == 1){
             return 50;
         }
 
-        if(currentAge >= 50){
+        else if(currentAge >= 50 && currentAge < 1750){
             return currentAge + 50;
         }
 
-        if(currentAge >= 1750 && currentAge <= 1900){
+        else if(currentAge >= 1750 && currentAge <= 1900){
             return currentAge + 25;
         }
 
-        if(currentAge >= 1900 && currentAge >= 1970){
+        else if(currentAge >= 1900 && currentAge >= 1970){
             return currentAge + 5;
         }
 
-        if(currentAge >= 1900){
+        else if(currentAge >= 1900){
             return currentAge + 1;
         }
 
