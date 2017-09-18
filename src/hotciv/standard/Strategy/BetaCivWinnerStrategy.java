@@ -1,6 +1,8 @@
 package hotciv.standard.Strategy;
 
 import hotciv.framework.Player;
+import hotciv.framework.Position;
+import hotciv.standard.CityIns;
 import hotciv.standard.GameImpl;
 
 /**
@@ -11,6 +13,25 @@ public class BetaCivWinnerStrategy implements WinnerStrategy
     @Override
     public Player determineWinner(GameImpl game)
     {
-        return null;
+        Player sameOwner = null;
+        boolean hasWinner = true;
+
+        for(Position position : game.getCities().keySet()){
+            CityIns city = (CityIns)game.getCities().get(position);
+
+            if(sameOwner == null){
+                sameOwner = city.getOwner();
+            }
+            else if(sameOwner != city.getOwner()){
+                hasWinner = false;
+            }
+        }
+
+        if(hasWinner == true){
+            return sameOwner;
+        }
+        else{
+            return null;
+        }
     }
 }
