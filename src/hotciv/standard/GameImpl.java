@@ -135,7 +135,12 @@ public class GameImpl implements Game {
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) { uas.performAction(this, (UnitIns) getUnitAt(p), p);}
+  public void performUnitActionAt( Position p )
+  {
+    if(getUnitAt(p).getOwner() != playerInTurn) return;
+
+    uas.performAction(this, (UnitIns) getUnitAt(p), p);
+  }
 
   private Position getFirstAvailbleSpawnAroundCity(Position position)
   {
