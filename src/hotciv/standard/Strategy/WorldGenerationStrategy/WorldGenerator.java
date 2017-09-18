@@ -6,7 +6,6 @@ import hotciv.framework.Tile;
 import hotciv.standard.TileIns;
 
 import java.util.HashMap;
-import java.util.IllegalFormatException;
 
 /**
  * Created by morte_000 on 18-09-2017.
