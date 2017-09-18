@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import java.security.acl.Owner;
 import java.util.HashMap;
 
 /** Skeleton implementation of HotCiv.
@@ -38,6 +39,7 @@ public class GameImpl implements Game {
   private int ageIncrease = 100; // The amount of years every round will increase with.
   private Player winner = null;
   private Player playerInTurn = Player.RED;
+  private boolean hasWinner = false;
 
   private HashMap<Position, Unit> units = new HashMap<>();
   private HashMap<Position, City> cities = new HashMap<>();
@@ -93,18 +95,32 @@ public class GameImpl implements Game {
     units.put(to, unitToMove);
     return true;
   }
-
     /**
      * This is a method that handles every activity upon end turn.
      */
   public void endOfTurn()
   {
+
+      Player sameOwner = null;
+      boolean hasWinner = true;
+
     age += ageIncrease;
     playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
+
 
     for(Position position: cities.keySet())
     {
       CityIns theBetterCity = (CityIns)cities.get(position);
+
+      if(sameOwner == null){
+          sameOwner = theBetterCity.getOwner();
+      }
+      else if (sameOwner != theBetterCity.getOwner())
+      {
+          hasWinner = false;
+      }
+
+
       if(theBetterCity.getProduction() != null && !theBetterCity.getProduction().isEmpty())
       {
         if(theBetterCity.getProcessPercentage() >= 100)
@@ -114,7 +130,14 @@ public class GameImpl implements Game {
         }
       }
       theBetterCity.onEndTurn();
+
+
+      if(hasWinner == true){
+          winner = sameOwner;
+      }
+
     }
+
 
     if(age == -3000)
     {
