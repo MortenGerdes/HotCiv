@@ -8,15 +8,8 @@ import hotciv.standard.GameImpl;
  */
 public class BetaCivWinnerStrategy implements WinnerStrategy
 {
-    private GameImpl game;
-
-    public BetaCivWinnerStrategy(GameImpl game)
-    {
-        this.game = game;
-    }
-
     @Override
-    public Player determineWinner()
+    public Player determineWinner(GameImpl game)
     {
         return null;
     }
