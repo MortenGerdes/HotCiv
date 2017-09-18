@@ -1,4 +1,4 @@
-package hotciv.standard.Strategy;
+package hotciv.standard.Strategy.WinningStrategy;
 
 import hotciv.framework.Player;
 import hotciv.standard.GameImpl;

@@ -1,7 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import hotciv.standard.Strategy.WinnerStrategy;
+import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 
 import java.util.HashMap;
 
