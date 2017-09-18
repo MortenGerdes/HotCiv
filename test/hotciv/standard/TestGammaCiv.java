@@ -56,9 +56,23 @@ public class TestGammaCiv {
 
     @Test
     public void shouldFortifyArcher(){
+
         game.getUnits().put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED));
+        assertThat(game.getPlayerInTurn(), is(game.getUnitAt(new Position(5,5)).getOwner()));
         game.performUnitActionAt(new Position(5,5));
         assertThat(game.getUnitAt(new Position(5,5)).getDefensiveStrength(), is(game.getUnitAt(new Position(5,5)).getDefensiveStrength()*2));
         assertThat(game.getUnitAt(new Position(5, 5)).getMoveCount(), is(0));
+    }
+
+    @Test
+    public void shouldFortifyArcherBack(){
+
+        game.getUnits().put(new Position(7,5), new UnitIns(GameConstants.ARCHER, Player.RED));
+        game.performUnitActionAt(new Position(7,5));
+        assertThat(game.getUnitAt(new Position(7,5)).getDefensiveStrength(), is(game.getUnitAt(new Position(5,5)).getDefensiveStrength()*2));
+      /*  assertThat(game.getUnitAt(new Position(7, 5)).getMoveCount(), is(0));
+        game.performUnitActionAt(new Position(7,5));
+        assertThat(game.getUnitAt(new Position(7, 5)).getMoveCount(), is(1));
+        assertThat(game.getUnitAt(new Position(7,5)).getDefensiveStrength(), is(3));*/
     }
 }
