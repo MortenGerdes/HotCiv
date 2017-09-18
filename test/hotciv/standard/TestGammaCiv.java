@@ -59,5 +59,6 @@ public class TestGammaCiv {
         game.getUnits().put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED));
         game.performUnitActionAt(new Position(5,5));
         assertThat(game.getUnitAt(new Position(5,5)).getDefensiveStrength(), is(game.getUnitAt(new Position(5,5)).getDefensiveStrength()*2));
+        assertThat(game.getUnitAt(new Position(5, 5)).getMoveCount(), is(0));
     }
 }
