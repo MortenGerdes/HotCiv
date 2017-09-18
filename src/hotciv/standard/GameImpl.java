@@ -126,7 +126,7 @@ public class GameImpl implements Game {
         if(theBetterCity.getProcessPercentage() >= 100)
         {
             //Todo add spawn around city.
-            units.put(position, new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
+            units.put(getFirstAvailbleSpawnAroundCity(position), new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
         }
       }
       theBetterCity.onEndTurn();
@@ -148,6 +148,47 @@ public class GameImpl implements Game {
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
   public void performUnitActionAt( Position p ) { throw new UnsupportedOperationException();}
+
+  private Position getFirstAvailbleSpawnAroundCity(Position position)
+  {
+    if(getUnitAt(position) == null)
+    {
+      return position;
+    }
+    else if(getUnitAt(new Position(position.getRow(), position.getColumn()+1)) == null)
+    {
+      return new Position(position.getRow(), position.getColumn()+1);
+    }
+    else if(getUnitAt(new Position(position.getRow()+1, position.getColumn()+1)) == null)
+    {
+      return new Position(position.getRow()+1, position.getColumn()+1);
+    }
+    else if(getUnitAt(new Position(position.getRow()+1, position.getColumn())) == null)
+    {
+      return new Position(position.getRow()+1, position.getColumn());
+    }
+    else if(getUnitAt(new Position(position.getRow()+1, position.getColumn()-1)) == null)
+    {
+      return new Position(position.getRow()+1, position.getColumn()-1);
+    }
+    else if(getUnitAt(new Position(position.getRow(), position.getColumn()-1)) == null)
+    {
+      return new Position(position.getRow(), position.getColumn() - 1);
+    }
+    else if(getUnitAt(new Position(position.getRow()-1, position.getColumn()-1)) == null)
+    {
+      return new Position(position.getRow()-1, position.getColumn()-1);
+    }
+    else if(getUnitAt(new Position(position.getRow()-1, position.getColumn())) == null)
+    {
+      return new Position(position.getRow()-1, position.getColumn());
+    }
+    else if(getUnitAt(new Position(position.getRow()-1, position.getColumn()+1)) == null)
+    {
+      return new Position(position.getRow()-1, position.getColumn()+1);
+    }
+    return null;
+  }
 
 
     // Getters for testing purposes
