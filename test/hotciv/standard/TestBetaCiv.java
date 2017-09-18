@@ -59,5 +59,13 @@ public class TestBetaCiv {
         assertThat(game.getWinner(), is(Player.RED));
     }
 
+    @Test
+    public void shouldBe100YearsPerRoundBetween4000BCAnd100BC(){
+        assertThat(game.getAge(), is(-4000));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(-3900));
+
+    }
+
 
 }
