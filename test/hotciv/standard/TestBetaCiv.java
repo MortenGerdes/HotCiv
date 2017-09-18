@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.Strategy.AgeingStrategy.BetaCivAgeingStrategy;
 import hotciv.standard.Strategy.WinningStrategy.BetaCivWinnerStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -42,7 +43,7 @@ public class TestBetaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new BetaCivWinnerStrategy());
+        game = new GameImpl(new BetaCivAgeingStrategy(), new BetaCivWinnerStrategy());
     }
 
     @Test
@@ -64,7 +65,66 @@ public class TestBetaCiv {
         assertThat(game.getAge(), is(-4000));
         game.endOfTurn();
         assertThat(game.getAge(), is(-3900));
+    }
 
+    @Test
+    public void shouldAgeCorrectlyNearAge0()
+    {
+        game.setAge(-100);
+        assertThat(game.getAge(), is(-100));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(-1));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(1));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(50));
+    }
+
+    @Test
+    public void shouldPass50YearsBetweenYear50To1750()
+    {
+        game.setAge(50);
+        assertThat(game.getAge(), is(50));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(100));
+        for(int i = 0; i < 10; i++)
+        {
+            game.endOfTurn();
+        }
+        assertThat(game.getAge(), is(600));
+    }
+
+    @Test
+    public void shouldPass25YearsBetweenYear1750To1900()
+    {
+        game.setAge(1750);
+        assertThat(game.getAge(), is(1750));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(1775));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(1800));
+    }
+
+    @Test
+    public void shouldPass5YearsBetweenYear1900To1970()
+    {
+        game.setAge(1900);
+        assertThat(game.getAge(), is(1900));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(1905));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(1910));
+    }
+
+    @Test
+    public void shouldPass1YearAfterYear1970()
+    {
+        game.setAge(1970);
+        assertThat(game.getAge(), is(1970));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(1971));
+        game.endOfTurn();
+        assertThat(game.getAge(), is(1972));
     }
 
 

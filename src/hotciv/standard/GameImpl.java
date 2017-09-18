@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 
 import java.util.HashMap;
@@ -36,20 +37,19 @@ import java.util.HashMap;
 
 public class GameImpl implements Game {
   private int age = -4000; //Initial starting age.
-  private int ageIncrease = 100; // The amount of years every round will increase with.
   private Player winner = null;
   private Player playerInTurn = Player.RED;
+  private AgeingStrategy as;
   private WinnerStrategy ws;
 
   private HashMap<Position, Unit> units = new HashMap<>();
   private HashMap<Position, City> cities = new HashMap<>();
   private HashMap<Position, Tile> tiles = new HashMap<>();
 
-
   /**
    * Game initial code goes here.
    */
-  public GameImpl(WinnerStrategy winnerStrategy)
+  public GameImpl(AgeingStrategy ageingStrategy, WinnerStrategy winnerStrategy)
   {
     for(int i = 0; i < 16; i++) // Populate the world
     {
@@ -66,6 +66,7 @@ public class GameImpl implements Game {
 
       //Assigning strategy classes;
       ws = winnerStrategy;
+      as = ageingStrategy;
   }
 
   public Tile getTileAt(Position p ) { return tiles.get(p); }
@@ -106,7 +107,7 @@ public class GameImpl implements Game {
      */
   public void endOfTurn()
   {
-    age += ageIncrease;
+    age = as.increaseAge(age);
     playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
 
     for(Position position: cities.keySet())
@@ -189,5 +190,11 @@ public class GameImpl implements Game {
     public HashMap<Position, Tile> getTiles()
     {
         return tiles;
+    }
+
+    // Setters for testing purposes
+    public void setAge(int age)
+    {
+        this.age = age;
     }
 }

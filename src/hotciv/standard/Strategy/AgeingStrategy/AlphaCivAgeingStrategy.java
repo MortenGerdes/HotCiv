@@ -8,6 +8,6 @@ public class AlphaCivAgeingStrategy implements AgeingStrategy
     @Override
     public int increaseAge(int currentAge)
     {
-        return 0;
+        return currentAge+100;
     }
 }
