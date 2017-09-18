@@ -4,6 +4,8 @@ import hotciv.framework.*;
 import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
+import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
+import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerator;
 
 import java.util.HashMap;
 
@@ -51,15 +53,10 @@ public class GameImpl implements Game {
   /**
    * Game initial code goes here.
    */
-  public GameImpl(AgeingStrategy ageingStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
+  public GameImpl(AgeingStrategy ageingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
   {
-    for(int i = 0; i < 16; i++) // Populate the world
-    {
-      for(int j = 0; j < 16; j++)
-      {
-        tiles.put(new Position(i,j), new TileIns(GameConstants.PLAINS));
-      }
-    }
+      tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
+
       cities.put(new Position(1, 1), new CityIns(Player.RED));
       cities.put(new Position(4, 1), new CityIns(Player.RED));
       units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
@@ -129,9 +126,6 @@ public class GameImpl implements Game {
 
     winner = ws.determineWinner(this);
   }
-
-
-
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
