@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
+import hotciv.standard.Strategy.UnitPerformStrategy.GammaCivUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -43,17 +44,20 @@ public class TestGammaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new AlphaCivAgeingStrategy(), new AlphaCivWinnerStrategy());
+        game = new GameImpl(new AlphaCivAgeingStrategy(), new AlphaCivWinnerStrategy(), new GammaCivUnitActionStrategy());
     }
 
     @Test
     public void shouldMakeSettlerBuildACity(){
-        game.getUnits().put(new Position(1,1), new UnitIns(GameConstants.SETTLER, 1, 1, Player.RED))
+        game.getUnits().put(new Position(1,1), new UnitIns(GameConstants.SETTLER, Player.RED, 1, 1,1));
+        game.performUnitActionAt(new Position(1,1));
+        assertThat(game.getCityAt(new Position(1,1)), is(notNullValue()));
     }
 
     @Test
     public void shouldFortifyArcher(){
-
+        game.getUnits().put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED));
+        game.performUnitActionAt(new Position(5,5));
+        assertThat(game.getUnitAt(new Position(5,5)).getDefensiveStrength(), is(game.getUnitAt(new Position(5,5)).getDefensiveStrength()*2));
     }
-
 }

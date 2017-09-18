@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import hotciv.standard.Strategy.AgeingStrategy.BetaCivAgeingStrategy;
+import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.BetaCivWinnerStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -43,7 +44,7 @@ public class TestBetaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new BetaCivAgeingStrategy(), new BetaCivWinnerStrategy());
+        game = new GameImpl(new BetaCivAgeingStrategy(), new BetaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
     }
 
     @Test

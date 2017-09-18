@@ -13,7 +13,6 @@ public class UnitIns implements Unit
     private int moveCount;
     private int defensiveStrength;
     private int attackingStrength;
-    private boolean fortified = false;
 
     public UnitIns(String type, Player owner)
     {
@@ -71,16 +70,5 @@ public class UnitIns implements Unit
 
     public void setDefensiveStrength(int def){
         defensiveStrength = def;
-    }
-
-    public void fortify(){
-        if(!fortified){
-            fortified = true;
-        }
-        else fortified = false;
-    }
-
-    public boolean isFortified(){
-        return fortified;
     }
 }

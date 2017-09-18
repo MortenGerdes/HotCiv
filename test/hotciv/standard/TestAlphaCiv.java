@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
+import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
@@ -41,7 +42,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgeingStrategy(), new AlphaCivWinnerStrategy());
+    game = new GameImpl(new AlphaCivAgeingStrategy(), new AlphaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.

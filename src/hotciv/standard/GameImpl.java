@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
+import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 
 import java.util.HashMap;
@@ -41,6 +42,7 @@ public class GameImpl implements Game {
   private Player playerInTurn = Player.RED;
   private AgeingStrategy as;
   private WinnerStrategy ws;
+  private UnitActionStrategy uas;
 
   private HashMap<Position, Unit> units = new HashMap<>();
   private HashMap<Position, City> cities = new HashMap<>();
@@ -49,7 +51,7 @@ public class GameImpl implements Game {
   /**
    * Game initial code goes here.
    */
-  public GameImpl(AgeingStrategy ageingStrategy, WinnerStrategy winnerStrategy)
+  public GameImpl(AgeingStrategy ageingStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
   {
     for(int i = 0; i < 16; i++) // Populate the world
     {
@@ -67,6 +69,7 @@ public class GameImpl implements Game {
       //Assigning strategy classes;
       ws = winnerStrategy;
       as = ageingStrategy;
+      uas = unitActionStrategy;
   }
 
   public Tile getTileAt(Position p ) { return tiles.get(p); }
@@ -132,60 +135,7 @@ public class GameImpl implements Game {
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-
-  public void performUnitActionAt(Position p) {
-
-
-      //If the unit belongs to RED and it is RED's turn
-      if(getUnitAt(p).getOwner().equals(Player.RED) && playerInTurn.equals(Player.RED)){
-          //if the unit is a Settler
-          if(getUnitAt(p).equals(GameConstants.SETTLER)){
-              units.remove(p);
-              cities.put(p, new CityIns(Player.RED));
-          }
-          //if the unit is an Archer
-          if(getUnitAt(p).equals(GameConstants.ARCHER)){
-              UnitIns fortifiedArcher = (UnitIns) getUnitAt(p);
-              if(!fortifiedArcher.isFortified()){
-                  fortifiedArcher.fortify();
-                  fortifiedArcher.setDefensiveStrength(2*fortifiedArcher.getDefensiveStrength());
-                  fortifiedArcher.setMoveCount(0);
-                  units.remove(p);
-                  units.put(p, fortifiedArcher);
-              }
-              else{
-                  fortifiedArcher.fortify();
-                  fortifiedArcher.setDefensiveStrength(getUnitAt(p).getDefensiveStrength()/2);
-                  fortifiedArcher.setMoveCount(1);
-                  units.remove(p);
-                  units.put(p, fortifiedArcher);
-              }
-
-          }
-      }
-      else if(getUnitAt(p).getOwner().equals(Player.BLUE) && playerInTurn.equals(Player.BLUE)){
-          if(getUnitAt(p).equals(GameConstants.SETTLER)){
-              units.remove(p);
-              cities.put(p, new CityIns(Player.BLUE));
-          }
-
-      }
-      else if(getUnitAt(p).getOwner().equals(Player.GREEN) && playerInTurn.equals(Player.GREEN)){
-          if(getUnitAt(p).equals(GameConstants.SETTLER)){
-              units.remove(p);
-              cities.put(p, new CityIns(Player.GREEN));
-          }
-
-      }
-      else if(getUnitAt(p).getOwner().equals(Player.YELLOW) && playerInTurn.equals(Player.YELLOW)){
-          if(getUnitAt(p).equals(GameConstants.SETTLER)){
-              units.remove(p);
-              cities.put(p, new CityIns(Player.YELLOW));
-          }
-      }
-
-
-  }
+  public void performUnitActionAt( Position p ) { uas.performAction(this, (UnitIns) getUnitAt(p), p);}
 
   private Position getFirstAvailbleSpawnAroundCity(Position position)
   {
