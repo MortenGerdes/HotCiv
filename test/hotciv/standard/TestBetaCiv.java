@@ -48,5 +48,13 @@ public class TestBetaCiv {
         game = new GameImpl(new BetaCivWinnerStrategy());
     }
 
-    
+    @Test
+    public void shouldBeBluesTurnAfterRed()
+    {
+        assertThat(game.getPlayerInTurn(), is(Player.RED));
+        game.endOfTurn();
+        assertThat(game.getPlayerInTurn(), is(Player.BLUE));
+    }
+
+
 }
