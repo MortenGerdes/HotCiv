@@ -59,7 +59,7 @@ public class GameImpl implements Game {
       }
     }
       cities.put(new Position(1, 1), new CityIns(Player.RED));
-      cities.put(new Position(4, 1), new CityIns(Player.BLUE));
+      cities.put(new Position(4, 1), new CityIns(Player.RED));
       units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
       units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
       units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));

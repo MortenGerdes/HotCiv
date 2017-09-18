@@ -27,7 +27,7 @@ public class BetaCivWinnerStrategy implements WinnerStrategy
             }
         }
 
-        if(hasWinner == true){
+        if(hasWinner){
             return sameOwner;
         }
         else{

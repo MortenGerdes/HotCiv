@@ -56,5 +56,11 @@ public class TestBetaCiv {
         assertThat(game.getPlayerInTurn(), is(Player.BLUE));
     }
 
+    @Test
+    public void shouldDeclareRedAsWinnerWhenHavingAllCities(){
+        game.endOfTurn();
+        assertThat(game.getWinner(), is(Player.RED));
+    }
+
 
 }

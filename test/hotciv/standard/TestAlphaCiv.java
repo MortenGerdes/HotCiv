@@ -281,4 +281,5 @@ public class TestAlphaCiv {
         assertThat(game.getUnitAt(new Position(4,6)).getTypeString(), is(GameConstants.ARCHER)); // Last Tile around city
     }
 
+
 }
