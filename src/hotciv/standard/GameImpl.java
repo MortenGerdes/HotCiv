@@ -1,6 +1,7 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.standard.Strategy.WinnerStrategy;
 
 import java.util.HashMap;
 
@@ -38,6 +39,7 @@ public class GameImpl implements Game {
   private int ageIncrease = 100; // The amount of years every round will increase with.
   private Player winner = null;
   private Player playerInTurn = Player.RED;
+  private WinnerStrategy ws;
 
   private HashMap<Position, Unit> units = new HashMap<>();
   private HashMap<Position, City> cities = new HashMap<>();
@@ -47,7 +49,7 @@ public class GameImpl implements Game {
   /**
    * Game initial code goes here.
    */
-  public GameImpl()
+  public GameImpl(WinnerStrategy winnerStrategy)
   {
     for(int i = 0; i < 16; i++) // Populate the world
     {
@@ -59,6 +61,9 @@ public class GameImpl implements Game {
       units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
       units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
       units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
+
+      //Assigning strategy classes;
+      ws = winnerStrategy;
   }
 
   public Tile getTileAt(Position p ) { return tiles.get(p); }
@@ -116,10 +121,7 @@ public class GameImpl implements Game {
       theBetterCity.onEndTurn();
     }
 
-    if(age == -3000)
-    {
-      winner = Player.RED;
-    }
+    winner = ws.determineWinner(this);
   }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}

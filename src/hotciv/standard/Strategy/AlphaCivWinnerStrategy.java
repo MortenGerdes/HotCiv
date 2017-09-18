@@ -8,16 +8,13 @@ import hotciv.standard.GameImpl;
  */
 public class AlphaCivWinnerStrategy implements WinnerStrategy
 {
-    private GameImpl game;
-
-    public AlphaCivWinnerStrategy(GameImpl game)
-    {
-        this.game = game;
-    }
-
     @Override
-    public Player determineWinner()
+    public Player determineWinner(GameImpl game)
     {
-        return null;
+        if(game.getAge() >= -3000)
+        {
+            return Player.RED;
+        }
+        return Player.RED;
     }
 }
