@@ -132,7 +132,60 @@ public class GameImpl implements Game {
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) { throw new UnsupportedOperationException();}
+
+  public void performUnitActionAt(Position p) {
+
+
+      //If the unit belongs to RED and it is RED's turn
+      if(getUnitAt(p).getOwner().equals(Player.RED) && playerInTurn.equals(Player.RED)){
+          //if the unit is a Settler
+          if(getUnitAt(p).equals(GameConstants.SETTLER)){
+              units.remove(p);
+              cities.put(p, new CityIns(Player.RED));
+          }
+          //if the unit is an Archer
+          if(getUnitAt(p).equals(GameConstants.ARCHER)){
+              UnitIns fortifiedArcher = (UnitIns) getUnitAt(p);
+              if(!fortifiedArcher.isFortified()){
+                  fortifiedArcher.fortify();
+                  fortifiedArcher.setDefensiveStrength(2*fortifiedArcher.getDefensiveStrength());
+                  fortifiedArcher.setMoveCount(0);
+                  units.remove(p);
+                  units.put(p, fortifiedArcher);
+              }
+              else{
+                  fortifiedArcher.fortify();
+                  fortifiedArcher.setDefensiveStrength(getUnitAt(p).getDefensiveStrength()/2);
+                  fortifiedArcher.setMoveCount(1);
+                  units.remove(p);
+                  units.put(p, fortifiedArcher);
+              }
+
+          }
+      }
+      else if(getUnitAt(p).getOwner().equals(Player.BLUE) && playerInTurn.equals(Player.BLUE)){
+          if(getUnitAt(p).equals(GameConstants.SETTLER)){
+              units.remove(p);
+              cities.put(p, new CityIns(Player.BLUE));
+          }
+
+      }
+      else if(getUnitAt(p).getOwner().equals(Player.GREEN) && playerInTurn.equals(Player.GREEN)){
+          if(getUnitAt(p).equals(GameConstants.SETTLER)){
+              units.remove(p);
+              cities.put(p, new CityIns(Player.GREEN));
+          }
+
+      }
+      else if(getUnitAt(p).getOwner().equals(Player.YELLOW) && playerInTurn.equals(Player.YELLOW)){
+          if(getUnitAt(p).equals(GameConstants.SETTLER)){
+              units.remove(p);
+              cities.put(p, new CityIns(Player.YELLOW));
+          }
+      }
+
+
+  }
 
   private Position getFirstAvailbleSpawnAroundCity(Position position)
   {
