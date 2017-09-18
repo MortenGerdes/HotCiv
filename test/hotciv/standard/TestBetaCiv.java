@@ -5,6 +5,7 @@ import hotciv.framework.*;
 import hotciv.standard.Strategy.AgeingStrategy.BetaCivAgeingStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.BetaCivWinnerStrategy;
+import hotciv.standard.Strategy.WorldGenerationStrategy.GammaCivWorldAndBelowStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -44,7 +45,7 @@ public class TestBetaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new BetaCivAgeingStrategy(), new BetaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
+        game = new GameImpl(new BetaCivAgeingStrategy(), new GammaCivWorldAndBelowStrategy(), new BetaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
     }
 
     @Test

@@ -5,6 +5,7 @@ import hotciv.framework.*;
 import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
+import hotciv.standard.Strategy.WorldGenerationStrategy.GammaCivWorldAndBelowStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -42,7 +43,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl(new AlphaCivAgeingStrategy(), new AlphaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
+    game = new GameImpl(new AlphaCivAgeingStrategy(), new GammaCivWorldAndBelowStrategy(), new AlphaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
@@ -58,13 +59,6 @@ public class TestAlphaCiv {
       assertThat(game.getPlayerInTurn(), is(Player.RED));
       game.endOfTurn();
       assertThat(game.getPlayerInTurn(), is(Player.BLUE));
-  }
-
-  @Test
-  public void shouldOnlyBeOneUnitPerTile()
-  {
-    assertThat(game, is(notNullValue()));
-
   }
 
   @Test
@@ -180,6 +174,7 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldBePlainTileAtPosition00() {
+        System.out.println(game.getTileAt(new Position(0, 0)).getTypeString());
         assertThat(game.getTileAt(new Position(0,0)).getTypeString(), is(GameConstants.PLAINS));
     }
 
