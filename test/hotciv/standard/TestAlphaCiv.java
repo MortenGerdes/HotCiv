@@ -2,11 +2,11 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
+import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-
-import java.util.*;
 
 /** Skeleton class for AlphaCiv test cases
 
@@ -41,7 +41,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl();
+    game = new GameImpl(new AlphaCivAgeingStrategy(), new AlphaCivWinnerStrategy());
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
@@ -279,5 +279,6 @@ public class TestAlphaCiv {
         }
         assertThat(game.getUnitAt(new Position(4,6)).getTypeString(), is(GameConstants.ARCHER)); // Last Tile around city
     }
+
 
 }
