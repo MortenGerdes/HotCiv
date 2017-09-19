@@ -63,4 +63,12 @@ public class UnitIns implements Unit
     {
         return attackingStrength;
     }
+
+    public void setMoveCount(int moveCount){
+        this.moveCount = moveCount;
+    }
+
+    public void setDefensiveStrength(int def){
+        defensiveStrength = def;
+    }
 }

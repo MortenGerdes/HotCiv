@@ -2,11 +2,13 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
+import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
+import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
+import hotciv.standard.Strategy.WorldGenerationStrategy.GammaCivWorldAndBelowStrategy;
 import org.junit.*;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-
-import java.util.*;
 
 /** Skeleton class for AlphaCiv test cases
 
@@ -41,7 +43,7 @@ public class TestAlphaCiv {
   /** Fixture for alphaciv testing. */
   @Before
   public void setUp() {
-    game = new GameImpl();
+    game = new GameImpl(new AlphaCivAgeingStrategy(), new GammaCivWorldAndBelowStrategy(), new AlphaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
   }
 
   // FRS p. 455 states that 'Red is the first player to take a turn'.
@@ -57,13 +59,6 @@ public class TestAlphaCiv {
       assertThat(game.getPlayerInTurn(), is(Player.RED));
       game.endOfTurn();
       assertThat(game.getPlayerInTurn(), is(Player.BLUE));
-  }
-
-  @Test
-  public void shouldOnlyBeOneUnitPerTile()
-  {
-    assertThat(game, is(notNullValue()));
-
   }
 
   @Test
@@ -120,7 +115,7 @@ public class TestAlphaCiv {
     }
 
     @Test
-    public void ShouldReturnFalseWhenTryingToMoveAUnitThatsNotThere()
+    public void shouldReturnFalseWhenTryingToMoveAUnitThatsNotThere()
     {
         assertThat(game, is(notNullValue()));
         assertThat(game.getUnits(), is(notNullValue()));
@@ -129,7 +124,7 @@ public class TestAlphaCiv {
     }
 
     @Test
-    public void ShouldHaveStartingUnitsForRedAndBlue()
+    public void shouldHaveStartingUnitsForRedAndBlue()
     {
         assertThat(game.getUnitAt(new Position(2, 0)).getTypeString(), is(GameConstants.ARCHER));
         assertThat(game.getUnitAt(new Position(2, 0)).getOwner(), is(Player.RED));
@@ -179,6 +174,7 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldBePlainTileAtPosition00() {
+        System.out.println(game.getTileAt(new Position(0, 0)).getTypeString());
         assertThat(game.getTileAt(new Position(0,0)).getTypeString(), is(GameConstants.PLAINS));
     }
 
@@ -228,28 +224,57 @@ public class TestAlphaCiv {
         assertThat(game.getUnitAt(new Position(10,3)).getTypeString(), is(GameConstants.LEGION));
         assertThat(game.getUnitAt(new Position(10,2)).getTypeString(), is(GameConstants.ARCHER));
     }
-/*
     @Test
-    public void shouldSpawnUnitsCorrectly() throws InterruptedException
+    public void shouldSpawnUnitOnCityPosition() throws InterruptedException
     {
-        game.cities.put(new Position(5,5), new CityIns(Player.RED));
+        game.getCities().put(new Position(5,5), new CityIns(Player.RED));
         CityIns castedCity = (CityIns) game.getCityAt(new Position(5,5));
 
-        game.endOfTurn();
-        game.endOfTurn();
-        game.endOfTurn();
-        game.endOfTurn();
+        for(int i = 0; i < 2; i++)
+        {
+            castedCity.onEndTurn();
+        }
+            castedCity.setProduction(GameConstants.ARCHER);
+            game.endOfTurn();
 
-
-        castedCity.setProduction(GameConstants.ARCHER);
-        game.endOfTurn();
-        castedCity.setProduction(GameConstants.ARCHER);
-        game.endOfTurn();
-
-        assertThat(game.getUnitAt(new Position(5,5)).toString(), is(GameConstants.ARCHER));
-      //  assertThat(game.getUnitAt(new Position(6,6)).toString(), is(GameConstants.ARCHER));
+        assertThat(game.getUnitAt(new Position(5,5)).getTypeString(), is(GameConstants.ARCHER)); // On City
     }
-    */
+
+    @Test
+    public void shouldSpawnUnityUnderCity()
+    {
+        game.getCities().put(new Position(5, 5), new CityIns(Player.RED));
+        CityIns castedCity = (CityIns) game.getCityAt(new Position(5, 5));
+
+        for (int i = 0; i < 2; i++)
+        {
+            castedCity.onEndTurn();
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            castedCity.setProduction(GameConstants.ARCHER);
+            game.endOfTurn();
+        }
+        assertThat(game.getUnitAt(new Position(5, 4)).getTypeString(), is(GameConstants.ARCHER)); // Below City
+    }
+
+    @Test
+    public void shouldSpawnUnitAtLastTile()
+    {
+        game.getCities().put(new Position(5, 5), new CityIns(Player.RED));
+        CityIns castedCity = (CityIns) game.getCityAt(new Position(5, 5));
+
+        for (int i = 0; i < 2; i++)
+        {
+            castedCity.onEndTurn();
+        }
+        for (int i = 0; i < 9; i++)
+        {
+            castedCity.setProduction(GameConstants.ARCHER);
+            game.endOfTurn();
+        }
+        assertThat(game.getUnitAt(new Position(4,6)).getTypeString(), is(GameConstants.ARCHER)); // Last Tile around city
+    }
 
 
 }
