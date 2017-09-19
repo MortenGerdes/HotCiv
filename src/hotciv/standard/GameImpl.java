@@ -9,173 +9,202 @@ import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerator;
 
 import java.util.HashMap;
 
-/** Skeleton implementation of HotCiv.
+/**
+ * Skeleton implementation of HotCiv.
+ * <p>
+ * This source code is from the book
+ * "Flexible, Reliable Software:
+ * Using Patterns and Agile Development"
+ * published 2010 by CRC Press.
+ * Author:
+ * Henrik B Christensen
+ * Department of Computer Science
+ * Aarhus University
+ * <p>
+ * Please visit http://www.baerbak.com/ for further information.
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * This is a change
+ * This an important hotfix for release so the customer wont yell at us.
+ * This is an even more imporant hotfix.
+ */
 
-   This source code is from the book
-     "Flexible, Reliable Software:
-       Using Patterns and Agile Development"
-     published 2010 by CRC Press.
-   Author:
-     Henrik B Christensen
-     Department of Computer Science
-     Aarhus University
+public class GameImpl implements Game
+{
+    private int age = -4000; //Initial starting age.
+    private Player winner = null;
+    private Player playerInTurn = Player.RED;
+    private AgeingStrategy ageingStrategy;
+    private WorldGenerationStrategy worldGenerationStrategy;
+    private WinnerStrategy winnerStrategy;
+    private UnitActionStrategy unitActionStrategy;
 
-   Please visit http://www.baerbak.com/ for further information.
+    private HashMap<Position, Unit> units = new HashMap<>();
+    private HashMap<Position, City> cities = new HashMap<>();
+    private HashMap<Position, Tile> tiles = new HashMap<>();
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
- This is a change
- This an important hotfix for release so the customer wont yell at us.
- This is an even more imporant hotfix.
-*/
-
-public class GameImpl implements Game {
-  private int age = -4000; //Initial starting age.
-  private Player winner = null;
-  private Player playerInTurn = Player.RED;
-  private AgeingStrategy as;
-  private WinnerStrategy ws;
-  private UnitActionStrategy uas;
-
-  private HashMap<Position, Unit> units = new HashMap<>();
-  private HashMap<Position, City> cities = new HashMap<>();
-  private HashMap<Position, Tile> tiles = new HashMap<>();
-
-  /**
-   * Game initial code goes here.
-   */
-  public GameImpl(AgeingStrategy ageingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
-  {
-      tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
-
-      cities.put(new Position(1, 1), new CityIns(Player.RED));
-      cities.put(new Position(4, 1), new CityIns(Player.RED));
-      units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
-      units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
-      units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
-
-      //Assigning strategy classes;
-      ws = winnerStrategy;
-      as = ageingStrategy;
-      uas = unitActionStrategy;
-  }
-
-  public Tile getTileAt(Position p ) { return tiles.get(p); }
-  public Unit getUnitAt( Position p ) { return units.get(p); }
-  public City getCityAt( Position p ) { return cities.get(p); }
-  public Player getPlayerInTurn() { return playerInTurn; }
-  public Player getWinner() { return winner; }
-  public int getAge() { return age; }
-
-  public boolean moveUnit(Position from, Position to )
-  {
-    if(getUnitAt(from) == null)
+    /**
+     * Game initial code goes here.
+     */
+    public GameImpl(AgeingStrategy ageingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
     {
-      // No Unit on position "from"
-      return false;
-    }
-    if(getUnitAt(from).getOwner() != getPlayerInTurn())
-    {
-      // Not this player's turn
-      return false;
+        //Assigning strategy classes;
+
+        this.ageingStrategy = ageingStrategy;
+        this.worldGenerationStrategy = worldGenerationStrategy;
+        this.winnerStrategy = winnerStrategy;
+        this.unitActionStrategy = unitActionStrategy;
+
+        tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
+        cities.put(new Position(1, 1), new CityIns(Player.RED));
+        cities.put(new Position(4, 1), new CityIns(Player.RED));
+        units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
+        units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
+        units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
+
+
     }
 
-    Unit unitToMove = getUnitAt(from);
+    public Tile getTileAt(Position p)
+    {
+        return tiles.get(p);
+    }
 
-    if(getUnitAt(to) != null){
-        if(getUnitAt(from).getOwner() == getUnitAt(to).getOwner()){
+    public Unit getUnitAt(Position p)
+    {
+        return units.get(p);
+    }
+
+    public City getCityAt(Position p)
+    {
+        return cities.get(p);
+    }
+
+    public Player getPlayerInTurn()
+    {
+        return playerInTurn;
+    }
+
+    public Player getWinner()
+    {
+        return winner;
+    }
+
+    public int getAge()
+    {
+        return age;
+    }
+
+    public boolean moveUnit(Position from, Position to)
+    {
+        if (getUnitAt(from) == null)
+        {
+            // No Unit on position "from"
             return false;
         }
-    }
+        if (getUnitAt(from).getOwner() != getPlayerInTurn())
+        {
+            // Not this player's turn
+            return false;
+        }
 
-    units.remove(from);
-    units.put(to, unitToMove);
-    return true;
-  }
+        Unit unitToMove = getUnitAt(from);
+
+        if (getUnitAt(to) != null)
+        {
+            if (getUnitAt(from).getOwner() == getUnitAt(to).getOwner())
+            {
+                return false;
+            }
+        }
+
+        units.remove(from);
+        units.put(to, unitToMove);
+        return true;
+    }
 
     /**
      * This is a method that handles every activity upon end turn.
      */
-  public void endOfTurn()
-  {
-    age = as.increaseAge(age);
-    playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
-
-    for(Position position: cities.keySet())
+    public void endOfTurn()
     {
-      CityIns theBetterCity = (CityIns)cities.get(position);
-      if(theBetterCity.getProduction() != null && !theBetterCity.getProduction().isEmpty())
-      {
-        if(theBetterCity.getProcessPercentage() >= 100)
+        age = ageingStrategy.increaseAge(age);
+        playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
+
+        for (Position position : cities.keySet())
         {
-            //Todo add spawn around city.
-            units.put(getFirstAvailbleSpawnAroundCity(position), new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
+            CityIns theBetterCity = (CityIns) cities.get(position);
+            if (theBetterCity.getProduction() != null && !theBetterCity.getProduction().isEmpty())
+            {
+                if (theBetterCity.getProcessPercentage() >= 100)
+                {
+                    //Todo add spawn around city.
+                    units.put(getFirstAvailbleSpawnAroundCity(position), new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
+                }
+            }
+            theBetterCity.onEndTurn();
         }
-      }
-      theBetterCity.onEndTurn();
+
+        winner = winnerStrategy.determineWinner(this);
     }
 
-    winner = ws.determineWinner(this);
-  }
+    public void changeWorkForceFocusInCityAt(Position p, String balance)
+    {
+    }
 
-  public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
-  public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p )
-  {
-    if(getUnitAt(p).getOwner() != playerInTurn) return;
+    public void changeProductionInCityAt(Position p, String unitType)
+    {
+    }
 
-    uas.performAction(this, (UnitIns) getUnitAt(p), p);
-  }
+    public void performUnitActionAt(Position p)
+    {
+        if (getUnitAt(p).getOwner() != playerInTurn) return;
 
-  private Position getFirstAvailbleSpawnAroundCity(Position position)
-  {
-    if(getUnitAt(position) == null)
-    {
-      return position;
+        unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
     }
-    else if(getUnitAt(new Position(position.getRow(), position.getColumn()+1)) == null)
+
+    private Position getFirstAvailbleSpawnAroundCity(Position position)
     {
-      return new Position(position.getRow(), position.getColumn()+1);
+        if (getUnitAt(position) == null)
+        {
+            return position;
+        } else if (getUnitAt(new Position(position.getRow(), position.getColumn() + 1)) == null)
+        {
+            return new Position(position.getRow(), position.getColumn() + 1);
+        } else if (getUnitAt(new Position(position.getRow() + 1, position.getColumn() + 1)) == null)
+        {
+            return new Position(position.getRow() + 1, position.getColumn() + 1);
+        } else if (getUnitAt(new Position(position.getRow() + 1, position.getColumn())) == null)
+        {
+            return new Position(position.getRow() + 1, position.getColumn());
+        } else if (getUnitAt(new Position(position.getRow() + 1, position.getColumn() - 1)) == null)
+        {
+            return new Position(position.getRow() + 1, position.getColumn() - 1);
+        } else if (getUnitAt(new Position(position.getRow(), position.getColumn() - 1)) == null)
+        {
+            return new Position(position.getRow(), position.getColumn() - 1);
+        } else if (getUnitAt(new Position(position.getRow() - 1, position.getColumn() - 1)) == null)
+        {
+            return new Position(position.getRow() - 1, position.getColumn() - 1);
+        } else if (getUnitAt(new Position(position.getRow() - 1, position.getColumn())) == null)
+        {
+            return new Position(position.getRow() - 1, position.getColumn());
+        } else if (getUnitAt(new Position(position.getRow() - 1, position.getColumn() + 1)) == null)
+        {
+            return new Position(position.getRow() - 1, position.getColumn() + 1);
+        }
+        return null;
     }
-    else if(getUnitAt(new Position(position.getRow()+1, position.getColumn()+1)) == null)
-    {
-      return new Position(position.getRow()+1, position.getColumn()+1);
-    }
-    else if(getUnitAt(new Position(position.getRow()+1, position.getColumn())) == null)
-    {
-      return new Position(position.getRow()+1, position.getColumn());
-    }
-    else if(getUnitAt(new Position(position.getRow()+1, position.getColumn()-1)) == null)
-    {
-      return new Position(position.getRow()+1, position.getColumn()-1);
-    }
-    else if(getUnitAt(new Position(position.getRow(), position.getColumn()-1)) == null)
-    {
-      return new Position(position.getRow(), position.getColumn() - 1);
-    }
-    else if(getUnitAt(new Position(position.getRow()-1, position.getColumn()-1)) == null)
-    {
-      return new Position(position.getRow()-1, position.getColumn()-1);
-    }
-    else if(getUnitAt(new Position(position.getRow()-1, position.getColumn())) == null)
-    {
-      return new Position(position.getRow()-1, position.getColumn());
-    }
-    else if(getUnitAt(new Position(position.getRow()-1, position.getColumn()+1)) == null)
-    {
-      return new Position(position.getRow()-1, position.getColumn()+1);
-    }
-    return null;
-  }
 
 
     // Getters for testing purposes
