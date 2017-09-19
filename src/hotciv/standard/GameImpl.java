@@ -1,6 +1,11 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
+import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
+import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
+import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
+import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerator;
 
 import java.util.HashMap;
 
@@ -33,33 +38,41 @@ import java.util.HashMap;
  This is an even more imporant hotfix.
 */
 
-public class GameImpl implements Game {
-  private int age = -4000; //Initial starting age.
-  private int ageIncrease = 100; // The amount of years every round will increase with.
-  private Player winner = null;
-  private Player playerInTurn = Player.RED;
+public class GameImpl implements Game
+{
+    private int age = -4000; //Initial starting age.
+    private Player winner = null;
+    private Player playerInTurn = Player.RED;
+    private AgeingStrategy ageingStrategy;
+    private WorldGenerationStrategy worldGenerationStrategy;
+    private WinnerStrategy winnerStrategy;
+    private UnitActionStrategy unitActionStrategy;
 
-  private HashMap<Position, Unit> units = new HashMap<>();
-  private HashMap<Position, City> cities = new HashMap<>();
-  private HashMap<Position, Tile> tiles = new HashMap<>();
+    private HashMap<Position, Unit> units = new HashMap<>();
+    private HashMap<Position, City> cities = new HashMap<>();
+    private HashMap<Position, Tile> tiles = new HashMap<>();
 
-
-  /**
-   * Game initial code goes here.
-   */
-  public GameImpl()
-  {
-    for(int i = 0; i < 16; i++) // Populate the world
+    /**
+     * Game initial code goes here.
+     */
+    public GameImpl(AgeingStrategy ageingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
     {
-      for(int j = 0; j < 16; j++)
-      {
-        tiles.put(new Position(i,j), new TileIns(GameConstants.PLAINS));
-      }
+        //Assigning strategy classes;
+
+        this.ageingStrategy = ageingStrategy;
+        this.worldGenerationStrategy = worldGenerationStrategy;
+        this.winnerStrategy = winnerStrategy;
+        this.unitActionStrategy = unitActionStrategy;
+
+        tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
+        cities.put(new Position(1, 1), new CityIns(Player.RED));
+        cities.put(new Position(4, 1), new CityIns(Player.RED));
+        units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
+        units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
+        units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
+
+
     }
-      units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
-      units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
-      units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
-  }
 
   public Tile getTileAt(Position p ) { return tiles.get(p); }
   public Unit getUnitAt( Position p ) { return units.get(p); }
@@ -97,10 +110,10 @@ public class GameImpl implements Game {
     /**
      * This is a method that handles every activity upon end turn.
      */
-  public void endOfTurn()
-  {
-    age += ageIncrease;
-    playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
+    public void endOfTurn()
+    {
+        age = ageingStrategy.increaseAge(age);
+        playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
 
     for(Position position: cities.keySet())
     {
@@ -110,21 +123,64 @@ public class GameImpl implements Game {
         if(theBetterCity.getProcessPercentage() >= 100)
         {
             //Todo add spawn around city.
-            units.put(position, new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
+            units.put(getFirstAvailbleSpawnAroundCity(position), new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
         }
       }
       theBetterCity.onEndTurn();
     }
 
-    if(age == -3000)
-    {
-      winner = Player.RED;
+        winner = winnerStrategy.determineWinner(this);
     }
-  }
 
   public void changeWorkForceFocusInCityAt( Position p, String balance ) {}
   public void changeProductionInCityAt( Position p, String unitType ) {}
-  public void performUnitActionAt( Position p ) { throw new UnsupportedOperationException();}
+  public void performUnitActionAt( Position p )
+  {
+    if(getUnitAt(p).getOwner() != playerInTurn) return;
+
+        unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
+    }
+
+  private Position getFirstAvailbleSpawnAroundCity(Position position)
+  {
+    if(getUnitAt(position) == null)
+    {
+      return position;
+    }
+    else if(getUnitAt(new Position(position.getRow(), position.getColumn()+1)) == null)
+    {
+      return new Position(position.getRow(), position.getColumn()+1);
+    }
+    else if(getUnitAt(new Position(position.getRow()+1, position.getColumn()+1)) == null)
+    {
+      return new Position(position.getRow()+1, position.getColumn()+1);
+    }
+    else if(getUnitAt(new Position(position.getRow()+1, position.getColumn())) == null)
+    {
+      return new Position(position.getRow()+1, position.getColumn());
+    }
+    else if(getUnitAt(new Position(position.getRow()+1, position.getColumn()-1)) == null)
+    {
+      return new Position(position.getRow()+1, position.getColumn()-1);
+    }
+    else if(getUnitAt(new Position(position.getRow(), position.getColumn()-1)) == null)
+    {
+      return new Position(position.getRow(), position.getColumn() - 1);
+    }
+    else if(getUnitAt(new Position(position.getRow()-1, position.getColumn()-1)) == null)
+    {
+      return new Position(position.getRow()-1, position.getColumn()-1);
+    }
+    else if(getUnitAt(new Position(position.getRow()-1, position.getColumn())) == null)
+    {
+      return new Position(position.getRow()-1, position.getColumn());
+    }
+    else if(getUnitAt(new Position(position.getRow()-1, position.getColumn()+1)) == null)
+    {
+      return new Position(position.getRow()-1, position.getColumn()+1);
+    }
+    return null;
+  }
 
 
     // Getters for testing purposes
@@ -141,5 +197,11 @@ public class GameImpl implements Game {
     public HashMap<Position, Tile> getTiles()
     {
         return tiles;
+    }
+
+    // Setters for testing purposes
+    public void setAge(int age)
+    {
+        this.age = age;
     }
 }
