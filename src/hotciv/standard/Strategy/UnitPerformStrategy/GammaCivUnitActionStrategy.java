@@ -23,13 +23,15 @@ public class GammaCivUnitActionStrategy implements UnitActionStrategy
 
         if(unit.getTypeString() == GameConstants.ARCHER)
         {
-            if(unit.getMoveCount() == 0)
+            if(unit.isFortified())
             {
+                unit.setFortified();
                 unit.setDefensiveStrength(unit.getDefensiveStrength()/2);
                 unit.setMoveCount(1);
             }
             else
             {
+                unit.setFortified();
                 unit.setDefensiveStrength(unit.getDefensiveStrength()*2);
                 unit.setMoveCount(0);
             }
