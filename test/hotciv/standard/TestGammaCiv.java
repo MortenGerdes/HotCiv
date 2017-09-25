@@ -38,7 +38,7 @@ import static org.hamcrest.CoreMatchers.*;
  limitations under the License.
  */
 public class TestGammaCiv {
-    private GameImpl game; //Todo change to "Game" again?
+    private GameImpl game;
 
     /**
      * Fixture for gammaciv testing.
