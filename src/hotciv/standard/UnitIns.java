@@ -1,5 +1,6 @@
 package hotciv.standard;
 
+import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Unit;
 
@@ -13,6 +14,7 @@ public class UnitIns implements Unit
     private int moveCount;
     private int defensiveStrength;
     private int attackingStrength;
+    private boolean isFortified = false;
 
     public UnitIns(String type, Player owner)
     {
@@ -49,7 +51,7 @@ public class UnitIns implements Unit
     @Override
     public int getMoveCount()
     {
-        return moveCount;
+        return isFortified ? 0 : moveCount;
     }
 
     @Override
@@ -64,11 +66,29 @@ public class UnitIns implements Unit
         return attackingStrength;
     }
 
-    public void setMoveCount(int moveCount){
+    public boolean isFortified()
+    {
+        return isFortified;
+    }
+
+    public void setMoveCount(int moveCount)
+    {
         this.moveCount = moveCount;
     }
 
-    public void setDefensiveStrength(int def){
+    public void setDefensiveStrength(int def)
+    {
         defensiveStrength = def;
     }
+
+    public void setFortified()
+    {
+        if (getTypeString() != GameConstants.ARCHER)
+        {
+            return;
+        }
+        isFortified = (isFortified == true) ? false : true;
+    }
+
+
 }

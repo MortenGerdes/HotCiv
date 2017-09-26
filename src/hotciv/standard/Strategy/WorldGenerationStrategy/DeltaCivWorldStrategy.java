@@ -8,7 +8,7 @@ public class DeltaCivWorldStrategy implements WorldGenerationStrategy
     @Override
     public String[] worldDesign()
     {
-        return new String[] {
+        return new String[]{
                 "oooppmpppppooooo",
                 "oophhppppfffppoo",
                 "opppppmpppoooppo",

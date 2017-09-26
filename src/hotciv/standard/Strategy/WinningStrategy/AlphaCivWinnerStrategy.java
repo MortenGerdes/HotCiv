@@ -11,7 +11,7 @@ public class AlphaCivWinnerStrategy implements WinnerStrategy
     @Override
     public Player determineWinner(GameImpl game)
     {
-        if(game.getAge() >= -3000)
+        if (game.getAge() >= -3000)
         {
             return Player.RED;
         }

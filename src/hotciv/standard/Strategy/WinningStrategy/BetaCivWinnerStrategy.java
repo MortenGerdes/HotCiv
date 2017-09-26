@@ -16,21 +16,24 @@ public class BetaCivWinnerStrategy implements WinnerStrategy
         Player sameOwner = null;
         boolean hasWinner = true;
 
-        for(Position position : game.getCities().keySet()){
-            CityIns city = (CityIns)game.getCities().get(position);
+        for (Position position : game.getCities().keySet())
+        {
+            CityIns city = (CityIns) game.getCities().get(position);
 
-            if(sameOwner == null){
+            if (sameOwner == null)
+            {
                 sameOwner = city.getOwner();
-            }
-            else if(sameOwner != city.getOwner()){
+            } else if (sameOwner != city.getOwner())
+            {
                 hasWinner = false;
             }
         }
 
-        if(hasWinner){
+        if (hasWinner)
+        {
             return sameOwner;
-        }
-        else{
+        } else
+        {
             return null;
         }
     }

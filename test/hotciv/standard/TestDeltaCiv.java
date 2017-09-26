@@ -18,7 +18,7 @@ import static org.junit.Assert.assertThat;
  */
 public class TestDeltaCiv
 {
-    private GameImpl game; //Todo change to "Game" again?
+    private GameImpl game;
 
     /**
      * Fixture for deltaciv testing.

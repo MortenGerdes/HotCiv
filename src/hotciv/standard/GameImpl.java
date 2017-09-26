@@ -41,8 +41,8 @@ import java.util.HashMap;
 
 public class GameImpl implements Game
 {
-    private int age = -4000; //Initial starting age.
-    private Player winner = null;
+    private int currentGameAge = -4000; //Initial starting age.
+    private Player gameWinner = null;
     private Player playerInTurn = Player.RED;
     private AgeingStrategy ageingStrategy;
     private WorldGenerationStrategy worldGenerationStrategy;
@@ -71,8 +71,6 @@ public class GameImpl implements Game
         units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
         units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
         units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
-
-
     }
 
     public Tile getTileAt(Position p)
@@ -97,12 +95,12 @@ public class GameImpl implements Game
 
     public Player getWinner()
     {
-        return winner;
+        return gameWinner;
     }
 
     public int getAge()
     {
-        return age;
+        return currentGameAge;
     }
 
     public boolean moveUnit(Position from, Position to)
@@ -119,7 +117,6 @@ public class GameImpl implements Game
         }
 
         Unit unitToMove = getUnitAt(from);
-
         if (getUnitAt(to) != null)
         {
             if (getUnitAt(from).getOwner() == getUnitAt(to).getOwner())
@@ -138,24 +135,10 @@ public class GameImpl implements Game
      */
     public void endOfTurn()
     {
-        age = ageingStrategy.increaseAge(age);
-        playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
-
-        for (Position position : cities.keySet())
-        {
-            CityIns theBetterCity = (CityIns) cities.get(position);
-            if (theBetterCity.getProduction() != null && !theBetterCity.getProduction().isEmpty())
-            {
-                if (theBetterCity.getProcessPercentage() >= 100)
-                {
-                    //Todo add spawn around city.
-                    units.put(getFirstAvailbleSpawnAroundCity(position), new UnitIns(theBetterCity.getProduction(), theBetterCity.getOwner()));
-                }
-            }
-            theBetterCity.onEndTurn();
-        }
-
-        winner = winnerStrategy.determineWinner(this);
+        increaseAge();
+        switchTurnsBetweenPlayers();
+        spawnUnitIfCityCan();
+        determineWinner();
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance)
@@ -171,6 +154,37 @@ public class GameImpl implements Game
         if (getUnitAt(p).getOwner() != playerInTurn) return;
 
         unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
+    }
+
+    private void increaseAge()
+    {
+        currentGameAge = ageingStrategy.increaseAge(currentGameAge);
+    }
+
+    private void switchTurnsBetweenPlayers()
+    {
+        playerInTurn = (playerInTurn == Player.RED) ? Player.BLUE : Player.RED;
+    }
+
+    private void spawnUnitIfCityCan()
+    {
+        for (Position position : cities.keySet())
+        {
+            CityIns castedCity = (CityIns) cities.get(position);
+            if (castedCity.getProduction() != null && !castedCity.getProduction().isEmpty())
+            { // Nested if-statements due to order of which the code should run.
+                if (castedCity.getProcessPercentage() >= 100)
+                {
+                    units.put(getFirstAvailbleSpawnAroundCity(position), new UnitIns(castedCity.getProduction(), castedCity.getOwner()));
+                }
+            }
+            castedCity.onEndTurn();
+        }
+    }
+
+    private void determineWinner()
+    {
+        gameWinner = winnerStrategy.determineWinner(this);
     }
 
     private Position getFirstAvailbleSpawnAroundCity(Position position)
@@ -206,7 +220,6 @@ public class GameImpl implements Game
         return null;
     }
 
-
     // Getters for testing purposes
     public HashMap<Position, Unit> getUnits()
     {
@@ -226,6 +239,6 @@ public class GameImpl implements Game
     // Setters for testing purposes
     public void setAge(int age)
     {
-        this.age = age;
+        this.currentGameAge = age;
     }
 }
