@@ -14,25 +14,24 @@ public class GammaCivUnitActionStrategy implements UnitActionStrategy
     @Override
     public void performAction(GameImpl game, UnitIns unit, Position pos)
     {
-        if(unit.getTypeString() == GameConstants.SETTLER)
+        if (unit.getTypeString() == GameConstants.SETTLER)
         {
             game.getCities().put(pos, new CityIns(unit.getOwner()));
             game.getUnits().remove(pos);
             return;
         }
 
-        if(unit.getTypeString() == GameConstants.ARCHER)
+        if (unit.getTypeString() == GameConstants.ARCHER)
         {
-            if(unit.isFortified())
+            if (unit.isFortified())
             {
                 unit.setFortified();
-                unit.setDefensiveStrength(unit.getDefensiveStrength()/2);
+                unit.setDefensiveStrength(unit.getDefensiveStrength() / 2);
                 unit.setMoveCount(1);
-            }
-            else
+            } else
             {
                 unit.setFortified();
-                unit.setDefensiveStrength(unit.getDefensiveStrength()*2);
+                unit.setDefensiveStrength(unit.getDefensiveStrength() * 2);
                 unit.setMoveCount(0);
             }
             return;

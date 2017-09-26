@@ -3,9 +3,6 @@ package hotciv.standard;
 import hotciv.framework.City;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
-import hotciv.framework.Position;
-
-import java.util.ArrayList;
 
 /**
  * Created by morten on 9/2/17.
@@ -66,12 +63,12 @@ public class CityIns implements City
 
     public boolean setProduction(String production)
     {
-        if(ressources >= GameConstants.PRICE_ON_UNIT.get(production)){
+        if (ressources >= GameConstants.PRICE_ON_UNIT.get(production))
+        {
             this.production = production;
             ressources -= GameConstants.PRICE_ON_UNIT.get(production);
             return true;
-        }
-        else
+        } else
             return false;
 
     }

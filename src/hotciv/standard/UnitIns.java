@@ -71,16 +71,19 @@ public class UnitIns implements Unit
         return isFortified;
     }
 
-    public void setMoveCount(int moveCount){
+    public void setMoveCount(int moveCount)
+    {
         this.moveCount = moveCount;
     }
 
-    public void setDefensiveStrength(int def){
+    public void setDefensiveStrength(int def)
+    {
         defensiveStrength = def;
     }
 
-    public void setFortified(){
-        if(getTypeString() != GameConstants.ARCHER)
+    public void setFortified()
+    {
+        if (getTypeString() != GameConstants.ARCHER)
         {
             return;
         }

@@ -71,8 +71,6 @@ public class GameImpl implements Game
         units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
         units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
         units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
-
-
     }
 
     public Tile getTileAt(Position p)
@@ -174,7 +172,7 @@ public class GameImpl implements Game
         {
             CityIns castedCity = (CityIns) cities.get(position);
             if (castedCity.getProduction() != null && !castedCity.getProduction().isEmpty())
-            {
+            { // Nested if-statements due to order of which the code should run.
                 if (castedCity.getProcessPercentage() >= 100)
                 {
                     units.put(getFirstAvailbleSpawnAroundCity(position), new UnitIns(castedCity.getProduction(), castedCity.getOwner()));
