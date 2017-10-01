@@ -106,13 +106,15 @@ public class GameImpl implements Game
     public boolean moveUnit(Position from, Position to)
     {
         boolean isSelectedUnitNull = getUnitAt(from) == null;
-        boolean isItTheRightPlayerInTurn = getUnitAt(from).getOwner() == getPlayerInTurn();
+        boolean isItTheRightPlayerInTurn;
 
         if (isSelectedUnitNull) // Is the unit null, bailout
         {
             // No Unit on position "from"
             return false;
         }
+
+        isItTheRightPlayerInTurn = getUnitAt(from).getOwner() == getPlayerInTurn();
         if (!isItTheRightPlayerInTurn) // Is it "not" the right player in turn
         {
             // Not this player's turn
