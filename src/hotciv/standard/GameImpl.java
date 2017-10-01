@@ -105,12 +105,15 @@ public class GameImpl implements Game
 
     public boolean moveUnit(Position from, Position to)
     {
-        if (getUnitAt(from) == null)
+        boolean isSelectedUnitNull = getUnitAt(from) == null;
+        boolean isItTheRightPlayerInTurn = getUnitAt(from).getOwner() == getPlayerInTurn();
+
+        if (isSelectedUnitNull) // Is the unit null, bailout
         {
             // No Unit on position "from"
             return false;
         }
-        if (getUnitAt(from).getOwner() != getPlayerInTurn())
+        if (!isItTheRightPlayerInTurn) // Is it "not" the right player in turn
         {
             // Not this player's turn
             return false;
@@ -124,9 +127,7 @@ public class GameImpl implements Game
                 return false;
             }
         }
-
-        units.remove(from);
-        units.put(to, unitToMove);
+        moveUnitObjectInMap(unitToMove, to);
         return true;
     }
 
@@ -218,6 +219,12 @@ public class GameImpl implements Game
             return new Position(position.getRow() - 1, position.getColumn() + 1);
         }
         return null;
+    }
+
+    private void moveUnitObjectInMap(Unit unitToMove, Position moveToPos)
+    {
+        units.remove(unitToMove);
+        units.put(moveToPos, unitToMove);
     }
 
     // Getters for testing purposes
