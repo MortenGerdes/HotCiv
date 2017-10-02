@@ -17,12 +17,6 @@ public class EpsilonCivWinnerStrategy implements WinnerStrategy{
                 return player;
             }
         }
-        if(game.getCurrentRound() > 20)
-        {
-            game.setWinnerStrategy(new BetaCivWinnerStrategy());
-        }
         return null;
     }
-
-
 }

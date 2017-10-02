@@ -276,8 +276,4 @@ public class GameImpl implements Game
     {
         this.currentGameAge = age;
     }
-    public void setWinnerStrategy(WinnerStrategy winnerStrategy)
-    {
-        this.winnerStrategy = winnerStrategy;
-    }
 }
