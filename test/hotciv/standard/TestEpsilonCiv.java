@@ -4,6 +4,7 @@ import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.EpsilonCivAttackingStrategy;
+import hotciv.standard.Strategy.Factory.EpsilonCivFactory;
 import hotciv.standard.Strategy.TestStubs.FixedDieRollStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.EpsilonCivWinnerStrategy;
@@ -27,7 +28,7 @@ public class TestEpsilonCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new FixedDieRollStrategy(), new AlphaCivAgeingStrategy(), new EpsilonCivAttackingStrategy(), new GammaCivWorldAndBelowStrategy(), new EpsilonCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
+        game = new GameImpl(new EpsilonCivFactory());
     }
     @Test
     public void redPlayerShouldWinAfterThreeWonAttacks(){

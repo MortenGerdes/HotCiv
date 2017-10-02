@@ -7,6 +7,7 @@ import hotciv.framework.Position;
 import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.AlphaCivAttackingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.EpsilonCivAttackingStrategy;
+import hotciv.standard.Strategy.Factory.ZetaCivFactory;
 import hotciv.standard.Strategy.TestStubs.FixedDieRollStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
@@ -35,7 +36,7 @@ public class TestZetaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new FixedDieRollStrategy(), new AlphaCivAgeingStrategy(), new AlphaCivAttackingStrategy(), new GammaCivWorldAndBelowStrategy(), new ZetaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
+        game = new GameImpl(new ZetaCivFactory());
     }
 
     @Test

@@ -4,6 +4,7 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.Position;
 import hotciv.standard.Strategy.AgeingStrategy.BetaCivAgeingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.AlphaCivAttackingStrategy;
+import hotciv.standard.Strategy.Factory.DeltaCivFactory;
 import hotciv.standard.Strategy.TestStubs.FixedDieRollStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
@@ -26,7 +27,7 @@ public class TestDeltaCiv
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new FixedDieRollStrategy(), new BetaCivAgeingStrategy(), new AlphaCivAttackingStrategy(), new DeltaCivWorldStrategy(), new AlphaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
+        game = new GameImpl(new DeltaCivFactory());
     }
 
     @Test

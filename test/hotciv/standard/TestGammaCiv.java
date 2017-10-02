@@ -4,6 +4,7 @@ import hotciv.framework.*;
 
 import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.AlphaCivAttackingStrategy;
+import hotciv.standard.Strategy.Factory.GammaCivFactory;
 import hotciv.standard.Strategy.TestStubs.FixedDieRollStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.GammaCivUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
@@ -47,7 +48,7 @@ public class TestGammaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new FixedDieRollStrategy(), new AlphaCivAgeingStrategy(), new AlphaCivAttackingStrategy(), new GammaCivWorldAndBelowStrategy(), new AlphaCivWinnerStrategy(), new GammaCivUnitActionStrategy());
+        game = new GameImpl(new GammaCivFactory());
     }
 
     @Test

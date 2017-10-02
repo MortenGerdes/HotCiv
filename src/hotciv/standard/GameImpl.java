@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.AttackingStrategy;
+import hotciv.standard.Strategy.Factory.HotcivFactory;
 import hotciv.standard.Strategy.TestStubs.DieRollStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
@@ -63,15 +64,15 @@ public class GameImpl implements Game
     /**
      * Game initial code goes here.
      */
-    public GameImpl(DieRollStrategy dieRollStrategy, AgeingStrategy ageingStrategy, AttackingStrategy attackingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
+    public GameImpl(HotcivFactory factory)
     {
         //Assigning strategy classes
-        this.dieRollStrategy = dieRollStrategy;
-        this.ageingStrategy = ageingStrategy;
-        this.attackingStrategy = attackingStrategy;
-        this.worldGenerationStrategy = worldGenerationStrategy;
-        this.winnerStrategy = winnerStrategy;
-        this.unitActionStrategy = unitActionStrategy;
+        this.dieRollStrategy = factory.produceDieRollStrategy();
+        this.ageingStrategy = factory.produceAgeingStrategy();
+        this.attackingStrategy = factory.produceAttackingStrategy();
+        this.worldGenerationStrategy = factory.produceWorldGenerationStrategy();
+        this.winnerStrategy = factory.produceWinnerStrategy();
+        this.unitActionStrategy = factory.produceUnitActionStrategy();
 
         tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
         units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
