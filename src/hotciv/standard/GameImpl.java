@@ -74,6 +74,9 @@ public class GameImpl implements Game
         units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
         units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
         units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
+
+        killCount.put(Player.RED, 0);
+        killCount.put(Player.BLUE, 0);
     }
 
     public Tile getTileAt(Position p)
