@@ -2,6 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
+import hotciv.standard.Strategy.AttackingStrategy.AttackingStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
@@ -48,6 +49,7 @@ public class GameImpl implements Game
     private WorldGenerationStrategy worldGenerationStrategy;
     private WinnerStrategy winnerStrategy;
     private UnitActionStrategy unitActionStrategy;
+    private AttackingStrategy attackingStrategy;
 
     private HashMap<Position, Unit> units = new HashMap<>();
     private HashMap<Position, City> cities = new HashMap<>();
@@ -132,6 +134,7 @@ public class GameImpl implements Game
         moveUnitObjectInMap(unitToMove, to);
         return true;
     }
+
 
     /**
      * This is a method that handles every activity upon end turn.
