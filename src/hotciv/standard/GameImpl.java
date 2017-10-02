@@ -145,6 +145,7 @@ public class GameImpl implements Game
                 return true;
             }
         }
+
         moveUnitInMap(to, unitToMove);
         return true;
     }
@@ -157,6 +158,7 @@ public class GameImpl implements Game
         increaseRound();
         increaseAge();
         switchTurnsBetweenPlayers();
+        checkIfUnitConquerCity();
         spawnUnitIfCityCan();
         determineWinner();
     }
@@ -174,6 +176,22 @@ public class GameImpl implements Game
         if (getUnitAt(p).getOwner() != playerInTurn) return;
 
         unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
+    }
+
+    private void checkIfUnitConquerCity()
+    {
+        for(Position posOfCity: getCities().keySet())
+        {
+            if(getUnitAt(posOfCity) == null)
+            {
+                continue;
+            }
+            if(getUnitAt(posOfCity).getOwner() == getCityAt(posOfCity).getOwner())
+            {
+                continue;
+            }
+            getCities().put(posOfCity, new CityIns(getUnitAt(posOfCity).getOwner()));
+        }
     }
 
     private void moveUnitInMap(Position posToMoveTo, Unit unitToMove)

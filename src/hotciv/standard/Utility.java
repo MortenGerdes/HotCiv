@@ -1,7 +1,9 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /** Collection of utility methods for speeding up
  * the implementation effort in the HotCiv Game
