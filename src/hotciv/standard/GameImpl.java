@@ -2,6 +2,9 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
+import hotciv.standard.Strategy.AttackingStrategy.AttackingStrategy;
+import hotciv.standard.Strategy.Factory.HotcivFactory;
+import hotciv.standard.Strategy.TestStubs.DieRollStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
@@ -41,36 +44,43 @@ import java.util.HashMap;
 
 public class GameImpl implements Game
 {
+    private int currentRoundNumber = 1;
     private int currentGameAge = -4000; //Initial starting age.
     private Player gameWinner = null;
     private Player playerInTurn = Player.RED;
     private AgeingStrategy ageingStrategy;
+    private AttackingStrategy attackingStrategy;
     private WorldGenerationStrategy worldGenerationStrategy;
     private WinnerStrategy winnerStrategy;
     private UnitActionStrategy unitActionStrategy;
+    private DieRollStrategy dieRollStrategy;
 
     private HashMap<Position, Unit> units = new HashMap<>();
     private HashMap<Position, City> cities = new HashMap<>();
     private HashMap<Position, Tile> tiles = new HashMap<>();
 
+    public HashMap<Player, Integer> killCount = new HashMap<>();
+
     /**
      * Game initial code goes here.
      */
-    public GameImpl(AgeingStrategy ageingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
+    public GameImpl(HotcivFactory factory)
     {
-        //Assigning strategy classes;
-
-        this.ageingStrategy = ageingStrategy;
-        this.worldGenerationStrategy = worldGenerationStrategy;
-        this.winnerStrategy = winnerStrategy;
-        this.unitActionStrategy = unitActionStrategy;
+        //Assigning strategy classes
+        this.dieRollStrategy = factory.produceDieRollStrategy();
+        this.ageingStrategy = factory.produceAgeingStrategy();
+        this.attackingStrategy = factory.produceAttackingStrategy();
+        this.worldGenerationStrategy = factory.produceWorldGenerationStrategy();
+        this.winnerStrategy = factory.produceWinnerStrategy();
+        this.unitActionStrategy = factory.produceUnitActionStrategy();
 
         tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
-        cities.put(new Position(1, 1), new CityIns(Player.RED));
-        cities.put(new Position(4, 1), new CityIns(Player.RED));
         units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
         units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
         units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
+
+        killCount.put(Player.RED, 0);
+        killCount.put(Player.BLUE, 0);
     }
 
     public Tile getTileAt(Position p)
@@ -128,8 +138,15 @@ public class GameImpl implements Game
             {
                 return false;
             }
+            else
+            {
+                // Init attack sequence and update the unit map with who won.
+                units = attackingStrategy.attackUnit(dieRollStrategy, this, (HashMap<Position, Unit>) getUnits().clone(), from, to);
+                return true;
+            }
         }
-        moveUnitObjectInMap(unitToMove, to);
+
+        moveUnitInMap(to, unitToMove);
         return true;
     }
 
@@ -138,8 +155,10 @@ public class GameImpl implements Game
      */
     public void endOfTurn()
     {
+        increaseRound();
         increaseAge();
         switchTurnsBetweenPlayers();
+        checkIfUnitConquerCity();
         spawnUnitIfCityCan();
         determineWinner();
     }
@@ -157,6 +176,33 @@ public class GameImpl implements Game
         if (getUnitAt(p).getOwner() != playerInTurn) return;
 
         unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
+    }
+
+    private void checkIfUnitConquerCity()
+    {
+        for(Position posOfCity: getCities().keySet())
+        {
+            if(getUnitAt(posOfCity) == null)
+            {
+                continue;
+            }
+            if(getUnitAt(posOfCity).getOwner() == getCityAt(posOfCity).getOwner())
+            {
+                continue;
+            }
+            getCities().put(posOfCity, new CityIns(getUnitAt(posOfCity).getOwner()));
+        }
+    }
+
+    private void moveUnitInMap(Position posToMoveTo, Unit unitToMove)
+    {
+        units.remove(unitToMove);
+        units.put(posToMoveTo, unitToMove);
+    }
+
+    private void increaseRound()
+    {
+        currentRoundNumber++;
     }
 
     private void increaseAge()
@@ -223,12 +269,6 @@ public class GameImpl implements Game
         return null;
     }
 
-    private void moveUnitObjectInMap(Unit unitToMove, Position moveToPos)
-    {
-        units.remove(unitToMove);
-        units.put(moveToPos, unitToMove);
-    }
-
     // Getters for testing purposes
     public HashMap<Position, Unit> getUnits()
     {
@@ -245,7 +285,10 @@ public class GameImpl implements Game
         return tiles;
     }
 
-    // Setters for testing purposes
+    public HashMap<Player, Integer> getKillCount(){return killCount; }
+
+    public int getCurrentRoundNumber(){return currentRoundNumber;}
+
     public void setAge(int age)
     {
         this.currentGameAge = age;

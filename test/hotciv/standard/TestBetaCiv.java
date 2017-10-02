@@ -3,6 +3,9 @@ package hotciv.standard;
 import hotciv.framework.*;
 
 import hotciv.standard.Strategy.AgeingStrategy.BetaCivAgeingStrategy;
+import hotciv.standard.Strategy.AttackingStrategy.AlphaCivAttackingStrategy;
+import hotciv.standard.Strategy.Factory.BetaCivFactory;
+import hotciv.standard.Strategy.TestStubs.FixedDieRollStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.BetaCivWinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.GammaCivWorldAndBelowStrategy;
@@ -45,7 +48,7 @@ public class TestBetaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new BetaCivAgeingStrategy(), new GammaCivWorldAndBelowStrategy(), new BetaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
+        game = new GameImpl(new BetaCivFactory());
     }
 
     @Test
@@ -58,6 +61,8 @@ public class TestBetaCiv {
 
     @Test
     public void shouldDeclareRedAsWinnerWhenHavingAllCities(){
+        game.getCities().put(new Position(1, 1), new CityIns(Player.RED));
+        game.getCities().put(new Position(4, 1), new CityIns(Player.RED));
         game.endOfTurn();
         assertThat(game.getWinner(), is(Player.RED));
     }
