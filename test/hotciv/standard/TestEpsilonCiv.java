@@ -1,4 +1,5 @@
 package hotciv.standard;
+import hotciv.framework.Game;
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
@@ -6,6 +7,7 @@ import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.EpsilonCivAttackingStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
+import hotciv.standard.Strategy.WinningStrategy.EpsilonCivWinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.GammaCivWorldAndBelowStrategy;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,9 +28,9 @@ public class TestEpsilonCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new AlphaCivAgeingStrategy(), new EpsilonCivAttackingStrategy(), new GammaCivWorldAndBelowStrategy(), new AlphaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
+        game = new GameImpl(new AlphaCivAgeingStrategy(), new EpsilonCivAttackingStrategy(), new GammaCivWorldAndBelowStrategy(), new EpsilonCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
     }
-
+/*
     @Test
     public void redPlayerShouldWinAfterThreeWonAttacks(){
         //Creates an archer for player Red
@@ -62,6 +64,13 @@ public class TestEpsilonCiv {
         assertThat(game.getUnitAt(new Position(7,0)).getOwner(), is(Player.RED));
         game.endOfTurn();
 
+        assertThat(game.getWinner(), is(Player.RED));
+    }*/
+
+    @Test
+    public void shouldHaveRedPlayerToWin(){
+        game.getKillCount().put(Player.RED, 3);
+        game.endOfTurn();
         assertThat(game.getWinner(), is(Player.RED));
     }
 }

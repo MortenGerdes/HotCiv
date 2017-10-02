@@ -1,5 +1,6 @@
 package hotciv.standard.Strategy.AttackingStrategy;
 
+import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.framework.Unit;
 
@@ -14,6 +15,7 @@ public class AlphaCivAttackingStrategy implements AttackingStrategy{
     {
         unitMap.remove(unitToMove);
         unitMap.put(posToMoveTo, unitToMove);
+
         return unitMap;
     }
 }

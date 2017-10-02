@@ -8,8 +8,20 @@ import hotciv.standard.GameImpl;
  */
 public class EpsilonCivWinnerStrategy implements WinnerStrategy{
 
+    private boolean redPlayerIsWinner;
     @Override
     public Player determineWinner(GameImpl game) {
+
+        for(Player player : game.getKillCount().keySet()){
+            if (game.getKillCount().get(player) > 2){
+                return player;
+            }
+        }
         return null;
     }
+
+    public boolean isRedPlayerWinner(){
+        return true;
+    }
+
 }

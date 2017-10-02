@@ -54,6 +54,7 @@ public class GameImpl implements Game
     private HashMap<Position, Unit> units = new HashMap<>();
     private HashMap<Position, City> cities = new HashMap<>();
     private HashMap<Position, Tile> tiles = new HashMap<>();
+    private HashMap<Player, Integer> killCount = new HashMap<>();
 
     /**
      * Game initial code goes here.
@@ -253,6 +254,8 @@ public class GameImpl implements Game
     {
         return tiles;
     }
+
+    public HashMap<Player, Integer> getKillCount(){return killCount; }
 
     // Setters for testing purposes
     public void setAge(int age)
