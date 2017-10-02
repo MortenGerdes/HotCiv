@@ -1,6 +1,6 @@
 package hotciv.standard.Strategy.AttackingStrategy;
 
-import hotciv.framework.Player;
+import hotciv.framework.Game;
 import hotciv.framework.Position;
 import hotciv.framework.Unit;
 
@@ -11,11 +11,12 @@ import java.util.HashMap;
  */
 public class AlphaCivAttackingStrategy implements AttackingStrategy{
     @Override
-    public HashMap<Position, Unit> attackUnit(HashMap<Position, Unit> unitMap, Position posToMoveTo, Unit unitToMove)
+    public HashMap<Position, Unit> attackUnit(Game game, HashMap<Position, Unit> unitHashMap, Position posToMoveFrom, Position posToMoveTo)
     {
-        unitMap.remove(unitToMove);
-        unitMap.put(posToMoveTo, unitToMove);
+        Unit unitToMove = game.getUnitAt(posToMoveFrom);
+        unitHashMap.remove(unitToMove);
+        unitHashMap.put(posToMoveTo, unitToMove);
 
-        return unitMap;
+        return unitHashMap;
     }
 }

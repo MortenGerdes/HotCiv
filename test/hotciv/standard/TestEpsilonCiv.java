@@ -73,4 +73,14 @@ public class TestEpsilonCiv {
         game.endOfTurn();
         assertThat(game.getWinner(), is(Player.RED));
     }
+
+    @Test
+    public void redUnitDefeatsBlueUnit()
+    {
+        game.getUnits().put(new Position(4,0), new UnitIns(GameConstants.ARCHER, Player.RED, 1, 3, 5));
+        game.getUnits().put(new Position(5,0), new UnitIns(GameConstants.ARCHER, Player.BLUE, 1, 3, 1));
+
+        game.moveUnit(new Position(4,0), new Position(5,0));
+        assertThat(game.getUnitAt(new Position(5,0)).getOwner(), is(Player.RED));
+    }
 }

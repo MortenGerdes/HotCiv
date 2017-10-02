@@ -133,8 +133,8 @@ public class GameImpl implements Game
             }
             else
             {
-                // Init attack sequence
-                attackingStrategy.attackUnit(units, to, unitToMove);
+                // Init attack sequence and update the unit map with who won.
+                units = attackingStrategy.attackUnit(this, (HashMap<Position, Unit>) getUnits().clone(), from, to);
                 return true;
             }
         }
