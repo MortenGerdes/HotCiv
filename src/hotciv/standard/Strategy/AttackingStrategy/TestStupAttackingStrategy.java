@@ -27,19 +27,37 @@ public class TestStupAttackingStrategy implements AttackingStrategy
         this.posToMoveFrom = posToMoveFrom;
         this.posToMoveTo = posToMoveTo;
 
-        int attackerNumber = game.getUnitAt(posToMoveFrom).getAttackingStrength();
-        int defenderNumber = unitHashMap.get(posToMoveTo).getDefensiveStrength();
+        int attackerNumber = calculateStats(game.getUnitAt(posToMoveFrom).getAttackingStrength(), posToMoveFrom);
+        int defenderNumber = calculateStats(game.getUnitAt(posToMoveTo).getDefensiveStrength(), posToMoveTo);
         int randomValue = 3;
+
+        if(attackerNumber+randomValue > defenderNumber+randomValue)
+        {
+            Unit attackingUnit = game.getUnitAt(posToMoveFrom);
+            unitHashMap.remove(attackingUnit);
+            unitHashMap.put(posToMoveTo, attackingUnit);
+        }
+        else
+        {
+            unitHashMap.remove(game.getUnitAt(posToMoveFrom));
+        }
 
         return unitHashMap;
     }
 
-    private int calculateStats(int baseStat)
+    private int calculateStats(int baseStat, Position center)
     {
-        /*
         int finalStat = baseStat;
-        for(Position adjPos: Utility.get8Neighborhood());
-        */
-        return 1;
+        for(Position adjPos: Utility.get8Neighborhood(center))
+        {
+            if(game.getUnitAt(adjPos) != null)
+            {
+                if(game.getUnitAt(adjPos).getOwner() == game.getUnitAt(center).getOwner())
+                {
+                    finalStat++;
+                }
+            }
+        }
+        return finalStat * Utility.getTerrainFactor(game, center);
     }
 }
