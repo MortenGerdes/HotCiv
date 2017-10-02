@@ -8,16 +8,14 @@ import hotciv.standard.Strategy.TestStubs.DieRollStrategy;
 import java.util.HashMap;
 
 /**
- * Created by csdev on 10/2/17.
+ * Created by Morten G on 02-10-2017.
  */
-public class AlphaCivAttackingStrategy implements AttackingStrategy{
+public class TestStubAttackingStrategy implements AttackingStrategy
+{
+
     @Override
     public HashMap<Position, Unit> attackUnit(DieRollStrategy dieRollStrategy, Game game, HashMap<Position, Unit> unitHashMap, Position posToMoveFrom, Position posToMoveTo)
     {
-        Unit unitToMove = game.getUnitAt(posToMoveFrom);
-        unitHashMap.remove(unitToMove);
-        unitHashMap.put(posToMoveTo, unitToMove);
-
-        return unitHashMap;
+        return null;
     }
 }

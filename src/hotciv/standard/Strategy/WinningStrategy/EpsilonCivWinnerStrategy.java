@@ -7,21 +7,22 @@ import hotciv.standard.GameImpl;
  * Created by csdev on 10/2/17.
  */
 public class EpsilonCivWinnerStrategy implements WinnerStrategy{
-
-    private boolean redPlayerIsWinner;
     @Override
     public Player determineWinner(GameImpl game) {
 
-        for(Player player : game.getKillCount().keySet()){
-            if (game.getKillCount().get(player) > 2){
+        for(Player player : game.getKillCount().keySet())
+        {
+            if (game.getKillCount().get(player) > 2)
+            {
                 return player;
             }
+        }
+        if(game.getCurrentRound() > 20)
+        {
+            game.setWinnerStrategy(new BetaCivWinnerStrategy());
         }
         return null;
     }
 
-    public boolean isRedPlayerWinner(){
-        return true;
-    }
 
 }

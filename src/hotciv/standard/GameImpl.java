@@ -3,6 +3,7 @@ package hotciv.standard;
 import hotciv.framework.*;
 import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.AttackingStrategy;
+import hotciv.standard.Strategy.TestStubs.DieRollStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
@@ -42,6 +43,7 @@ import java.util.HashMap;
 
 public class GameImpl implements Game
 {
+    private int currentRound = 1;
     private int currentGameAge = -4000; //Initial starting age.
     private Player gameWinner = null;
     private Player playerInTurn = Player.RED;
@@ -50,18 +52,21 @@ public class GameImpl implements Game
     private WorldGenerationStrategy worldGenerationStrategy;
     private WinnerStrategy winnerStrategy;
     private UnitActionStrategy unitActionStrategy;
+    private DieRollStrategy dieRollStrategy;
 
     private HashMap<Position, Unit> units = new HashMap<>();
     private HashMap<Position, City> cities = new HashMap<>();
     private HashMap<Position, Tile> tiles = new HashMap<>();
-    private HashMap<Player, Integer> killCount = new HashMap<>();
+
+    public HashMap<Player, Integer> killCount = new HashMap<>();
 
     /**
      * Game initial code goes here.
      */
-    public GameImpl(AgeingStrategy ageingStrategy, AttackingStrategy attackingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
+    public GameImpl(DieRollStrategy dieRollStrategy, AgeingStrategy ageingStrategy, AttackingStrategy attackingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
     {
-        //Assigning strategy classes;
+        //Assigning strategy classes
+        this.dieRollStrategy = dieRollStrategy;
         this.ageingStrategy = ageingStrategy;
         this.attackingStrategy = attackingStrategy;
         this.worldGenerationStrategy = worldGenerationStrategy;
@@ -137,7 +142,7 @@ public class GameImpl implements Game
             else
             {
                 // Init attack sequence and update the unit map with who won.
-                units = attackingStrategy.attackUnit(this, (HashMap<Position, Unit>) getUnits().clone(), from, to);
+                units = attackingStrategy.attackUnit(dieRollStrategy, this, (HashMap<Position, Unit>) getUnits().clone(), from, to);
                 return true;
             }
         }
@@ -145,12 +150,12 @@ public class GameImpl implements Game
         return true;
     }
 
-
     /**
      * This is a method that handles every activity upon end turn.
      */
     public void endOfTurn()
     {
+        increaseRound();
         increaseAge();
         switchTurnsBetweenPlayers();
         spawnUnitIfCityCan();
@@ -176,6 +181,11 @@ public class GameImpl implements Game
     {
         units.remove(unitToMove);
         units.put(posToMoveTo, unitToMove);
+    }
+
+    private void increaseRound()
+    {
+        currentRound++;
     }
 
     private void increaseAge()
@@ -260,9 +270,14 @@ public class GameImpl implements Game
 
     public HashMap<Player, Integer> getKillCount(){return killCount; }
 
-    // Setters for testing purposes
+    public int getCurrentRound(){return currentRound;}
+
     public void setAge(int age)
     {
         this.currentGameAge = age;
+    }
+    public void setWinnerStrategy(WinnerStrategy winnerStrategy)
+    {
+        this.winnerStrategy = winnerStrategy;
     }
 }
