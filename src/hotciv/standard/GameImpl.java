@@ -46,10 +46,10 @@ public class GameImpl implements Game
     private Player gameWinner = null;
     private Player playerInTurn = Player.RED;
     private AgeingStrategy ageingStrategy;
+    private AttackingStrategy attackingStrategy;
     private WorldGenerationStrategy worldGenerationStrategy;
     private WinnerStrategy winnerStrategy;
     private UnitActionStrategy unitActionStrategy;
-    private AttackingStrategy attackingStrategy;
 
     private HashMap<Position, Unit> units = new HashMap<>();
     private HashMap<Position, City> cities = new HashMap<>();
@@ -58,11 +58,11 @@ public class GameImpl implements Game
     /**
      * Game initial code goes here.
      */
-    public GameImpl(AgeingStrategy ageingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
+    public GameImpl(AgeingStrategy ageingStrategy, AttackingStrategy attackingStrategy, WorldGenerationStrategy worldGenerationStrategy, WinnerStrategy winnerStrategy, UnitActionStrategy unitActionStrategy)
     {
         //Assigning strategy classes;
-
         this.ageingStrategy = ageingStrategy;
+        this.attackingStrategy = attackingStrategy;
         this.worldGenerationStrategy = worldGenerationStrategy;
         this.winnerStrategy = winnerStrategy;
         this.unitActionStrategy = unitActionStrategy;
@@ -130,8 +130,14 @@ public class GameImpl implements Game
             {
                 return false;
             }
+            else
+            {
+                // Init attack sequence
+                attackingStrategy.attackUnit(units, to, unitToMove);
+                return true;
+            }
         }
-        moveUnitObjectInMap(unitToMove, to);
+        moveUnitInMap(to, unitToMove);
         return true;
     }
 
@@ -160,6 +166,12 @@ public class GameImpl implements Game
         if (getUnitAt(p).getOwner() != playerInTurn) return;
 
         unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
+    }
+
+    private void moveUnitInMap(Position posToMoveTo, Unit unitToMove)
+    {
+        units.remove(unitToMove);
+        units.put(posToMoveTo, unitToMove);
     }
 
     private void increaseAge()
@@ -224,12 +236,6 @@ public class GameImpl implements Game
             return new Position(position.getRow() - 1, position.getColumn() + 1);
         }
         return null;
-    }
-
-    private void moveUnitObjectInMap(Unit unitToMove, Position moveToPos)
-    {
-        units.remove(unitToMove);
-        units.put(moveToPos, unitToMove);
     }
 
     // Getters for testing purposes

@@ -3,10 +3,9 @@ import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
 import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
-import hotciv.standard.Strategy.UnitPerformStrategy.GammaCivUnitActionStrategy;
+import hotciv.standard.Strategy.AttackingStrategy.EpsilonCivAttackingStrategy;
+import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
-import hotciv.standard.Strategy.WinningStrategy.EpsilonCivWinnerStrategy;
-import hotciv.standard.Strategy.WorldGenerationStrategy.DeltaCivWorldStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.GammaCivWorldAndBelowStrategy;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +26,7 @@ public class TestEpsilonCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new AlphaCivAgeingStrategy(), new DeltaCivWorldStrategy(), new EpsilonCivWinnerStrategy(), new GammaCivUnitActionStrategy());
+        game = new GameImpl(new AlphaCivAgeingStrategy(), new EpsilonCivAttackingStrategy(), new GammaCivWorldAndBelowStrategy(), new AlphaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
     }
 
     @Test
@@ -64,8 +63,5 @@ public class TestEpsilonCiv {
         game.endOfTurn();
 
         assertThat(game.getWinner(), is(Player.RED));
-
-
     }
-
 }

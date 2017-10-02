@@ -2,8 +2,11 @@ package hotciv.standard;
 
 import hotciv.framework.*;
 
+import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
 import hotciv.standard.Strategy.AgeingStrategy.BetaCivAgeingStrategy;
+import hotciv.standard.Strategy.AttackingStrategy.AlphaCivAttackingStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
+import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
 import hotciv.standard.Strategy.WinningStrategy.BetaCivWinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.GammaCivWorldAndBelowStrategy;
 import org.junit.*;
@@ -45,7 +48,7 @@ public class TestBetaCiv {
      */
     @Before
     public void setUp() {
-        game = new GameImpl(new BetaCivAgeingStrategy(), new GammaCivWorldAndBelowStrategy(), new BetaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
+        game = new GameImpl(new BetaCivAgeingStrategy(), new AlphaCivAttackingStrategy(), new GammaCivWorldAndBelowStrategy(), new BetaCivWinnerStrategy(), new BetaCivAndBelowUnitActionStrategy());
     }
 
     @Test
