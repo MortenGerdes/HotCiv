@@ -31,6 +31,7 @@ public class EpsilonCivAttackingStrategy implements AttackingStrategy{
             gameImp.killCount.put(attackingUnit.getOwner(), gameImp.killCount.get(attackingUnit.getOwner()) + 1);
             unitHashMap.remove(attackingUnit);
             unitHashMap.put(posToMoveTo, attackingUnit);
+
         }
         else
         {

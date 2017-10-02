@@ -60,6 +60,8 @@ public class TestBetaCiv {
 
     @Test
     public void shouldDeclareRedAsWinnerWhenHavingAllCities(){
+        game.getCities().put(new Position(1, 1), new CityIns(Player.RED));
+        game.getCities().put(new Position(4, 1), new CityIns(Player.RED));
         game.endOfTurn();
         assertThat(game.getWinner(), is(Player.RED));
     }

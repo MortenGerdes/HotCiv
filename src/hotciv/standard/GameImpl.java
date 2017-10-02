@@ -43,7 +43,7 @@ import java.util.HashMap;
 
 public class GameImpl implements Game
 {
-    private int currentRound = 1;
+    private int currentRoundNumber = 1;
     private int currentGameAge = -4000; //Initial starting age.
     private Player gameWinner = null;
     private Player playerInTurn = Player.RED;
@@ -74,8 +74,6 @@ public class GameImpl implements Game
         this.unitActionStrategy = unitActionStrategy;
 
         tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
-        cities.put(new Position(1, 1), new CityIns(Player.RED));
-        cities.put(new Position(4, 1), new CityIns(Player.RED));
         units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
         units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
         units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
@@ -185,7 +183,7 @@ public class GameImpl implements Game
 
     private void increaseRound()
     {
-        currentRound++;
+        currentRoundNumber++;
     }
 
     private void increaseAge()
@@ -270,7 +268,7 @@ public class GameImpl implements Game
 
     public HashMap<Player, Integer> getKillCount(){return killCount; }
 
-    public int getCurrentRound(){return currentRound;}
+    public int getCurrentRoundNumber(){return currentRoundNumber;}
 
     public void setAge(int age)
     {

@@ -11,7 +11,7 @@ public class ZetaCivWinnerStrategy implements WinnerStrategy
     @Override
     public Player determineWinner(GameImpl game)
     {
-        if(game.getCurrentRound() > 20)
+        if(game.getCurrentRoundNumber() > 20)
         {
             return new EpsilonCivWinnerStrategy().determineWinner(game);
         }
