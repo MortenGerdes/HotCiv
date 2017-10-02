@@ -51,6 +51,6 @@ public class EpsilonCivFactory implements HotcivFactory
     @Override
     public DieRollStrategy produceDieRollStrategy()
     {
-        return new FixedDieRollStrategy();
+        return new FixedDieRollStrategy(); // Test stub
     }
 }
