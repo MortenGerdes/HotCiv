@@ -13,6 +13,10 @@ public class ZetaCivWinnerStrategy implements WinnerStrategy
     {
         if(game.getCurrentRoundNumber() > 20)
         {
+            if(game.getCurrentRoundNumber() == 21)
+            {
+                game.resetKillCount();
+            }
             return new EpsilonCivWinnerStrategy().determineWinner(game);
         }
         else

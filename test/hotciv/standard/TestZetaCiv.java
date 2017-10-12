@@ -29,13 +29,13 @@ public class TestZetaCiv {
     @Test
     public void RedShouldWinAfterThreeKillCounterAfterRound20(){
 
-        game.killCount.put(Player.RED, 3);
         assertThat(game.getWinner(), is(nullValue()));
         for(int i = 0; i < 20; i++){
             game.endOfTurn();
         }
-
         assertThat(game.getCurrentRoundNumber(), is(21));
+        game.killCount.put(Player.RED, 3);
+        game.endOfTurn();
         assertThat(game.getWinner(), is(Player.RED));
     }
 
