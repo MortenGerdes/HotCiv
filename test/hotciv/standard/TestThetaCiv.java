@@ -91,6 +91,29 @@ public class TestThetaCiv {
         System.out.println(game.getUnitAt(new Position(1,2)).getTypeString());
     }
 
+    @Test
+    public void shouldSpawnSettlerOnItsPerformAction()
+    {
+        assertThat(game.getTileAt(new Position(5, 6)).getTypeString(), is(GameConstants.PLAINS));
+        game.getUnits().put(new Position(6, 5), new UnitIns(GameConstants.GALLEY, Player.RED));
+        game.performUnitActionAt(new Position(6, 5));
+        game.endOfTurn();
+        assertThat(game.getUnitAt(new Position(5, 6)).getTypeString(), is(GameConstants.SETTLER));
+    }
+
+ /*   @Test
+    public void shouldPrintOutWorldMap()
+    {
+        for(int i = 0; i < 16; i++)
+        {
+            for(int j = 0; j < 16; j++)
+            {
+                System.out.print(game.getTileAt(new Position(i, j)).getTypeString().charAt(0));
+            }
+            System.out.println();
+        }
+    }
+*/
 
 
 }

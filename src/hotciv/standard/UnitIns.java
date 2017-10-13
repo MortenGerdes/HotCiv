@@ -36,6 +36,11 @@ public class UnitIns implements Unit
         this.moveCount = moveCount;
         this.defensiveStrength = defensiveStrength;
         this.attackingStrength = attackingStrength;
+
+        if(type.equals(GameConstants.GALLEY))
+        {
+            isShip = true;
+        }
     }
 
     @Override

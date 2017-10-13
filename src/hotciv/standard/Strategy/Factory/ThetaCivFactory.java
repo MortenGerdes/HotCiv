@@ -7,6 +7,7 @@ import hotciv.standard.Strategy.AttackingStrategy.AttackingStrategy;
 import hotciv.standard.Strategy.TestStubs.DieRollStrategy;
 import hotciv.standard.Strategy.TestStubs.FixedDieRollStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
+import hotciv.standard.Strategy.UnitPerformStrategy.ThetaCivUnitActionStrategy;
 import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
@@ -18,7 +19,6 @@ import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
  */
 public class ThetaCivFactory implements HotcivFactory
 {
-
 
     @Override
     public AgeingStrategy produceAgeingStrategy()
@@ -35,7 +35,7 @@ public class ThetaCivFactory implements HotcivFactory
     @Override
     public UnitActionStrategy produceUnitActionStrategy()
     {
-        return new BetaCivAndBelowUnitActionStrategy();
+        return new ThetaCivUnitActionStrategy();
     }
 
     @Override

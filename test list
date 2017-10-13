@@ -21,4 +21,4 @@
 []          Add so ships have two turns they can move in
 []          Test that ships can't move on land
 [ok]          Galley can spawn a settler
-[]          If multiple land tiles available, do it clockwise.
+[ok]          If multiple land tiles available, do it clockwise.
