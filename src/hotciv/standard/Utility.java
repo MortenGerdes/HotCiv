@@ -114,4 +114,14 @@ public class Utility {
         return support;
     }
 
+    public static boolean isWalkableLandTerrain(String tileType)
+    {
+        if(tileType.equals(GameConstants.HILLS )
+        || tileType.equals(GameConstants.FOREST)
+        || tileType.equals(GameConstants.PLAINS))
+            return true;
+        else
+            return false;
+    }
+
 }

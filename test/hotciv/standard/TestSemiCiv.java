@@ -28,4 +28,6 @@ public class TestSemiCiv
     {
         assertThat(game.getPlayerInTurn(), is(Player.RED));
     }
+
+    // No reason to write more tests for semiciv since all functionality is tested in the other versions
 }
