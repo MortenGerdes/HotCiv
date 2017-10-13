@@ -9,6 +9,7 @@ import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerator;
+import javafx.geometry.Pos;
 
 import java.util.HashMap;
 
@@ -114,6 +115,7 @@ public class GameImpl implements Game
     {
         boolean isSelectedUnitNull = getUnitAt(from) == null;
         boolean isItTheRightPlayerInTurn;
+        boolean isAShipMovingToLand;
 
         if (isSelectedUnitNull) // Is the unit null, bailout
         {
@@ -129,6 +131,14 @@ public class GameImpl implements Game
         }
 
         Unit unitToMove = getUnitAt(from);
+        isAShipMovingToLand = ((UnitIns)unitToMove).isShip() && getTileAt(to).getTypeString() != GameConstants.OCEANS;
+
+        if(isAShipMovingToLand)
+        {
+            // A ship that's trying to move on land
+            return false;
+        }
+
         if (getUnitAt(to) != null)
         {
             if (getUnitAt(from).getOwner() == getUnitAt(to).getOwner())
@@ -228,23 +238,52 @@ public class GameImpl implements Game
 
     private void spawnUnitIfCityCan()
     {
+        boolean isUnitAShipButNoAdjacentWater;
+        UnitIns unitToSpawn;
+
         for (Position position : cities.keySet())
         {
             CityIns castedCity = (CityIns) cities.get(position);
-            if (castedCity.getProduction() != null && !castedCity.getProduction().isEmpty())
-            { // Nested if-statements due to order of which the code should run.
-                if (castedCity.getProcessPercentage() >= 100)
-                {
-                    units.put(getFirstAvailbleSpawnAroundCity(position), new UnitIns(castedCity.getProduction(), castedCity.getOwner()));
-                }
-            }
             castedCity.onEndTurn();
+            if (castedCity.getProduction() == null)
+            {
+                continue;
+            }
+            if(castedCity.getProduction().isEmpty())
+            {
+                continue;
+            }
+            if (castedCity.getProcessPercentage() < 100)
+            {
+                continue;
+            }
+            unitToSpawn = new UnitIns(castedCity.getProduction(), castedCity.getOwner());
+            isUnitAShipButNoAdjacentWater = unitToSpawn.isShip() && !isCityNextToSpecificTile(position, GameConstants.OCEANS);
+
+            if(isUnitAShipButNoAdjacentWater)
+            {
+                return;
+            }
+
+            units.put(getFirstAvailbleSpawnAroundCity(position), unitToSpawn);
         }
     }
 
     private void determineWinner()
     {
         gameWinner = winnerStrategy.determineWinner(this);
+    }
+
+    private boolean isCityNextToSpecificTile(Position posOfCity, String tileType)
+    {
+        for(Position pos: Utility.get8Neighborhood(posOfCity))
+        {
+            if(getTileAt(pos).getTypeString() == tileType)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Position getFirstAvailbleSpawnAroundCity(Position position)

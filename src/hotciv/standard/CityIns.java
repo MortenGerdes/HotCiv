@@ -63,13 +63,13 @@ public class CityIns implements City
 
     public boolean setProduction(String production)
     {
-        if (ressources >= GameConstants.PRICE_ON_UNIT.get(production))
+        if (!(ressources >= GameConstants.PRICE_ON_UNIT.get(production)))
         {
-            this.production = production;
-            ressources -= GameConstants.PRICE_ON_UNIT.get(production);
-            return true;
-        } else
             return false;
+        }
 
+        this.production = production;
+        ressources -= GameConstants.PRICE_ON_UNIT.get(production);
+        return true;
     }
 }

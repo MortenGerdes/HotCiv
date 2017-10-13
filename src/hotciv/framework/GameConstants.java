@@ -39,6 +39,7 @@ public class GameConstants
     public static final String ARCHER = "archer";
     public static final String LEGION = "legion";
     public static final String SETTLER = "settler";
+    public static final String GALLEY = "galley";
     // Valid terrain types
     public static final String PLAINS = "plains";
     public static final String OCEANS = "ocean";
@@ -51,12 +52,19 @@ public class GameConstants
     public static final String foodFocus = "apple";
 
     public static final HashMap<String, Integer> PRICE_ON_UNIT;
-
+    public static final HashMap<String, Integer> DEFAULT_MOVECOUNT;
     static
     {
         PRICE_ON_UNIT = new HashMap<>();
+        DEFAULT_MOVECOUNT = new HashMap<>();
         PRICE_ON_UNIT.put(ARCHER, 10);
         PRICE_ON_UNIT.put(LEGION, 15);
         PRICE_ON_UNIT.put(SETTLER, 30);
+        PRICE_ON_UNIT.put(GALLEY, 30);
+
+        DEFAULT_MOVECOUNT.put(ARCHER, 1);
+        DEFAULT_MOVECOUNT.put(LEGION, 1);
+        DEFAULT_MOVECOUNT.put(SETTLER, 1);
+        DEFAULT_MOVECOUNT.put(GALLEY, 2);
     }
 }

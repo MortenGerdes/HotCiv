@@ -15,10 +15,11 @@ public class UnitIns implements Unit
     private int defensiveStrength;
     private int attackingStrength;
     private boolean isFortified = false;
+    private boolean isShip;
 
     public UnitIns(String type, Player owner)
     {
-        this(type, owner, 1, 0, 0);
+        this(type, owner, GameConstants.DEFAULT_MOVECOUNT.get(type), 0, 0);
     }
 
     public UnitIns(String type, Player owner, int moveCount)
@@ -29,11 +30,12 @@ public class UnitIns implements Unit
 
     public UnitIns(String type, Player owner, int moveCount, int defensiveStrength, int attackingStrength)
     {
+
+        this.type = type;
+        this.owner = owner;
         this.moveCount = moveCount;
         this.defensiveStrength = defensiveStrength;
         this.attackingStrength = attackingStrength;
-        this.type = type;
-        this.owner = owner;
     }
 
     @Override
@@ -71,6 +73,16 @@ public class UnitIns implements Unit
         return isFortified;
     }
 
+    public boolean isShip()
+    {
+        return isShip;
+    }
+
+    public void setShip(boolean ship)
+    {
+        isShip = ship;
+    }
+
     public void setMoveCount(int moveCount)
     {
         this.moveCount = moveCount;
@@ -89,6 +101,4 @@ public class UnitIns implements Unit
         }
         isFortified = (isFortified == true) ? false : true;
     }
-
-
 }
