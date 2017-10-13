@@ -248,7 +248,7 @@ public class TestAlphaCiv {
         game.getCities().put(new Position(5, 5), new CityIns(Player.RED));
         CityIns castedCity = (CityIns) game.getCityAt(new Position(5, 5));
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 9; i++)
         {
             castedCity.onEndTurn();
         }
@@ -266,7 +266,7 @@ public class TestAlphaCiv {
         game.getCities().put(new Position(5, 5), new CityIns(Player.RED));
         CityIns castedCity = (CityIns) game.getCityAt(new Position(5, 5));
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 9; i++)
         {
             castedCity.onEndTurn();
         }

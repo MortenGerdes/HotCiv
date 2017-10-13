@@ -39,18 +39,19 @@ public class TestThetaCiv {
         Position miniIsland = new Position(1,2);
         CityIns city = new CityIns(Player.RED);
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 6; i++){
             city.onEndTurn();
         }
 
         game.getCities().put(miniIsland, city);
 
-        assertThat(city.getResources(), is(30));
+        assertThat(city.getResources(), is(36));
         city.setProduction(GameConstants.GALLEY);
+        game.endOfTurn();
         game.endOfTurn();
 
         assertThat(game.getTileAt(miniIsland).getTypeString(), is(GameConstants.PLAINS));
-        //assertThat(game.getUnitAt(new Position(0,2)), is(notNullValue()));
+        assertThat(game.getUnitAt(new Position(1,3)), is(notNullValue()));
     }
 
     @Test
@@ -76,6 +77,7 @@ public class TestThetaCiv {
         assertThat(game.getUnitAt(new Position(5, 7)), is(nullValue()));
 
     }
+
     @Test
     public void shouldNotAllowGalleyToMoveOnLand(){
         Position miniIsland = new Position(1,2);

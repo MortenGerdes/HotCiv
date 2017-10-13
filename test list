@@ -19,6 +19,6 @@
 
 []          Make sure that ships only spawn on water tiles
 []          Add so ships have two turns they can move in
-[]          Test that ships can't move on land
+[ok]          Test that ships can't move on land
 [ok]          Galley can spawn a settler
 [ok]          If multiple land tiles available, do it clockwise.

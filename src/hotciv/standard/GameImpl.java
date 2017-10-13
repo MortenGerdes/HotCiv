@@ -255,15 +255,16 @@ public class GameImpl implements Game
             {
                 continue;
             }
+
             unitToSpawn = new UnitIns(castedCity.getProduction(), castedCity.getOwner());
             isUnitAShipButNoAdjacentWater = unitToSpawn.isShip() && !isCityNextToSpecificTile(position, GameConstants.OCEANS);
-
             if (isUnitAShipButNoAdjacentWater)
             {
                 continue;
             }
-
+            System.out.println("Spawning unit " + unitToSpawn.getTypeString() + " to " + getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip()).toString() + " on tile type " + getTileAt(getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip())).getTypeString());
             units.put(getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip()), unitToSpawn);
+            castedCity.setProduction(null);
         }
     }
 
@@ -287,7 +288,7 @@ public class GameImpl implements Game
     private Position getFirstAvailbleSpawnAroundCity(Position position, boolean isShip)
     {
         Position posToCheck;
-        if (getUnitAt(position) == null)
+        if (getUnitAt(position) == null && !isShip)
         {
             return position;
         }
@@ -334,7 +335,7 @@ public class GameImpl implements Game
         return null;
     }
 
-    // Getters for testing purposes
+    // Getters and Setters for testing purposes
     public HashMap<Position, Unit> getUnits()
     {
         return units;

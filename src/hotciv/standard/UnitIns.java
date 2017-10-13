@@ -15,7 +15,7 @@ public class UnitIns implements Unit
     private int defensiveStrength;
     private int attackingStrength;
     private boolean isFortified = false;
-    private boolean isShip;
+    private boolean isShip = false;
 
     public UnitIns(String type, Player owner)
     {
