@@ -12,7 +12,13 @@
 [ok]        Units må ikke kunne angribe units fra samme team.
 [ok]        Cities kan spawne units on end turn.
 [ok] 	    Skift tur fra rød til blå til rød.
-[ok]		    Red starter med en archer og settler.
-[ok]		    Blue starter med en legion.
-[ok]          Cities kan producere forskellige units, som spillerne kan vælge (?)
-[ok]          Units, der spawner fra cities, spawner på samme tile som byen. Hvis optaget, start fra north og bevæg clockwise
+[ok]		Red starter med en archer og settler.
+[ok]		Blue starter med en legion.
+[ok]        Cities kan producere forskellige units, som spillerne kan vælge (?)
+[ok]        Units, der spawner fra cities, spawner på samme tile som byen. Hvis optaget, start fra north og bevæg clockwise
+
+[]          Make sure that ships only spawn on water tiles
+[]          Add so ships have two turns they can move in
+[]          Test that ships can't move on land
+[]          Galley can spawn a settler
+[]          If multiple land tiles available, do it clockwise.

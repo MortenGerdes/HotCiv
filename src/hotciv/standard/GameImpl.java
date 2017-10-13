@@ -9,7 +9,6 @@ import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerator;
-import javafx.geometry.Pos;
 
 import java.util.HashMap;
 
@@ -131,7 +130,7 @@ public class GameImpl implements Game
         }
 
         Unit unitToMove = getUnitAt(from);
-        isAShipMovingToLand = ((UnitIns)unitToMove).isShip() && getTileAt(to).getTypeString() != GameConstants.OCEANS;
+        isAShipMovingToLand = ((UnitIns)unitToMove).isShip() && !getTileAt(to).getTypeString().equals(GameConstants.OCEANS);
 
         if(isAShipMovingToLand)
         {
@@ -262,7 +261,7 @@ public class GameImpl implements Game
 
             if(isUnitAShipButNoAdjacentWater)
             {
-                return;
+                continue;
             }
 
             units.put(getFirstAvailbleSpawnAroundCity(position), unitToSpawn);
@@ -278,7 +277,7 @@ public class GameImpl implements Game
     {
         for(Position pos: Utility.get8Neighborhood(posOfCity))
         {
-            if(getTileAt(pos).getTypeString() == tileType)
+            if(getTileAt(pos).getTypeString().equals(tileType))
             {
                 return true;
             }
