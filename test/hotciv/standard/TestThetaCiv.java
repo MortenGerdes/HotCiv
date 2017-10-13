@@ -50,7 +50,7 @@ public class TestThetaCiv {
         game.endOfTurn();
 
         assertThat(game.getTileAt(miniIsland).getTypeString(), is(GameConstants.PLAINS));
-        assertThat(game.getUnitAt(new Position(0,2)), is(notNullValue()));
+        //assertThat(game.getUnitAt(new Position(0,2)), is(notNullValue()));
     }
 
     @Test
@@ -76,14 +76,21 @@ public class TestThetaCiv {
         assertThat(game.getUnitAt(new Position(5, 7)), is(nullValue()));
 
     }
-   /* @Test
+    @Test
     public void shouldNotAllowGalleyToMoveOnLand(){
         Position miniIsland = new Position(1,2);
 
         game.getUnits().put(new Position(0,2), new UnitIns(GameConstants.GALLEY, Player.RED));
-        game.getUnits().
+        game.moveUnit(new Position(0,2), miniIsland);
+        game.endOfTurn();
+
+        assertThat(game.getUnitAt(new Position(0,2)).getTypeString(), is(GameConstants.GALLEY));
+        assertThat(game.getUnitAt(miniIsland).getTypeString(), is(GameConstants.GALLEY));
+
+        System.out.println(game.getUnitAt(new Position(0,2)).getTypeString());
+        System.out.println(game.getUnitAt(new Position(1,2)).getTypeString());
     }
-*/
+
 
 
 }
