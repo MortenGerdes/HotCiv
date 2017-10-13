@@ -177,7 +177,6 @@ public class TestAlphaCiv {
 
     @Test
     public void shouldBePlainTileAtPosition00() {
-        System.out.println(game.getTileAt(new Position(0, 0)).getTypeString());
         assertThat(game.getTileAt(new Position(0,0)).getTypeString(), is(GameConstants.PLAINS));
     }
 
