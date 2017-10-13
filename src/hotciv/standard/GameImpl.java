@@ -262,7 +262,7 @@ public class GameImpl implements Game
             {
                 continue;
             }
-           // System.out.println("Spawning unit " + unitToSpawn.getTypeString() + " to " + getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip()).toString() + " on tile type " + getTileAt(getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip())).getTypeString());
+            // System.out.println("Spawning unit " + unitToSpawn.getTypeString() + " to " + getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip()).toString() + " on tile type " + getTileAt(getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip())).getTypeString());
             units.put(getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip()), unitToSpawn);
             castedCity.setProduction(null);
         }
