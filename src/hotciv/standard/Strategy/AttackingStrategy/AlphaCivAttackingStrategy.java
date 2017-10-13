@@ -12,11 +12,12 @@ import java.util.HashMap;
 /**
  * Created by csdev on 10/2/17.
  */
-public class AlphaCivAttackingStrategy implements AttackingStrategy{
+public class AlphaCivAttackingStrategy implements AttackingStrategy
+{
     @Override
     public HashMap<Position, Unit> attackUnit(DieRollStrategy dieRollStrategy, Game game, HashMap<Position, Unit> unitHashMap, Position posToMoveFrom, Position posToMoveTo)
     {
-        UnitIns unitToMove = (UnitIns)game.getUnitAt(posToMoveFrom);
+        UnitIns unitToMove = (UnitIns) game.getUnitAt(posToMoveFrom);
         unitHashMap.remove(unitToMove);
         unitHashMap.put(posToMoveTo, unitToMove);
         ((GameImpl) game).increaseKillCount(unitToMove.getOwner());

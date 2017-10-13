@@ -13,9 +13,14 @@ import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
 public interface HotcivFactory
 {
     public AgeingStrategy produceAgeingStrategy();
+
     public AttackingStrategy produceAttackingStrategy();
+
     public UnitActionStrategy produceUnitActionStrategy();
+
     public WorldGenerationStrategy produceWorldGenerationStrategy();
+
     public WinnerStrategy produceWinnerStrategy();
+
     public DieRollStrategy produceDieRollStrategy();
 }

@@ -3,10 +3,12 @@ package hotciv.standard.Strategy.WorldGenerationStrategy;
 /**
  * Created by csdev on 10/13/17.
  */
-public class TestStubWorldStrategy implements WorldGenerationStrategy{
+public class TestStubWorldStrategy implements WorldGenerationStrategy
+{
 
     @Override
-    public String[] worldDesign() {
+    public String[] worldDesign()
+    {
         return new String[]{
                 "oooooooooooooooo",
                 "oopooooooooooooo",

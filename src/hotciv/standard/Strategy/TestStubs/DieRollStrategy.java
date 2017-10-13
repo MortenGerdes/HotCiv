@@ -6,5 +6,6 @@ package hotciv.standard.Strategy.TestStubs;
 public interface DieRollStrategy
 {
     int outcome1();
+
     int outcome2();
 }

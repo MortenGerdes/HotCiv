@@ -1,4 +1,5 @@
 package hotciv.standard.Strategy.Factory;
+
 import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
 import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.AlphaCivAttackingStrategy;
@@ -9,18 +10,21 @@ import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStr
 import hotciv.standard.Strategy.UnitPerformStrategy.UnitActionStrategy;
 import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
 import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
-import hotciv.standard.Strategy.WorldGenerationStrategy.DeltaCivWorldStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.TestStubWorldStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
 
 /**
  * Created by csdev on 10/13/17.
  */
-public class ThetaCivFactory implements HotcivFactory {
+public class ThetaCivFactory implements HotcivFactory
+{
 
 
     @Override
-    public AgeingStrategy produceAgeingStrategy() {return new AlphaCivAgeingStrategy();}
+    public AgeingStrategy produceAgeingStrategy()
+    {
+        return new AlphaCivAgeingStrategy();
+    }
 
     @Override
     public AttackingStrategy produceAttackingStrategy()
@@ -35,7 +39,10 @@ public class ThetaCivFactory implements HotcivFactory {
     }
 
     @Override
-    public WorldGenerationStrategy produceWorldGenerationStrategy() {return new TestStubWorldStrategy();}
+    public WorldGenerationStrategy produceWorldGenerationStrategy()
+    {
+        return new TestStubWorldStrategy();
+    }
 
     @Override
     public WinnerStrategy produceWinnerStrategy()

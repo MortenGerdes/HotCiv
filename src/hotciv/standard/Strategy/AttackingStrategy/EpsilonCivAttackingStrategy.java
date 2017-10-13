@@ -12,7 +12,8 @@ import java.util.HashMap;
 /**
  * Created by csdev on 10/2/17.
  */
-public class EpsilonCivAttackingStrategy implements AttackingStrategy{
+public class EpsilonCivAttackingStrategy implements AttackingStrategy
+{
 
     private Game game;
 
@@ -24,15 +25,14 @@ public class EpsilonCivAttackingStrategy implements AttackingStrategy{
         int attackerNumber = calculateStats(game.getUnitAt(posToMoveFrom).getAttackingStrength(), posToMoveFrom);
         int defenderNumber = calculateStats(game.getUnitAt(posToMoveTo).getDefensiveStrength(), posToMoveTo);
 
-        if(attackerNumber*dieRoll.outcome1() > defenderNumber*dieRoll.outcome2())
+        if (attackerNumber * dieRoll.outcome1() > defenderNumber * dieRoll.outcome2())
         {
             GameImpl gameImp = (GameImpl) game;
             Unit attackingUnit = game.getUnitAt(posToMoveFrom);
             gameImp.increaseKillCount(attackingUnit.getOwner());
             unitHashMap.remove(attackingUnit);
             unitHashMap.put(posToMoveTo, attackingUnit);
-        }
-        else
+        } else
         {
             unitHashMap.remove(game.getUnitAt(posToMoveFrom));
         }
@@ -43,11 +43,11 @@ public class EpsilonCivAttackingStrategy implements AttackingStrategy{
     private int calculateStats(int baseStat, Position center)
     {
         int finalStat = baseStat;
-        for(Position adjPos: Utility.get8Neighborhood(center))
+        for (Position adjPos : Utility.get8Neighborhood(center))
         {
-            if(game.getUnitAt(adjPos) != null)
+            if (game.getUnitAt(adjPos) != null)
             {
-                if(game.getUnitAt(adjPos).getOwner() == game.getUnitAt(center).getOwner())
+                if (game.getUnitAt(adjPos).getOwner() == game.getUnitAt(center).getOwner())
                 {
                     finalStat++;
                 }

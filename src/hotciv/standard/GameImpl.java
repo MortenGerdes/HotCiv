@@ -130,9 +130,9 @@ public class GameImpl implements Game
         }
 
         Unit unitToMove = getUnitAt(from);
-        isAShipMovingToLand = ((UnitIns)unitToMove).isShip() && !getTileAt(to).getTypeString().equals(GameConstants.OCEANS);
+        isAShipMovingToLand = ((UnitIns) unitToMove).isShip() && !getTileAt(to).getTypeString().equals(GameConstants.OCEANS);
 
-        if(isAShipMovingToLand)
+        if (isAShipMovingToLand)
         {
             // A ship that's trying to move on land
             return false;
@@ -143,8 +143,7 @@ public class GameImpl implements Game
             if (getUnitAt(from).getOwner() == getUnitAt(to).getOwner())
             {
                 return false;
-            }
-            else
+            } else
             {
                 // Init attack sequence and update the unit map with who won.
                 units = attackingStrategy.attackUnit(dieRollStrategy, this, (HashMap<Position, Unit>) getUnits().clone(), from, to);
@@ -186,11 +185,11 @@ public class GameImpl implements Game
 
     public void increaseKillCount(Player player)
     {
-        if(!killCount.containsKey(player))
+        if (!killCount.containsKey(player))
         {
             killCount.put(player, new Integer(0));
         }
-        killCount.put(player, killCount.get(player)+1);
+        killCount.put(player, killCount.get(player) + 1);
     }
 
     public void resetKillCount()
@@ -200,13 +199,13 @@ public class GameImpl implements Game
 
     private void checkIfUnitConquerCity()
     {
-        for(Position posOfCity: getCities().keySet())
+        for (Position posOfCity : getCities().keySet())
         {
-            if(getUnitAt(posOfCity) == null)
+            if (getUnitAt(posOfCity) == null)
             {
                 continue;
             }
-            if(getUnitAt(posOfCity).getOwner() == getCityAt(posOfCity).getOwner())
+            if (getUnitAt(posOfCity).getOwner() == getCityAt(posOfCity).getOwner())
             {
                 continue;
             }
@@ -248,7 +247,7 @@ public class GameImpl implements Game
             {
                 continue;
             }
-            if(castedCity.getProduction().isEmpty())
+            if (castedCity.getProduction().isEmpty())
             {
                 continue;
             }
@@ -259,12 +258,12 @@ public class GameImpl implements Game
             unitToSpawn = new UnitIns(castedCity.getProduction(), castedCity.getOwner());
             isUnitAShipButNoAdjacentWater = unitToSpawn.isShip() && !isCityNextToSpecificTile(position, GameConstants.OCEANS);
 
-            if(isUnitAShipButNoAdjacentWater)
+            if (isUnitAShipButNoAdjacentWater)
             {
                 continue;
             }
 
-            units.put(getFirstAvailbleSpawnAroundCity(position), unitToSpawn);
+            units.put(getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip()), unitToSpawn);
         }
     }
 
@@ -275,9 +274,9 @@ public class GameImpl implements Game
 
     private boolean isCityNextToSpecificTile(Position posOfCity, String tileType)
     {
-        for(Position pos: Utility.get8Neighborhood(posOfCity))
+        for (Position pos : Utility.get8Neighborhood(posOfCity))
         {
-            if(getTileAt(pos).getTypeString().equals(tileType))
+            if (getTileAt(pos).getTypeString().equals(tileType))
             {
                 return true;
             }
@@ -285,33 +284,50 @@ public class GameImpl implements Game
         return false;
     }
 
-    private Position getFirstAvailbleSpawnAroundCity(Position position)
+    private Position getFirstAvailbleSpawnAroundCity(Position position, boolean isShip)
     {
+        Position posToCheck;
         if (getUnitAt(position) == null)
         {
             return position;
-        } else if (getUnitAt(new Position(position.getRow(), position.getColumn() + 1)) == null)
+        }
+        posToCheck = new Position(position.getRow(), position.getColumn() + 1);
+        if (getUnitAt(posToCheck) == null && Utility.isWalkableLandTerrain(getTileAt(posToCheck).getTypeString(), isShip))
         {
             return new Position(position.getRow(), position.getColumn() + 1);
-        } else if (getUnitAt(new Position(position.getRow() + 1, position.getColumn() + 1)) == null)
+        }
+        posToCheck = new Position(position.getRow() + 1, position.getColumn() + 1);
+        if (getUnitAt(posToCheck) == null && Utility.isWalkableLandTerrain(getTileAt(posToCheck).getTypeString(), isShip))
         {
             return new Position(position.getRow() + 1, position.getColumn() + 1);
-        } else if (getUnitAt(new Position(position.getRow() + 1, position.getColumn())) == null)
+        }
+        posToCheck = new Position(position.getRow() + 1, position.getColumn());
+        if (getUnitAt(posToCheck) == null && Utility.isWalkableLandTerrain(getTileAt(posToCheck).getTypeString(), isShip))
         {
             return new Position(position.getRow() + 1, position.getColumn());
-        } else if (getUnitAt(new Position(position.getRow() + 1, position.getColumn() - 1)) == null)
+        }
+        posToCheck = new Position(position.getRow() + 1, position.getColumn() - 1);
+        if (getUnitAt(posToCheck) == null && Utility.isWalkableLandTerrain(getTileAt(posToCheck).getTypeString(), isShip))
         {
             return new Position(position.getRow() + 1, position.getColumn() - 1);
-        } else if (getUnitAt(new Position(position.getRow(), position.getColumn() - 1)) == null)
+        }
+        posToCheck = new Position(position.getRow(), position.getColumn() - 1);
+        if (getUnitAt(posToCheck) == null && Utility.isWalkableLandTerrain(getTileAt(posToCheck).getTypeString(), isShip))
         {
             return new Position(position.getRow(), position.getColumn() - 1);
-        } else if (getUnitAt(new Position(position.getRow() - 1, position.getColumn() - 1)) == null)
+        }
+        posToCheck = new Position(position.getRow() - 1, position.getColumn() - 1);
+        if (getUnitAt(posToCheck) == null && Utility.isWalkableLandTerrain(getTileAt(posToCheck).getTypeString(), isShip))
         {
             return new Position(position.getRow() - 1, position.getColumn() - 1);
-        } else if (getUnitAt(new Position(position.getRow() - 1, position.getColumn())) == null)
+        }
+        posToCheck = new Position(position.getRow() - 1, position.getColumn());
+        if (getUnitAt(posToCheck) == null && Utility.isWalkableLandTerrain(getTileAt(posToCheck).getTypeString(), isShip))
         {
             return new Position(position.getRow() - 1, position.getColumn());
-        } else if (getUnitAt(new Position(position.getRow() - 1, position.getColumn() + 1)) == null)
+        }
+        posToCheck = new Position(position.getRow() - 1, position.getColumn() + 1);
+        if (getUnitAt(posToCheck) == null && Utility.isWalkableLandTerrain(getTileAt(posToCheck).getTypeString(), isShip))
         {
             return new Position(position.getRow() - 1, position.getColumn() + 1);
         }
@@ -334,9 +350,15 @@ public class GameImpl implements Game
         return tiles;
     }
 
-    public HashMap<Player, Integer> getKillCount(){return killCount; }
+    public HashMap<Player, Integer> getKillCount()
+    {
+        return killCount;
+    }
 
-    public int getCurrentRoundNumber(){return currentRoundNumber;}
+    public int getCurrentRoundNumber()
+    {
+        return currentRoundNumber;
+    }
 
     public void setAge(int age)
     {

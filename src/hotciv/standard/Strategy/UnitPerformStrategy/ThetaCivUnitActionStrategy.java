@@ -16,9 +16,9 @@ public class ThetaCivUnitActionStrategy implements UnitActionStrategy
     {
         if (unit.getTypeString() == GameConstants.GALLEY)
         {
-            for(Position localPos: Utility.get8Neighborhood(pos))
+            for (Position localPos : Utility.get8Neighborhood(pos))
             {
-                if(Utility.isWalkableLandTerrain(game.getTileAt(localPos).getTypeString()))
+                if (Utility.isWalkableLandTerrain(game.getTileAt(localPos).getTypeString(), false))
                 {
                     game.getUnits().remove(pos);
                     game.getUnits().put(localPos, new UnitIns(GameConstants.SETTLER, unit.getOwner(), 0));
