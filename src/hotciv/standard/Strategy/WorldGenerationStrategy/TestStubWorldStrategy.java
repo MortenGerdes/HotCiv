@@ -26,7 +26,7 @@ public class TestStubWorldStrategy implements WorldGenerationStrategy
                 "oooooooooooooooo",
                 "oooooooooooooooo",
                 "oooooooooooooooo",
-        }; //(6,8) middle of big island
+        }; //(6,7) middle of big island
         //(1,2) mini island
     }
 }

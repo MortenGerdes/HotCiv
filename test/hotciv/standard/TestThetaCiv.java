@@ -57,7 +57,7 @@ public class TestThetaCiv {
     @Test
     public void shouldNotSpawnGalleyOnLand(){
 
-        Position islandCenter = new Position(6,8);
+        Position islandCenter = new Position(6,7);
         CityIns city = new CityIns(Player.RED);
 
         for(int i = 0; i < 5; i++){
@@ -67,30 +67,29 @@ public class TestThetaCiv {
         game.getCities().put(islandCenter, city);
         city.setProduction(GameConstants.GALLEY);
         game.endOfTurn();
-        assertThat(game.getUnitAt(new Position(5, 8)), is(nullValue()));
-        assertThat(game.getUnitAt(new Position(5, 9)), is(nullValue()));
-        assertThat(game.getUnitAt(new Position(6, 9)), is(nullValue()));
-        assertThat(game.getUnitAt(new Position(7, 9)), is(nullValue()));
+
         assertThat(game.getUnitAt(new Position(7, 8)), is(nullValue()));
-        assertThat(game.getUnitAt(new Position(7, 7)), is(nullValue()));
-        assertThat(game.getUnitAt(new Position(6, 7)), is(nullValue()));
+        assertThat(game.getUnitAt(new Position(7, 9)), is(nullValue()));
+        assertThat(game.getUnitAt(new Position(6, 9)), is(nullValue()));
+        assertThat(game.getUnitAt(new Position(5, 9)), is(nullValue()));
+        assertThat(game.getUnitAt(new Position(5, 8)), is(nullValue()));
         assertThat(game.getUnitAt(new Position(5, 7)), is(nullValue()));
+        assertThat(game.getUnitAt(new Position(6, 7)), is(nullValue()));
+        assertThat(game.getUnitAt(new Position(7, 7)), is(nullValue()));
 
     }
 
     @Test
     public void shouldNotAllowGalleyToMoveOnLand(){
         Position miniIsland = new Position(1,2);
+        UnitIns galley = new UnitIns(GameConstants.GALLEY, Player.RED);
 
-        game.getUnits().put(new Position(0,2), new UnitIns(GameConstants.GALLEY, Player.RED));
+        game.getUnits().put(new Position(0,2), galley);
         game.moveUnit(new Position(0,2), miniIsland);
         game.endOfTurn();
 
         assertThat(game.getUnitAt(new Position(0,2)).getTypeString(), is(GameConstants.GALLEY));
-        assertThat(game.getUnitAt(miniIsland).getTypeString(), is(GameConstants.GALLEY));
-
-        System.out.println(game.getUnitAt(new Position(0,2)).getTypeString());
-        System.out.println(game.getUnitAt(new Position(1,2)).getTypeString());
+        assertThat(game.getUnitAt(miniIsland), is(nullValue()));
     }
 
     @Test
