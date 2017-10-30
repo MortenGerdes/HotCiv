@@ -138,12 +138,14 @@ public class Utility
                 return true;
             else
                 return false;
-        } else
+        }
+        else
         {
             if (tileType.equals(GameConstants.OCEANS))
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }

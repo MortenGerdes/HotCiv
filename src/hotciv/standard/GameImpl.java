@@ -335,6 +335,23 @@ public class GameImpl implements Game
         return null;
     }
 
+    private boolean isMoveCountEnough(Position toMoveFrom, Position toMoveTo, Unit unit)
+    {
+        int unitMoveCount = unit.getMoveCount();
+
+        if(Math.abs(toMoveFrom.getColumn() - toMoveTo.getColumn()) > unitMoveCount)
+        {
+            return false;
+        }
+
+        if(Math.abs(toMoveFrom.getRow() - toMoveTo.getRow()) > unitMoveCount)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     // Getters and Setters for testing purposes
     public HashMap<Position, Unit> getUnits()
     {
