@@ -132,6 +132,11 @@ public class GameImpl implements Game
         Unit unitToMove = getUnitAt(from);
         isAShipMovingToLand = ((UnitIns) unitToMove).isShip() && !getTileAt(to).getTypeString().equals(GameConstants.OCEANS);
 
+        if(!isMoveCountEnough(from, to, unitToMove))
+        {
+            return false;
+        }
+
         if (isAShipMovingToLand)
         {
             // A ship that's trying to move on land
