@@ -45,11 +45,12 @@
             value="${test.output.dir}/jacoco.exec" />
 
   <!-- define the class path for JUnit testing -->
-  <path id="class-path">
-    <pathelement location="${build.dir}"/>
-    <pathelement location="${junit.jar}"/>
-    <pathelement location="${hamcrest.jar}"/>
-  </path>
+    <path id="class-path">
+        <pathelement location="${build.dir}"/>
+        <pathelement location="${junit.jar}"/>
+        <pathelement location="${hamcrest.jar}"/>
+        <pathelement location="lib/fractal.jar"/>
+    </path>
 
   <target name="help">
     <echo>
@@ -82,9 +83,8 @@ HotCiv build management for SWEA Course
     <javac srcdir="${src.dir}"
 	   destdir="${build.dir}"
 	   debug="on" 
-	   includeantruntime="no" 
-	   >
-      <classpath refid="class-path"/>
+	   includeantruntime="no">
+        <classpath refid="class-path"/>
     </javac>
   </target>
   
@@ -96,7 +96,13 @@ HotCiv build management for SWEA Course
       <classpath refid="class-path"/>
     </javac>
   </target>
-  
+
+    <target name="fractal"  depends="build.test">
+        <java classname="hotciv.sprint8.DemoFractalMap">
+            <classpath refid="class-path"/>
+        </java>
+    </target>
+
   <target name="build.all" depends="build.src,build.test"/>
 
   <target name="mkdirdoc">

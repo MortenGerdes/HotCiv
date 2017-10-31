@@ -1,4 +1,4 @@
-package hotciv.standard; /** Demonstration of the fractal map generator.
+package hotciv.sprint8; /** Demonstration of the fractal map generator.
 
    This source code is from the book 
      "Flexible, Reliable Software:
