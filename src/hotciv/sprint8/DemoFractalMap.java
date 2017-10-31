@@ -24,7 +24,6 @@ package hotciv.sprint8; /** Demonstration of the fractal map generator.
    limitations under the License.
 
 */
-import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerator;
 import thirdparty.ThirdPartyFractalGenerator;
 
 public class DemoFractalMap {
