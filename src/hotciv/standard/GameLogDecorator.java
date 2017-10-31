@@ -5,6 +5,10 @@ import hotciv.framework.*;
 /**
  * Created by Morten G on 30-10-2017.
  */
+
+/*
+    Class not tested since it's merely a "wrapper" to an already tested class
+ */
 public class GameLogDecorator implements Game
 {
     private Game game;
