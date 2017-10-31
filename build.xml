@@ -87,7 +87,8 @@ HotCiv build management for SWEA Course
         <classpath refid="class-path"/>
     </javac>
   </target>
-  
+
+
   <target name="build.test" depends="build.src">
     <javac srcdir="${test.src.dir}"
 	   destdir="${build.dir}"
@@ -97,8 +98,8 @@ HotCiv build management for SWEA Course
     </javac>
   </target>
 
-    <target name="fractal"  depends="build.test">
-        <java classname="hotciv.sprint8.DemoFractalMap">
+    <target name="fractal"  depends="build.src">
+        <java classname="hotciv.Execute.DemoFractalTest">
             <classpath refid="class-path"/>
         </java>
     </target>
@@ -207,5 +208,7 @@ HotCiv build management for SWEA Course
     </jacoco:report>
     <echo message="To see report, browse to index.html at ${jacoco.report.dir}."/>
   </target>
+
+
 
 </project>

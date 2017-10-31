@@ -4,6 +4,7 @@ import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerator;
 import thirdparty.ThirdPartyFractalGenerator;
 
+
 /**
  * Created by Morten G on 31-10-2017.
  */
