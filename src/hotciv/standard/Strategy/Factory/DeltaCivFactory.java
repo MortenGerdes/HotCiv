@@ -1,5 +1,6 @@
 package hotciv.standard.Strategy.Factory;
 
+import hotciv.standard.Adapter.FractalAdapter;
 import hotciv.standard.Strategy.AgeingStrategy.AgeingStrategy;
 import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
 import hotciv.standard.Strategy.AttackingStrategy.AlphaCivAttackingStrategy;

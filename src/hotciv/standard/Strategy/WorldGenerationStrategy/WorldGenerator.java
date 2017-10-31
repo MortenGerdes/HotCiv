@@ -44,4 +44,37 @@ public class WorldGenerator
         }
         return world;
     }
+
+    public static String[] convertToOurConvention(String[] prevMap)
+    {
+        String[] toConvert = prevMap;
+        String[] newMap = new String[GameConstants.WORLDSIZE];
+        String line;
+        for ( int r = 0; r < 16; r++ )
+        {
+            line = "";
+            for ( int c = 0; c < 16; c++ )
+            {
+                char theChar = toConvert[r].charAt(c);
+                if(theChar == 'M')
+                {
+                    line = line + "m";
+                }
+                else if(theChar == 'o')
+                {
+                    line = line + "p";
+                }
+                else if(theChar == '.')
+                {
+                    line = line + "o";
+                }
+                else
+                {
+                    line = line + toConvert[r].charAt(c);
+                }
+            }
+            newMap[r] = line;
+        }
+        return newMap;
+    }
 }

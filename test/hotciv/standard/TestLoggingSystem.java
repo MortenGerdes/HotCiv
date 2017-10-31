@@ -17,11 +17,16 @@ import static org.junit.Assert.assertThat;
 public class TestLoggingSystem
 {
     private Game game;
+    private GameImpl gameImpl;
+    private GameLogDecorator decorator;
 
     @Before
     public void setUp()
     {
-        game = new GameLogDecorator(new GameImpl(new AlphaCivFactory()));
+        gameImpl = new GameImpl(new AlphaCivFactory());
+        decorator = new GameLogDecorator(gameImpl);
+        game = gameImpl;
+        enableLogging(true); // Set this to false to remove loggin.
     }
 
     @Test
@@ -35,7 +40,16 @@ public class TestLoggingSystem
     @Test
     public void shouldNotMoveMoreThanTwoTiles()
     {
-        GameImpl enhancedGame = ((GameImpl)((GameLogDecorator)game).unpackDecoratee());
+        GameImpl enhancedGame;
+        if(game instanceof GameLogDecorator)
+        {
+            enhancedGame = ((GameImpl)((GameLogDecorator)game).unpackDecoratee());
+        }
+        else
+        {
+            enhancedGame = ((GameImpl)game);
+        }
+
         enhancedGame.getUnits().put(new Position(3,3), new UnitIns(GameConstants.ARCHER, Player.RED, 1));
         enhancedGame.getUnits().put(new Position(5,5), new UnitIns(GameConstants.ARCHER, Player.RED, 1));
         enhancedGame.getUnits().put(new Position(8,8), new UnitIns(GameConstants.ARCHER, Player.RED, 1));
@@ -43,9 +57,21 @@ public class TestLoggingSystem
 
         assertThat(game.moveUnit(new Position(3, 3), new Position(3, 5)), is(false));
         assertThat(game.moveUnit(new Position(5, 5), new Position(2, 5)), is(false));
-        //game.endOfTurn(); // Why the fuck does this make it return true?!?!?!?!? Jack Fix!
+        //game.endOfTurn(); // Why the fuck does this make it return true?!?... TODO
         assertThat(game.moveUnit(new Position(8, 8), new Position(2, 2)), is(false));
 
         assertThat(game.moveUnit(new Position(10, 10), new Position(9, 11)), is(true));
+    }
+
+    private void enableLogging(boolean condition)
+    {
+        if(condition)
+        {
+            game = decorator;
+        }
+        else
+        {
+            game = gameImpl;
+        }
     }
 }
