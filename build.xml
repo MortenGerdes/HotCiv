@@ -235,7 +235,7 @@
 
     <!-- MiniDraw execution targets -->
     <target name="show" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowWorld">
+        <java fork="yes" classname="visual.ShowWorld">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
@@ -243,7 +243,7 @@
     </target>
 
     <target name="text" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowText">
+        <java fork="yes" classname="visual.ShowText">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
@@ -251,7 +251,7 @@
     </target>
 
     <target name="city" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowCity">
+        <java fork="yes" classname="visual.ShowCity">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
@@ -260,7 +260,7 @@
 
     <!-- SWEA targets -->
     <target name="update" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowUpdating">
+        <java fork="yes" classname="visual.ShowUpdating">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
@@ -268,7 +268,7 @@
     </target>
 
     <target name="move" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowMove">
+        <java fork="yes" classname="visual.ShowMove">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
@@ -276,7 +276,7 @@
     </target>
 
     <target name="setfocus" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowSetFocus">
+        <java fork="yes" classname="visual.ShowSetFocus">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
@@ -284,7 +284,7 @@
     </target>
 
     <target name="turn" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowEndOfTurn">
+        <java fork="yes" classname="visual.ShowEndOfTurn">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
@@ -292,7 +292,7 @@
     </target>
 
     <target name="action" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowAction">
+        <java fork="yes" classname="visual.ShowAction">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
@@ -300,7 +300,7 @@
     </target>
 
     <target name="comp" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowComposition">
+        <java fork="yes" classname="visual.ShowComposition">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
@@ -308,7 +308,7 @@
     </target>
 
     <target name="semi" depends="build.all">
-        <java fork="yes" classname="hotciv.standard.visual.ShowSemiSiv">
+        <java fork="yes" classname="visual.ShowSemiSiv">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
