@@ -153,12 +153,15 @@ public class GameImpl implements Game
             } else
             {
                 // Init attack sequence and update the unit map with who won.
+                onWorldChangedEvent(from);
                 units = attackingStrategy.attackUnit(dieRollStrategy, this, (HashMap<Position, Unit>) getUnits().clone(), from, to);
+                onWorldChangedEvent(to);
                 return true;
             }
         }
-
+        onWorldChangedEvent(from);
         moveUnitInMap(to, unitToMove);
+        onWorldChangedEvent(to);
         return true;
     }
 
@@ -173,6 +176,7 @@ public class GameImpl implements Game
         checkIfUnitConquerCity();
         spawnUnitIfCityCan();
         determineWinner();
+        onTurnEndsEvent(playerInTurn, getAge());
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance)
@@ -188,6 +192,7 @@ public class GameImpl implements Game
         if (getUnitAt(p).getOwner() != playerInTurn) return;
 
         unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
+        onWorldChangedEvent(p);
     }
 
     @Override
@@ -199,7 +204,7 @@ public class GameImpl implements Game
     @Override
     public void setTileFocus(Position position)
     {
-
+        onTileFocusChangeEvent(position);
     }
 
     public void increaseKillCount(Player player)
@@ -214,6 +219,30 @@ public class GameImpl implements Game
     public void resetKillCount()
     {
         killCount.clear();
+    }
+
+    private void onWorldChangedEvent(Position pos)
+    {
+        for (GameObserver obs : listeners)
+        {
+            obs.worldChangedAt(pos);
+        }
+    }
+
+    private void onTurnEndsEvent(Player nextPlayer, int age)
+    {
+        for (GameObserver obs : listeners)
+        {
+            obs.turnEnds(nextPlayer, age);
+        }
+    }
+
+    private void onTileFocusChangeEvent(Position pos)
+    {
+        for (GameObserver obs : listeners)
+        {
+            obs.tileFocusChangedAt(pos);
+        }
     }
 
     private void checkIfUnitConquerCity()
