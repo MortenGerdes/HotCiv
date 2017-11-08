@@ -10,6 +10,7 @@ import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -58,6 +59,7 @@ public class GameImpl implements Game
     private HashMap<Position, Unit> units = new HashMap<>();
     private HashMap<Position, City> cities = new HashMap<>();
     private HashMap<Position, Tile> tiles = new HashMap<>();
+    private ArrayList<GameObserver> listeners = new ArrayList<>();
 
     public HashMap<Player, Integer> killCount = new HashMap<>();
 
@@ -191,7 +193,7 @@ public class GameImpl implements Game
     @Override
     public void addObserver(GameObserver observer)
     {
-
+        listeners.add(observer);
     }
 
     @Override
