@@ -26,7 +26,7 @@ public class TestEpsilonCiv {
         game = new GameImpl(new EpsilonCivFactory());
     }
     @Test
-    public void redPlayerShouldWinAfterThreeWonAttacks(){
+    public void redPlayerShouldWinAfterThreeWonAttacks() {
         //Creates an archer for player Red
         game.getUnits().put(new Position(4,0), new UnitIns(GameConstants.ARCHER, Player.RED, 1, 3, 1));
         //Creates 3 archers for player blue
