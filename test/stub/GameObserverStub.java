@@ -10,6 +10,8 @@ import hotciv.framework.Position;
 public class GameObserverStub implements GameObserver {
 
     public Position position;
+    public Player nextPlayer;
+    public int age;
 
     @Override
     public void worldChangedAt(Position pos) {
@@ -19,7 +21,9 @@ public class GameObserverStub implements GameObserver {
 
     @Override
     public void turnEnds(Player nextPlayer, int age) {
-
+        this.nextPlayer = nextPlayer;
+        this.age = age;
+        System.out.println("Player in turn is: " + nextPlayer + " gameAge: " + age);
     }
 
     @Override

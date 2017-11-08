@@ -37,4 +37,12 @@ public class TestGameObserver{
 
     }
 
+    @Test
+    public void shouldSwitchPlayerInTurnAndIncreaseAge(){
+        game.endOfTurn();
+        assertThat(gameObserver.nextPlayer, is(Player.BLUE));
+        assertThat(gameObserver.age, is(-3900));
+    }
+
+
 }
