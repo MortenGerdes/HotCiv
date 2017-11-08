@@ -25,7 +25,6 @@ import stub.StubGame2;
  */
 public class ShowMove
 {
-
     public static void main(String[] args)
     {
         Game game = new StubGame2();
