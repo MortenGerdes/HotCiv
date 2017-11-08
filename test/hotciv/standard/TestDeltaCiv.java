@@ -2,13 +2,7 @@ package hotciv.standard;
 
 import hotciv.framework.GameConstants;
 import hotciv.framework.Position;
-import hotciv.standard.Strategy.AgeingStrategy.BetaCivAgeingStrategy;
-import hotciv.standard.Strategy.AttackingStrategy.AlphaCivAttackingStrategy;
 import hotciv.standard.Strategy.Factory.DeltaCivFactory;
-import hotciv.standard.Strategy.TestStubs.FixedDieRollStrategy;
-import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
-import hotciv.standard.Strategy.WinningStrategy.AlphaCivWinnerStrategy;
-import hotciv.standard.Strategy.WorldGenerationStrategy.DeltaCivWorldStrategy;
 import org.junit.Before;
 import org.junit.Test;
 

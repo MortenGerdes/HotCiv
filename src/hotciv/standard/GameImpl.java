@@ -188,6 +188,18 @@ public class GameImpl implements Game
         unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
     }
 
+    @Override
+    public void addObserver(GameObserver observer)
+    {
+
+    }
+
+    @Override
+    public void setTileFocus(Position position)
+    {
+
+    }
+
     public void increaseKillCount(Player player)
     {
         if (!killCount.containsKey(player))
