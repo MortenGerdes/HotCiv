@@ -160,7 +160,7 @@ public class GameImpl implements Game
             }
         }
         onWorldChangedEvent(from);
-        moveUnitInMap(to, unitToMove);
+        moveUnitInMap(from, to, unitToMove);
         onWorldChangedEvent(to);
         return true;
     }
@@ -262,9 +262,9 @@ public class GameImpl implements Game
         }
     }
 
-    private void moveUnitInMap(Position posToMoveTo, Unit unitToMove)
+    private void moveUnitInMap(Position from, Position posToMoveTo, Unit unitToMove)
     {
-        units.remove(unitToMove);
+        units.remove(from);
         units.put(posToMoveTo, unitToMove);
     }
 

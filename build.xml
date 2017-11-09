@@ -308,7 +308,7 @@
     </target>
 
     <target name="semi" depends="build.all">
-        <java fork="yes" classname="visual.ShowSemiSiv">
+        <java fork="yes" classname="visual.ShowSemiCiv">
             <classpath>
                 <path refid="class-path"/>
             </classpath>
