@@ -81,9 +81,10 @@ public class GameImpl implements Game
         // getCities().put(new Position(10, 7), new CityIns(Player.BLUE));
 
         units.put(new Position(6, 5), new UnitIns(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
+        units.put(new Position(2, 0), new UnitIns(GameConstants.GALLEY, Player.RED));
         units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
         units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
+
     }
 
     public Tile getTileAt(Position p)
@@ -121,6 +122,8 @@ public class GameImpl implements Game
         boolean isSelectedUnitNull = getUnitAt(from) == null;
         boolean isItTheRightPlayerInTurn;
         boolean isAShipMovingToLand;
+        boolean isInmovableTile;
+
 
         if (isSelectedUnitNull) // Is the unit null, bailout
         {
@@ -150,6 +153,11 @@ public class GameImpl implements Game
         {
             // A ship that's trying to move on land
             System.out.println("went here 4");
+            return false;
+        }
+
+        isInmovableTile = getTileAt(to).getTypeString().equals(GameConstants.MOUNTAINS) || getTileAt(to).getTypeString().equals(GameConstants.OCEANS);
+        if(unitToMove.getTypeString() != GameConstants.GALLEY && isInmovableTile){
             return false;
         }
 
