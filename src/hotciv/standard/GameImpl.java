@@ -38,9 +38,6 @@ import java.util.HashMap;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * This is a change
- * This an important hotfix for release so the customer wont yell at us.
- * This is an even more imporant hotfix.
  */
 
 public class GameImpl implements Game
