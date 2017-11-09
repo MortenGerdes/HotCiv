@@ -24,18 +24,16 @@ public class EpsilonCivAttackingStrategy implements AttackingStrategy
 
         int attackerNumber = calculateStats(game.getUnitAt(posToMoveFrom).getAttackingStrength(), posToMoveFrom);
         int defenderNumber = calculateStats(game.getUnitAt(posToMoveTo).getDefensiveStrength(), posToMoveTo);
-        System.out.println("Attack points: " + attackerNumber + ". Defender points: " + defenderNumber);
-        System.out.println("die one: " + dieRoll.outcome1() + ". Die two: " + dieRoll.outcome2());
         if (attackerNumber * dieRoll.outcome1() > defenderNumber * dieRoll.outcome2())
         {
             GameImpl gameImp = (GameImpl) game;
             Unit attackingUnit = game.getUnitAt(posToMoveFrom);
             gameImp.increaseKillCount(attackingUnit.getOwner());
-            unitHashMap.remove(attackingUnit);
+            unitHashMap.remove(posToMoveFrom);
             unitHashMap.put(posToMoveTo, attackingUnit);
         } else
         {
-            unitHashMap.remove(game.getUnitAt(posToMoveFrom));
+            unitHashMap.remove(posToMoveFrom);
         }
 
         return unitHashMap;

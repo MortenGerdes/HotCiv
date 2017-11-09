@@ -208,9 +208,11 @@ public class GameImpl implements Game
 
     public void performUnitActionAt(Position p)
     {
-        if (getUnitAt(p).getOwner() != playerInTurn) return;
+        UnitIns unit = (UnitIns) getUnitAt(p);
+        if (unit.getOwner() != playerInTurn) return;
 
         unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
+        unit.setCurMoveCount(0);
         onWorldChangedEvent(p);
     }
 
