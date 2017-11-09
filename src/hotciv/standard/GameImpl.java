@@ -77,8 +77,8 @@ public class GameImpl implements Game
         this.unitActionStrategy = factory.produceUnitActionStrategy();
 
         tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
-        // getCities().put(new Position(3, 7), new CityIns(Player.RED));
-        // getCities().put(new Position(10, 7), new CityIns(Player.BLUE));
+        getCities().put(new Position(3, 7), new CityIns(Player.RED));
+        getCities().put(new Position(10, 7), new CityIns(Player.BLUE));
 
         units.put(new Position(6, 5), new UnitIns(GameConstants.ARCHER, Player.RED));
         units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));

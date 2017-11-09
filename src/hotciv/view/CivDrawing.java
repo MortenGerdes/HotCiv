@@ -69,6 +69,7 @@ public class CivDrawing
         // ... and build up the set of figures associated with
         // units in the game.
         defineUnitMap();
+        defineCityMap();
         // and the set of 'icons' in the status panel
         defineIcons();
     }
@@ -89,6 +90,7 @@ public class CivDrawing
      * store all moveable figures visible in this drawing = units
      */
     protected Map<Unit, UnitFigure> figureMap = null;
+    protected Map<City, CityFigure> cityMap = null;
 
     /**
      * erase the old list of units, and build a completely new
@@ -129,6 +131,33 @@ public class CivDrawing
         }
     }
 
+    private void defineCityMap()
+    {
+        // ensure no units of the old list are accidental in
+        // the selection!
+        clearSelection();
+
+        cityMap = new HashMap<City, CityFigure>();
+        Position p;
+        for (int r = 0; r < GameConstants.WORLDSIZE; r++)
+        {
+            for (int c = 0; c < GameConstants.WORLDSIZE; c++)
+            {
+                p = new Position(r, c);
+                City city = game.getCityAt(p);
+                if (city != null)
+                {
+                    Point point = new Point(GfxConstants.getXFromColumn(p.getColumn()),
+                            GfxConstants.getYFromRow(p.getRow()));
+                    CityFigure cityFigure = new CityFigure(city, point);
+                    cityFigure.addFigureChangeListener(this);
+                    cityMap.put(city, cityFigure);
+                    delegate.add(cityFigure);
+                }
+            }
+        }
+    }
+
     private ImageFigure turnShieldIcon;
 
     private void defineIcons()
@@ -155,7 +184,12 @@ public class CivDrawing
         {
             delegate.remove(f);
         }
+        for(CityFigure f: cityMap.values())
+        {
+            delegate.remove(f);
+        }
         defineUnitMap();
+        defineCityMap();
     }
 
     public void turnEnds(Player nextPlayer, int age)
