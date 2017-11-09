@@ -1,17 +1,13 @@
 package hotciv.standard;
 
-import hotciv.framework.*;
-
-import hotciv.standard.Strategy.AgeingStrategy.BetaCivAgeingStrategy;
-import hotciv.standard.Strategy.AttackingStrategy.AlphaCivAttackingStrategy;
+import hotciv.framework.Player;
+import hotciv.framework.Position;
 import hotciv.standard.Strategy.Factory.BetaCivFactory;
-import hotciv.standard.Strategy.TestStubs.FixedDieRollStrategy;
-import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
-import hotciv.standard.Strategy.WinningStrategy.BetaCivWinnerStrategy;
-import hotciv.standard.Strategy.WorldGenerationStrategy.GammaCivWorldAndBelowStrategy;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /** Skeleton class for AlphaCiv test cases
 

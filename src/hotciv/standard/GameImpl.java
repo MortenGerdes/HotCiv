@@ -10,6 +10,7 @@ import hotciv.standard.Strategy.WinningStrategy.WinnerStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerationStrategy;
 import hotciv.standard.Strategy.WorldGenerationStrategy.WorldGenerator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -55,6 +56,7 @@ public class GameImpl implements Game
     private HashMap<Position, Unit> units = new HashMap<>();
     private HashMap<Position, City> cities = new HashMap<>();
     private HashMap<Position, Tile> tiles = new HashMap<>();
+    private ArrayList<GameObserver> listeners = new ArrayList<>();
 
     public HashMap<Player, Integer> killCount = new HashMap<>();
 
@@ -72,9 +74,18 @@ public class GameImpl implements Game
         this.unitActionStrategy = factory.produceUnitActionStrategy();
 
         tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
+        getCities().put(new Position(3, 7), new CityIns(Player.RED));
+        //getCities().put(new Position(10, 7), new CityIns(Player.BLUE));
+
+        units.put(new Position(4, 7), new UnitIns(GameConstants.ARCHER, Player.RED, 1, 1, 1));
+        units.put(new Position(3, 6), new UnitIns(GameConstants.ARCHER, Player.RED, 1, 1, 1));
+        units.put(new Position(4, 6), new UnitIns(GameConstants.ARCHER, Player.RED, 1, 1, 1));
+        units.put(new Position(4, 3), new UnitIns(GameConstants.ARCHER, Player.BLUE, 1, 1, 1));
+        units.put(new Position(5, 4), new UnitIns(GameConstants.ARCHER, Player.BLUE, 1, 1, 1));
         units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
+        units.put(new Position(5, 3), new UnitIns(GameConstants.SETTLER, Player.BLUE));
         units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
+
     }
 
     public Tile getTileAt(Position p)
@@ -112,10 +123,13 @@ public class GameImpl implements Game
         boolean isSelectedUnitNull = getUnitAt(from) == null;
         boolean isItTheRightPlayerInTurn;
         boolean isAShipMovingToLand;
+        boolean isInmovableTile;
+
 
         if (isSelectedUnitNull) // Is the unit null, bailout
         {
             // No Unit on position "from"
+            System.out.println("went here 1");
             return false;
         }
 
@@ -123,6 +137,7 @@ public class GameImpl implements Game
         if (!isItTheRightPlayerInTurn) // Is it "not" the right player in turn
         {
             // Not this player's turn
+            System.out.println("went here 2");
             return false;
         }
 
@@ -131,12 +146,19 @@ public class GameImpl implements Game
 
         if(!isMoveCountEnough(from, to, unitToMove))
         {
+            System.out.println("went here 3");
             return false;
         }
 
         if (isAShipMovingToLand)
         {
             // A ship that's trying to move on land
+            System.out.println("went here 4");
+            return false;
+        }
+
+        isInmovableTile = getTileAt(to).getTypeString().equals(GameConstants.MOUNTAINS) || getTileAt(to).getTypeString().equals(GameConstants.OCEANS);
+        if(unitToMove.getTypeString() != GameConstants.GALLEY && isInmovableTile){
             return false;
         }
 
@@ -144,16 +166,22 @@ public class GameImpl implements Game
         {
             if (getUnitAt(from).getOwner() == getUnitAt(to).getOwner())
             {
+                System.out.println("went here 5");
                 return false;
             } else
             {
                 // Init attack sequence and update the unit map with who won.
+                onWorldChangedEvent(from);
                 units = attackingStrategy.attackUnit(dieRollStrategy, this, (HashMap<Position, Unit>) getUnits().clone(), from, to);
+                System.out.println("attack");
+                onWorldChangedEvent(to);
                 return true;
             }
         }
-
-        moveUnitInMap(to, unitToMove);
+        onWorldChangedEvent(from);
+        moveUnitInMap(from, to, unitToMove);
+        onWorldChangedEvent(to);
+        System.out.println("Succesfully moved a unit!");
         return true;
     }
 
@@ -165,9 +193,11 @@ public class GameImpl implements Game
         increaseRound();
         increaseAge();
         switchTurnsBetweenPlayers();
+        resetTeamUnitMoveCount(playerInTurn);
         checkIfUnitConquerCity();
         spawnUnitIfCityCan();
         determineWinner();
+        onTurnEndsEvent(playerInTurn, getAge());
     }
 
     public void changeWorkForceFocusInCityAt(Position p, String balance)
@@ -180,9 +210,24 @@ public class GameImpl implements Game
 
     public void performUnitActionAt(Position p)
     {
-        if (getUnitAt(p).getOwner() != playerInTurn) return;
+        UnitIns unit = (UnitIns) getUnitAt(p);
+        if (unit.getOwner() != playerInTurn) return;
 
         unitActionStrategy.performAction(this, (UnitIns) getUnitAt(p), p);
+        unit.setCurMoveCount(0);
+        onWorldChangedEvent(p);
+    }
+
+    @Override
+    public void addObserver(GameObserver observer)
+    {
+        listeners.add(observer);
+    }
+
+    @Override
+    public void setTileFocus(Position position)
+    {
+        onTileFocusChangeEvent(position);
     }
 
     public void increaseKillCount(Player player)
@@ -199,6 +244,30 @@ public class GameImpl implements Game
         killCount.clear();
     }
 
+    private void onWorldChangedEvent(Position pos)
+    {
+        for (GameObserver obs : listeners)
+        {
+            obs.worldChangedAt(pos);
+        }
+    }
+
+    private void onTurnEndsEvent(Player nextPlayer, int age)
+    {
+        for (GameObserver obs : listeners)
+        {
+            obs.turnEnds(nextPlayer, age);
+        }
+    }
+
+    private void onTileFocusChangeEvent(Position pos)
+    {
+        for (GameObserver obs : listeners)
+        {
+            obs.tileFocusChangedAt(pos);
+        }
+    }
+
     private void checkIfUnitConquerCity()
     {
         for (Position posOfCity : getCities().keySet())
@@ -212,12 +281,13 @@ public class GameImpl implements Game
                 continue;
             }
             getCities().put(posOfCity, new CityIns(getUnitAt(posOfCity).getOwner()));
+            onWorldChangedEvent(posOfCity);
         }
     }
 
-    private void moveUnitInMap(Position posToMoveTo, Unit unitToMove)
+    private void moveUnitInMap(Position from, Position posToMoveTo, Unit unitToMove)
     {
-        units.remove(unitToMove);
+        units.remove(from);
         units.put(posToMoveTo, unitToMove);
     }
 
@@ -267,6 +337,7 @@ public class GameImpl implements Game
             // System.out.println("Spawning unit " + unitToSpawn.getTypeString() + " to " + getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip()).toString() + " on tile type " + getTileAt(getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip())).getTypeString());
             units.put(getFirstAvailbleSpawnAroundCity(position, unitToSpawn.isShip()), unitToSpawn);
             castedCity.setProduction(null);
+            onWorldChangedEvent(position);
         }
     }
 
@@ -339,19 +410,31 @@ public class GameImpl implements Game
 
     private boolean isMoveCountEnough(Position toMoveFrom, Position toMoveTo, Unit unit)
     {
-        int unitMoveCount = unit.getMoveCount();
+        int unitMoveCount = ((UnitIns)unit).remainingMoveCount();
+        int movementInColumn = Math.abs(toMoveFrom.getColumn() - toMoveTo.getColumn());
+        int movementInRow = Math.abs(toMoveFrom.getRow() - toMoveTo.getRow());
+        int moving = Math.max(movementInColumn, movementInRow);
 
-        if(Math.abs(toMoveFrom.getColumn() - toMoveTo.getColumn()) > unitMoveCount)
+        System.out.println("Moving " + moving + " tile(s)");
+        if(moving > unitMoveCount)
         {
             return false;
         }
-
-        if(Math.abs(toMoveFrom.getRow() - toMoveTo.getRow()) > unitMoveCount)
-        {
-            return false;
-        }
-
+        ((UnitIns)unit).setCurMoveCount(((UnitIns)unit).remainingMoveCount() - moving);
         return true;
+    }
+
+    private void resetTeamUnitMoveCount(Player player)
+    {
+        for(Unit unit: getUnits().values())
+        {
+            UnitIns theUnit = (UnitIns)unit;
+            if(theUnit.getOwner() != player)
+            {
+                continue;
+            }
+            theUnit.resetMoveCount();
+        }
     }
 
     // Getters and Setters for testing purposes

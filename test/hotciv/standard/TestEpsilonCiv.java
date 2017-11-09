@@ -1,14 +1,9 @@
 package hotciv.standard;
+
 import hotciv.framework.GameConstants;
 import hotciv.framework.Player;
 import hotciv.framework.Position;
-import hotciv.standard.Strategy.AgeingStrategy.AlphaCivAgeingStrategy;
-import hotciv.standard.Strategy.AttackingStrategy.EpsilonCivAttackingStrategy;
 import hotciv.standard.Strategy.Factory.EpsilonCivFactory;
-import hotciv.standard.Strategy.TestStubs.FixedDieRollStrategy;
-import hotciv.standard.Strategy.UnitPerformStrategy.BetaCivAndBelowUnitActionStrategy;
-import hotciv.standard.Strategy.WinningStrategy.EpsilonCivWinnerStrategy;
-import hotciv.standard.Strategy.WorldGenerationStrategy.GammaCivWorldAndBelowStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +26,7 @@ public class TestEpsilonCiv {
         game = new GameImpl(new EpsilonCivFactory());
     }
     @Test
-    public void redPlayerShouldWinAfterThreeWonAttacks(){
+    public void redPlayerShouldWinAfterThreeWonAttacks() {
         //Creates an archer for player Red
         game.getUnits().put(new Position(4,0), new UnitIns(GameConstants.ARCHER, Player.RED, 1, 3, 1));
         //Creates 3 archers for player blue

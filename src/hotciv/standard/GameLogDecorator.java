@@ -115,6 +115,18 @@ public class GameLogDecorator implements Game
         System.out.println("Player " + getPlayerInTurn().toString() + " tried performing action on invalid unit at position = " + p.toString());
     }
 
+    @Override
+    public void addObserver(GameObserver observer)
+    {
+
+    }
+
+    @Override
+    public void setTileFocus(Position position)
+    {
+
+    }
+
     public Game unpackDecoratee()
     {
         return game;

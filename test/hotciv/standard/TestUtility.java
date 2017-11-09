@@ -1,12 +1,15 @@
 package hotciv.standard;
 
 import hotciv.framework.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.junit.*;
-import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /** Test the utility library's methods to calculate neighborhoods
  * and battle factors.
@@ -176,5 +179,17 @@ class GameStubForBattleTesting implements Game {
     public int getAge() { return 0; }
     public boolean moveUnit(Position from, Position to) {return false;}
     public void performUnitActionAt( Position p ) {}
+
+    @Override
+    public void addObserver(GameObserver observer)
+    {
+
+    }
+
+    @Override
+    public void setTileFocus(Position position)
+    {
+
+    }
 }
 
