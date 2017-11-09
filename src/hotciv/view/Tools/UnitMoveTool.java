@@ -2,6 +2,7 @@ package hotciv.view.Tools;
 
 import hotciv.framework.Game;
 import hotciv.framework.Position;
+import hotciv.standard.UnitIns;
 import hotciv.view.GfxConstants;
 import minidraw.framework.DrawingEditor;
 import minidraw.framework.Figure;
@@ -40,7 +41,14 @@ public class UnitMoveTool extends NullTool
             if(draggedFigure != null)
             {
                 fromPos = GfxConstants.getPositionFromXY(e.getX(), e.getY());
-                fChild = createDragTracker(draggedFigure);
+                UnitIns unit = (UnitIns) game.getUnitAt(fromPos);
+                if(unit.remainingMoveCount() > 0)
+                {
+                    if(unit.getOwner() == game.getPlayerInTurn())
+                    {
+                        fChild = createDragTracker(draggedFigure);
+                    }
+                }
             }
             else
             {
@@ -48,7 +56,7 @@ public class UnitMoveTool extends NullTool
                     editor.drawing().clearSelection();
                 }
             }
-            fChild = createDragTracker(draggedFigure);
+            //fChild = createDragTracker(draggedFigure);
         }
         fChild.mouseDown(e, x, y);
     }
@@ -60,7 +68,9 @@ public class UnitMoveTool extends NullTool
         {
             return;
         }
-        game.moveUnit(fromPos, GfxConstants.getPositionFromXY(x, y));
+        if(game.moveUnit(fromPos, GfxConstants.getPositionFromXY(x, y)))
+        {
+        }
         fChild = cachedNullTool;
         draggedFigure = null;
         fromPos = null;
