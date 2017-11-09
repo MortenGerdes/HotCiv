@@ -1,6 +1,7 @@
 package hotciv.view.Tools;
 
 import hotciv.framework.Game;
+import hotciv.framework.Position;
 import hotciv.view.GfxConstants;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.NullTool;
@@ -24,10 +25,22 @@ public class SetFocusTool extends NullTool
     @Override
     public void mouseDown(MouseEvent e, int x, int y)
     {
-        if(game.getTileAt(GfxConstants.getPositionFromXY(x, y)) != null)
+        Position pos = GfxConstants.getPositionFromXY(x, y);
+        if(game.getTileAt(pos) != null)
         {
             game.setTileFocus(GfxConstants.getPositionFromXY(x, y));
-            editor.showStatus("Focus set on position: " + GfxConstants.getPositionFromXY(x, y));
+            editor.showStatus("Focus set on position: " + pos);
+
+            if(game.getUnitAt(GfxConstants.getPositionFromXY(x, y)) != null){
+                editor.showStatus("(" + game.getUnitAt(pos).getTypeString() + ", " +
+                        game.getUnitAt(pos).getOwner() + ", " + game.getUnitAt(pos).getMoveCount() + ")");
+
+            }
+
+            if(game.getCityAt(pos) != null){
+                editor.showStatus("(Owner: " + game.getCityAt(pos).getOwner() + ", size: " + game.getCityAt(pos).getSize() +
+                ", production: " + game.getCityAt(pos).getProduction());
+            }
         }
     }
 }

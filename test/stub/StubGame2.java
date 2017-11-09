@@ -43,8 +43,10 @@ public class StubGame2 implements Game
     private Position pos_legion_blue;
     private Position pos_settler_red;
     private Position pos_galley_red;
+    private Position pos_city_red;
 
     private Unit red_archer;
+    private City city;
 
     public Unit getUnitAt(Position p)
     {
@@ -117,10 +119,12 @@ public class StubGame2 implements Game
         pos_legion_blue = new Position(3, 2);
         pos_settler_red = new Position(4, 3);
         pos_galley_red = new Position(6, 4);
+        pos_city_red = new Position(8, 5);
+
 
         // the only one I need to store for this stub
         red_archer = new StubUnit(GameConstants.ARCHER, Player.RED);
-
+        city = new StubCity(Player.RED, 0, "nothing", "d");
         inTurn = Player.RED;
     }
 
@@ -154,6 +158,9 @@ public class StubGame2 implements Game
 
     public City getCityAt(Position p)
     {
+        if(p.equals(pos_city_red)){
+            return city;
+        }
         return null;
     }
 
@@ -224,3 +231,42 @@ class StubUnit implements Unit
         return 0;
     }
 }
+
+class StubCity implements City
+{
+    private Player owner;
+    private int size;
+    private String production;
+    private String workForceFocus;
+
+    public StubCity(Player owner, int size, String production, String workForceFocus)
+    {
+        this.size = size;
+        this.production = production;
+        this.workForceFocus = workForceFocus;
+        this.owner = owner;
+    }
+
+
+    public Player getOwner()
+    {
+        return owner;
+    }
+
+    @Override
+    public int getSize() {
+        return 0;
+    }
+
+    @Override
+    public String getProduction() {
+        return null;
+    }
+
+    @Override
+    public String getWorkforceFocus() {
+        return null;
+    }
+
+}
+

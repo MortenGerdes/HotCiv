@@ -78,11 +78,15 @@ public class GameImpl implements Game
 
         tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
         getCities().put(new Position(3, 7), new CityIns(Player.RED));
-        getCities().put(new Position(10, 7), new CityIns(Player.BLUE));
+        //getCities().put(new Position(10, 7), new CityIns(Player.BLUE));
 
-        units.put(new Position(6, 5), new UnitIns(GameConstants.ARCHER, Player.RED));
-        units.put(new Position(2, 0), new UnitIns(GameConstants.GALLEY, Player.RED));
-        units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
+        units.put(new Position(4, 7), new UnitIns(GameConstants.ARCHER, Player.RED, 1, 1, 1));
+        units.put(new Position(3, 6), new UnitIns(GameConstants.ARCHER, Player.RED, 1, 1, 1));
+        units.put(new Position(4, 6), new UnitIns(GameConstants.ARCHER, Player.RED, 1, 1, 1));
+        units.put(new Position(4, 3), new UnitIns(GameConstants.ARCHER, Player.BLUE, 1, 1, 1));
+        units.put(new Position(5, 4), new UnitIns(GameConstants.ARCHER, Player.BLUE, 1, 1, 1));
+        units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
+        units.put(new Position(5, 3), new UnitIns(GameConstants.SETTLER, Player.BLUE));
         units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
 
     }
@@ -172,6 +176,7 @@ public class GameImpl implements Game
                 // Init attack sequence and update the unit map with who won.
                 onWorldChangedEvent(from);
                 units = attackingStrategy.attackUnit(dieRollStrategy, this, (HashMap<Position, Unit>) getUnits().clone(), from, to);
+                System.out.println("attack");
                 onWorldChangedEvent(to);
                 return true;
             }
