@@ -1,6 +1,8 @@
 package visual;
 
 import hotciv.framework.Game;
+import hotciv.view.Tools.CompTool;
+import hotciv.view.Tools.Factory.CompToolFactory;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.MiniDrawApplication;
 import minidraw.standard.NullTool;
@@ -37,6 +39,6 @@ public class ShowComposition
         editor.showStatus("Click and drag any item to see Game's proper response.");
 
         // Replace the setting of the tool with your CompositionTool implementation.
-        editor.setTool(new NullTool());
+        editor.setTool(new CompTool(game, editor, new CompToolFactory()));
     }
 }

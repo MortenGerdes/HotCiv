@@ -1,10 +1,9 @@
 package visual;
 
 import hotciv.framework.Game;
-import hotciv.view.EndOfTurnTool;
+import hotciv.view.Tools.EndOfTurnTool;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.MiniDrawApplication;
-import minidraw.standard.NullTool;
 import stub.StubGame2;
 
 /**

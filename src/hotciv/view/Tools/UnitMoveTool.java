@@ -1,7 +1,8 @@
-package hotciv.view;
+package hotciv.view.Tools;
 
 import hotciv.framework.Game;
 import hotciv.framework.Position;
+import hotciv.view.GfxConstants;
 import minidraw.framework.DrawingEditor;
 import minidraw.framework.Figure;
 import minidraw.framework.Tool;
@@ -55,10 +56,11 @@ public class UnitMoveTool extends NullTool
     public void mouseUp(MouseEvent e, int x, int y) {
         editor.drawing().unlock();
         fChild.mouseUp(e, x, y);
-        if(game.moveUnit(fromPos, GfxConstants.getPositionFromXY(x, y)))
+        if(draggedFigure == null)
         {
-            editor.showStatus("Moved unit!");
+            return;
         }
+        game.moveUnit(fromPos, GfxConstants.getPositionFromXY(x, y));
         fChild = cachedNullTool;
         draggedFigure = null;
         fromPos = null;

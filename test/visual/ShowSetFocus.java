@@ -1,10 +1,9 @@
 package visual;
 
 import hotciv.framework.Game;
-import hotciv.view.SetFocusTool;
+import hotciv.view.Tools.SetFocusTool;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.MiniDrawApplication;
-import minidraw.standard.SelectionTool;
 import stub.StubGame2;
 
 /**

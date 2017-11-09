@@ -177,6 +177,7 @@ public class StubGame2 implements Game
 
     public void performUnitActionAt(Position p)
     {
+        System.out.println("Performing Unit action at: " + p.toString());
     }
 
     public void setTileFocus(Position position)

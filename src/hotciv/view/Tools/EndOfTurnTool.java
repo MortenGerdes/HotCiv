@@ -1,7 +1,8 @@
-package hotciv.view;
+package hotciv.view.Tools;
 
 import hotciv.framework.Game;
 import hotciv.standard.GameImpl;
+import hotciv.view.GfxConstants;
 import minidraw.framework.DrawingEditor;
 import minidraw.standard.GroupFigure;
 import minidraw.standard.NullTool;
@@ -13,8 +14,8 @@ import java.awt.event.MouseEvent;
  */
 public class EndOfTurnTool extends NullTool {
 
-    Game game;
-    DrawingEditor editor;
+    private Game game;
+    private DrawingEditor editor;
 
     public EndOfTurnTool(Game game, DrawingEditor editor)
     {
@@ -25,7 +26,7 @@ public class EndOfTurnTool extends NullTool {
     @Override
     public void mouseDown(MouseEvent e, int x, int y)
     {
-        if(x >= GfxConstants.TURN_SHIELD_X && x <= 580 && y >= GfxConstants.TURN_SHIELD_Y && y <= 100)
+        if(x >= GfxConstants.TURN_SHIELD_X && x <= GfxConstants.TURN_SHIELD_X + 26 && y >= GfxConstants.TURN_SHIELD_Y && y <= GfxConstants.TURN_SHIELD_Y + 38)
         {
             game.endOfTurn();
         }
