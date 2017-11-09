@@ -171,6 +171,7 @@ public class GameImpl implements Game
         onWorldChangedEvent(from);
         moveUnitInMap(from, to, unitToMove);
         onWorldChangedEvent(to);
+        System.out.println("Succesfully moved a unit!");
         return true;
     }
 
@@ -397,16 +398,17 @@ public class GameImpl implements Game
 
     private boolean isMoveCountEnough(Position toMoveFrom, Position toMoveTo, Unit unit)
     {
-        int unitMoveCount = ((UnitIns)unit).remaningMoveCount();
+        int unitMoveCount = ((UnitIns)unit).remainingMoveCount();
         int movementInColumn = Math.abs(toMoveFrom.getColumn() - toMoveTo.getColumn());
         int movementInRow = Math.abs(toMoveFrom.getRow() - toMoveTo.getRow());
+        int moving = Math.max(movementInColumn, movementInRow);
 
-        System.out.println("Moving " + Math.max(movementInColumn, movementInRow) + " tile(s)");
-        if(Math.max(movementInColumn, movementInRow) > unitMoveCount)
+        System.out.println("Moving " + moving + " tile(s)");
+        if(moving > unitMoveCount)
         {
             return false;
         }
-
+        ((UnitIns)unit).setCurMoveCount(((UnitIns)unit).remainingMoveCount() - moving);
         return true;
     }
 
