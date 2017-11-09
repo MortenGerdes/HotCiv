@@ -12,12 +12,12 @@ public class RandomDieRollStrategy implements DieRollStrategy
     @Override
     public int outcome1()
     {
-        return ran.nextInt();
+        return ran.nextInt(5)+1;
     }
 
     @Override
     public int outcome2()
     {
-        return ran.nextInt();
+        return ran.nextInt(5)+1;
     }
 }
