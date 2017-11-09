@@ -77,9 +77,14 @@ public class GameImpl implements Game
         this.unitActionStrategy = factory.produceUnitActionStrategy();
 
         tiles = new WorldGenerator().generateWorld(worldGenerationStrategy.worldDesign());
+        getCities().put(new Position(3, 7), new CityIns(Player.RED));
+        getCities().put(new Position(10, 7), new CityIns(Player.BLUE));
+        units.put(new Position(6, 5), new UnitIns(GameConstants.ARCHER, Player.RED));
+        /*
         units.put(new Position(2, 0), new UnitIns(GameConstants.ARCHER, Player.RED));
         units.put(new Position(4, 3), new UnitIns(GameConstants.SETTLER, Player.RED));
         units.put(new Position(3, 2), new UnitIns(GameConstants.LEGION, Player.BLUE));
+        */
     }
 
     public Tile getTileAt(Position p)
@@ -173,6 +178,7 @@ public class GameImpl implements Game
         increaseRound();
         increaseAge();
         switchTurnsBetweenPlayers();
+        resetTeamUnitMoveCount(playerInTurn);
         checkIfUnitConquerCity();
         spawnUnitIfCityCan();
         determineWinner();
@@ -387,19 +393,30 @@ public class GameImpl implements Game
 
     private boolean isMoveCountEnough(Position toMoveFrom, Position toMoveTo, Unit unit)
     {
-        int unitMoveCount = unit.getMoveCount();
+        int unitMoveCount = ((UnitIns)unit).remaningMoveCount();
+        int movementInColumn = Math.abs(toMoveFrom.getColumn() - toMoveTo.getColumn());
+        int movementInRow = Math.abs(toMoveFrom.getRow() - toMoveTo.getRow());
 
-        if(Math.abs(toMoveFrom.getColumn() - toMoveTo.getColumn()) > unitMoveCount)
-        {
-            return false;
-        }
-
-        if(Math.abs(toMoveFrom.getRow() - toMoveTo.getRow()) > unitMoveCount)
+        System.out.println("Moving " + Math.max(movementInColumn, movementInRow) + " tile(s)");
+        if(Math.max(movementInColumn, movementInRow) > unitMoveCount)
         {
             return false;
         }
 
         return true;
+    }
+
+    private void resetTeamUnitMoveCount(Player player)
+    {
+        for(Unit unit: getUnits().values())
+        {
+            UnitIns theUnit = (UnitIns)unit;
+            if(theUnit.getOwner() != player)
+            {
+                continue;
+            }
+            theUnit.setCurMoveCount(theUnit.getMoveCount());
+        }
     }
 
     // Getters and Setters for testing purposes

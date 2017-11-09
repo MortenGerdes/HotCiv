@@ -11,7 +11,8 @@ public class UnitIns implements Unit
 {
     private String type;
     private Player owner;
-    private int moveCount;
+    private int maxMoveCount;
+    private int curMoveCount;
     private int defensiveStrength;
     private int attackingStrength;
     private boolean isFortified = false;
@@ -33,7 +34,7 @@ public class UnitIns implements Unit
 
         this.type = type;
         this.owner = owner;
-        this.moveCount = moveCount;
+        this.maxMoveCount = moveCount;
         this.defensiveStrength = defensiveStrength;
         this.attackingStrength = attackingStrength;
 
@@ -58,7 +59,7 @@ public class UnitIns implements Unit
     @Override
     public int getMoveCount()
     {
-        return isFortified ? 0 : moveCount;
+        return isFortified ? 0 : maxMoveCount;
     }
 
     @Override
@@ -90,12 +91,17 @@ public class UnitIns implements Unit
 
     public void setMoveCount(int moveCount)
     {
-        this.moveCount = moveCount;
+        this.maxMoveCount = moveCount;
     }
 
     public void setDefensiveStrength(int def)
     {
         defensiveStrength = def;
+    }
+
+    public void setCurMoveCount(int moveCount)
+    {
+        this.curMoveCount = moveCount;
     }
 
     public void setFortified()
@@ -105,5 +111,15 @@ public class UnitIns implements Unit
             return;
         }
         isFortified = (isFortified == true) ? false : true;
+    }
+
+    public void resetMoveCount()
+    {
+        curMoveCount = maxMoveCount;
+    }
+
+    public int remaningMoveCount()
+    {
+        return curMoveCount;
     }
 }

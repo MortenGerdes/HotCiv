@@ -60,7 +60,11 @@ public class UnitMoveTool extends NullTool
         {
             return;
         }
-        game.moveUnit(fromPos, GfxConstants.getPositionFromXY(x, y));
+        System.out.println("went here 2");
+        if(game.moveUnit(fromPos, GfxConstants.getPositionFromXY(x, y)))
+        {
+            System.out.println("went here");
+        }
         fChild = cachedNullTool;
         draggedFigure = null;
         fromPos = null;
