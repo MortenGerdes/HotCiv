@@ -35,6 +35,7 @@ public class UnitIns implements Unit
         this.type = type;
         this.owner = owner;
         this.maxMoveCount = moveCount;
+        this.curMoveCount = maxMoveCount;
         this.defensiveStrength = defensiveStrength;
         this.attackingStrength = attackingStrength;
 
@@ -118,7 +119,7 @@ public class UnitIns implements Unit
         curMoveCount = maxMoveCount;
     }
 
-    public int remaningMoveCount()
+    public int remainingMoveCount()
     {
         return curMoveCount;
     }
